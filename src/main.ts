@@ -1,7 +1,7 @@
 // The page: the theme's switch, the chart and its key, the switches above it, and the chart following them.
 import "./styles.css";
 import "./lib/theme";
-import { mount } from "svelte";
+import { flushSync, mount } from "svelte";
 import SwitchBar from "./ui/SwitchBar.svelte";
 import { makeChart } from "./views/chart";
 import { follow } from "./views/controller.svelte";
@@ -15,6 +15,7 @@ measure("#switches", "--switches-height");
 const chart = makeChart(document.querySelector<HTMLElement>("#chart")!, document.querySelector<HTMLElement>("#legend")!);
 mount(SwitchBar, { target: document.querySelector("#switches")! });
 follow(chart);
+flushSync(); // (the chart made now, not after this script)
 
 // Opened at a register's link (#high), there once the chart is in.
 if (location.hash) document.getElementById(decodeURIComponent(location.hash.slice(1)))?.scrollIntoView({ behavior: "instant" });

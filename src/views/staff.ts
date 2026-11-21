@@ -17,6 +17,8 @@ const accidentalWidth = (gl: Glyph) => gl.x1 - gl.x0 + ACC_GAP;
 // Every staff as wide as one with two spellings, so that the notes' names beside them line up.
 const WIDTH = CLEF_END + accidentalWidth(GLYPHS.sharp) + accidentalWidth(GLYPHS.flat) + 2 * HEAD_W + NOTE_GAP + 80;
 
+const UNITS_PER_REM = 400; // the drawing's scale: a staff with no ledger lines is 4.6rem high
+
 const stepY = (step: number) => BOTTOM + step * STEP;
 
 // The staff's height, in steps from the bottom line, that every note of a group fits in (so that a
@@ -32,6 +34,7 @@ export function staff(p: Pitch, fit: { low: number; high: number }, label: strin
   const top = Math.max(GLYPHS.clef.y1 + 60, stepY(fit.high) + HEAD.y1 - GLYPH_CENTRE + 60);
   const bottom = Math.min(GLYPHS.clef.y0 - 60, stepY(fit.low) + HEAD.y0 - GLYPH_CENTRE - 60);
   const svg = el("svg", { viewBox: `0 ${-top} ${WIDTH} ${top - bottom}`, class: "staff", role: "img", "aria-label": label });
+  svg.style.height = `${(top - bottom) / UNITS_PER_REM}rem`; // every staff at one scale, however many ledger lines it has room for
   const g = el("g", { transform: "scale(1 -1)" }, svg);
   for (let i = 0; i < 5; i++) el("rect", { x: 0, y: BOTTOM + i * SPACE - LINE / 2, width: WIDTH, height: LINE, class: "line" }, g);
   const glyph = (gl: Glyph, x: number, y: number, cls: string) => el("path", { d: gl.d, transform: `translate(${x - gl.x0} ${y})`, class: cls }, g);

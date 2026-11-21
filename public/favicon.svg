@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
-  <!-- A fingering diagram, simplified: the piccolo's body, the mouthpiece, and the six finger keys,
+  <!-- A fingering diagram, simplified: the body, the mouthpiece, and the six finger keys,
        the left hand's down (G) and the right hand's up. -->
   <rect x="4" y="52" width="122" height="24" rx="12" fill="#d9d9d2"/>
   <ellipse cx="15" cy="64" rx="3.5" ry="3" fill="none" stroke="#6e6e68" stroke-width="3"/>

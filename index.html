@@ -3,11 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Flute Basics | Piccolo fingering chart</title>
-  <meta name="description" content="Fingerings for every note of the Boehm piccolo, from its lowest D to the top, with the alternatives for tuning and response.">
+  <title>Flute Basics | Flute and piccolo fingering charts</title>
+  <meta name="description" content="Fingerings for every note of the Boehm flute and piccolo, from the lowest note to the top, with the alternatives for tuning and response.">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <!-- The theme chosen in this browser (light or dark; none: the system's), set before the page is drawn. -->
-  <script>try { const t = localStorage.getItem("theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}</script>
+  <!-- Set before the page is drawn: the theme chosen in this browser (light or dark; none: the system's), and
+       the instrument, from the address or this browser (as src/lib/store.svelte.ts reads it; the flute if none). -->
+  <script>
+    try { const t = localStorage.getItem("theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+    { let i = new URLSearchParams(location.search).get("instrument"); try { if (i !== "flute" && i !== "piccolo") i = localStorage.getItem("flute-basics-instrument"); } catch {} document.documentElement.dataset.instrument = i === "piccolo" ? "piccolo" : "flute"; }
+  </script>
   <link rel="preload" href="fonts/DMMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
 </head>
 <body>
@@ -15,7 +19,7 @@
     <nav>
       <a class="brand" href="#">
         <img src="favicon.svg" alt="" width="20" height="20">
-        <div><strong>Flute Basics</strong> <span>| Piccolo fingering chart</span></div>
+        <div><strong>Flute Basics</strong> <span>| Fingering charts</span></div>
       </a>
       <div class="registers-nav">
         <a href="#low">1st octave</a>
@@ -29,9 +33,14 @@
 
   <main>
     <section class="intro" aria-labelledby="intro-title">
-      <h1 id="intro-title">Every fingering for the piccolo</h1>
-      <p class="lede">Every note from the lowest D to the top, the standard fingering first and the alternatives under it, for tuning, soft or loud playing, and response. For the Boehm piccolo; the first two octaves are fingered as on the flute, the third differs on a few notes.</p>
-      <ul class="facts">
+      <h1 id="intro-title">Every fingering for the flute and the piccolo</h1>
+      <p class="lede">Every note from the bottom to the top, the standard fingering first and the alternatives under it, for tuning, soft or loud playing, and response. For the Boehm flute and piccolo, fingered alike for two octaves: choose yours with the switch above the chart.</p>
+      <ul class="facts" data-for="flute">
+        <li><b>The foot joint</b> gives the lowest notes: the right pinky's rollers for low C♯ and C. Most flutes have this C foot; a B foot adds a key for low B, and often the gizmo key, which helps top C.</li>
+        <li><b>It sounds as written.</b> The concert flute is in C: the note on the page is the note you hear.</li>
+        <li><b>The right pinky stays down</b> on the E♭ key for almost every note. The diagrams show the few where it's lifted or moved, as for low D, middle D and the foot joint's notes.</li>
+      </ul>
+      <ul class="facts" data-for="piccolo">
         <li><b>There's no foot joint.</b> No piccolo has one: its lowest note is D, all six fingers down, and the flute's low C♯, C and B keys aren't needed for anything.</li>
         <li><b>It sounds an octave higher.</b> Piccolo music is written an octave below what's heard. The chart names written notes, and each card says what you'll hear.</li>
         <li><b>The right pinky stays down</b> on the E♭ key for almost every note. The diagrams show the few where it's lifted, as for low D and middle D.</li>
@@ -42,12 +51,12 @@
       <div class="legend-text">
         <h2 id="legend-title">Reading the diagrams</h2>
         <ul>
-          <li>The piccolo as you see it playing: the mouthpiece on the left, the left hand nearer it, the right hand further out.</li>
+          <li>The <span data-for="flute">flute</span><span data-for="piccolo">piccolo</span> seen from above as you play it: the mouthpiece on the left, the left hand nearer it, the right hand further out.</li>
           <li><b>Dark is pressed, white is up.</b> The numbers are your fingers: 1 the index, 2 the middle, 3 the ring finger.</li>
-          <li>The thumb has two keys, under the piccolo. Use <b>B</b>; a few fingerings ask for the <b>B♭</b> lever.</li>
-          <li>The pinkies' keys: <b>G♯</b> for the left, <b>E♭</b> for the right.</li>
-          <li>The dashed <b>D</b> and <b>D♯</b> are the trill keys, between your right-hand fingers, pressed with whichever finger is free. The <b>side</b> B♭ lever, beside right 1, is pressed with the side of that finger. Only a few notes use these.</li>
-          <li>Under each diagram the same fingering in words. Open-hole and closed-hole piccolos are fingered alike.</li>
+          <li>Above the body, the left pinky's <b>G♯</b>. Below it, the keys on your side of the instrument: the thumb's two (use <b>B</b>; a few fingerings ask for the <b>B♭</b> lever), the right hand's side lever and trill keys, and the right pinky's <b>E♭</b><span data-for="flute"> with the foot joint's rollers for low <b>C♯</b> and <b>C</b></span>.</li>
+          <li data-for="flute">The foot joint's <b>B</b> key and <b>giz</b>mo are a B foot's: on a C foot, use the fingerings without them.</li>
+          <li>The dashed <b>D</b> and <b>D♯</b> are the trill keys' touches, between your right-hand fingers, pressed with whichever finger is free. The <b>side</b> B♭ lever, by right 1, is pressed with the side of that finger. Only a few notes use these.</li>
+          <li>Under each diagram the same fingering in words. Open-hole and closed-hole <span data-for="flute">flutes</span><span data-for="piccolo">piccolos</span> are fingered alike.</li>
         </ul>
       </div>
     </section>
@@ -57,8 +66,9 @@
   </main>
 
   <footer>
-    <p>The piccolo tends to be sharp low down and flat at the very top: most alternatives are for that, or for soft and loud playing, or to make a note speak. Try them with a tuner, and keep what works on yours.</p>
-    <p>The fingerings are from the piccolo pages of <a href="https://www.wfg.woodwind.org/flute/">The Woodwind Fingering Guide</a> (<a href="https://www.wfg.woodwind.org/flute/picc_alt_1.html">first octave</a>, <a href="https://www.wfg.woodwind.org/flute/picc_alt_2.html">second</a>, <a href="https://www.wfg.woodwind.org/flute/picc_alt_3.html">third</a>), their comments adapted. The music symbols are from Noto Music.</p>
+    <p data-for="flute">Most alternatives are for tuning, or for soft and loud playing, or to make a note speak, or for a fast slur. Try them with a tuner, and keep what works on yours.</p>
+    <p data-for="piccolo">The piccolo tends to be sharp low down and flat at the very top: most alternatives are for that, or for soft and loud playing, or to make a note speak. Try them with a tuner, and keep what works on yours.</p>
+    <p>The fingerings are from <a href="https://www.wfg.woodwind.org/flute/">The Woodwind Fingering Guide</a>, their comments adapted: its flute pages (<a href="https://www.wfg.woodwind.org/flute/fl_alt_1.html">first octave</a>, <a href="https://www.wfg.woodwind.org/flute/fl_alt_2.html">second</a>, <a href="https://www.wfg.woodwind.org/flute/fl_alt_3.html">third</a>, <a href="https://www.wfg.woodwind.org/flute/fl_alt_4.html">fourth</a>) and piccolo pages (<a href="https://www.wfg.woodwind.org/flute/picc_alt_1.html">first octave</a>, <a href="https://www.wfg.woodwind.org/flute/picc_alt_2.html">second</a>, <a href="https://www.wfg.woodwind.org/flute/picc_alt_3.html">third</a>). The music symbols are from Noto Music.</p>
   </footer>
 
   <script type="module" src="/src/main.ts"></script>

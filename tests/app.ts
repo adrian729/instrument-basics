@@ -36,6 +36,8 @@ export const standard = (page: Page, note: string) => card(page, note).locator("
 export const alternatives = (page: Page, note: string) => card(page, note).locator("details.alternatives");
 export const switchButton = (page: Page, key: string, value: string) => page.locator(`#switches [data-${key}="${value}"]`);
 export const themeSwitch = (page: Page) => page.locator(".theme-switch");
+export const legendKeys = (page: Page) => page.locator("#legend svg.keys");
+export const facts = (page: Page, instrument: string) => page.locator(`.intro .facts[data-for="${instrument}"]`);
 
 export async function choose(page: Page, key: string, value: string) {
   await switchButton(page, key, value).click();

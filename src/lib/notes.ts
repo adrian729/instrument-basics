@@ -1,5 +1,5 @@
 // Notes' names (letters or solfège), where they sit on the staff, and how a fingering reads aloud.
-import type { Fingering, Letter, Pitch } from "../data/fingerings";
+import type { Fingering, Foot, Letter, Pitch } from "../data/fingerings";
 
 export type Names = "letters" | "solfege";
 
@@ -22,12 +22,17 @@ export function nameParts(p: Pitch, names: Names): { name: string; octave: strin
 }
 export const nameText = (p: Pitch, names: Names) => nameParts(p, names).map((n) => n.name + n.octave).join(" / ");
 
-// What's heard: an octave above what's written.
-export const soundingText = (p: Pitch, names: Names) =>
-  names === "letters" ? `Sounds ${nameParts({ ...p, octave: p.octave + 1 }, names)[0].name}${p.octave + 1}` : "Sounds an octave higher";
+// What's heard: what's written, or (the piccolo) an octave above it.
+export function soundingText(p: Pitch, names: Names, octavesUp: number) {
+  if (!octavesUp) return "Sounds as written";
+  return names === "letters" ? `Sounds ${nameParts(p, names)[0].name}${p.octave + octavesUp}` : "Sounds an octave higher";
+}
 
 // Diatonic steps above the treble staff's bottom line (E4 is 0, F4 1, D4 -1).
 export const staffStep = (letter: Letter, octave: number) => octave * 7 + LETTERS.indexOf(letter) - (4 * 7 + 2);
+
+const FOOT_NAMES: Record<Foot, string> = { "lowC#": "low C♯", lowC: "low C", lowB: "low B", giz: "gizmo" };
+const FOOT_LABELS: Record<Foot, string> = { "lowC#": "low C-sharp key", lowC: "low C key", lowB: "low B key", giz: "gizmo key" };
 
 // A fingering in words, hand by hand, for the line under its diagram.
 export function fingeringText(f: Fingering): { left: string; right: string } {
@@ -35,6 +40,7 @@ export function fingeringText(f: Fingering): { left: string; right: string } {
   const left = [f.thumb === "Bb" ? "thumb B♭" : f.thumb === "B" ? "thumb B" : "", fingers(f.left), f.gSharp ? "G♯" : ""].filter(Boolean);
   const right = [
     fingers(f.right), f.extras.includes("side") ? "side B♭" : "", f.extras.includes("trD") ? "D trill" : "", f.extras.includes("trD#") ? "D♯ trill" : "", f.eFlat ? "E♭" : "",
+    ...f.foot.map((k) => FOOT_NAMES[k]),
   ].filter(Boolean);
   return { left: left.join(" · ") || "nothing", right: right.join(" · ") || "nothing" };
 }
@@ -46,7 +52,7 @@ export function fingeringLabel(f: Fingering): string {
     ...f.left.flatMap((d, i) => (d ? [`left ${i + 1}`] : [])), f.gSharp ? "G-sharp key" : "",
     ...f.right.flatMap((d, i) => (d ? [`right ${i + 1}`] : [])),
     f.extras.includes("side") ? "side B-flat lever" : "", f.extras.includes("trD") ? "D trill key" : "", f.extras.includes("trD#") ? "D-sharp trill key" : "",
-    f.eFlat ? "E-flat key" : "",
+    f.eFlat ? "E-flat key" : "", ...f.foot.map((k) => FOOT_LABELS[k]),
   ].filter(Boolean);
   return keys.length ? `Press: ${keys.join(", ")}` : "Every key open";
 }

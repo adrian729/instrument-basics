@@ -1,6 +1,7 @@
-// How the page looks: the intro and key, each register, a few switches and the dark theme, on desktop, and
-// the same's start on a phone; compared with tests/screenshots. After a change meant to change them:
-// `pnpm test:update`, then look at the new ones before committing.
+// How the page looks: the intro and key, each register of the flute, the piccolo's start and its third octave
+// (where the two differ most), a few switches and the dark theme, on desktop, and the same's start on a phone;
+// compared with tests/screenshots. After a change meant to change them: `pnpm test:update`, then look at the
+// new ones before committing.
 import { test, expect, open, register, choose } from "./app";
 
 const TALL = { stylePath: "tests/screenshot.css" }; // (see the file)
@@ -19,6 +20,14 @@ for (const id of ["low", "middle", "high", "extreme"]) {
     await expect(register(page, id)).toHaveScreenshot(`${id}.png`, TALL);
   });
 }
+
+test("look piccolo", async ({ page }) => {
+  await open(page, { "flute-basics-instrument": "piccolo" });
+  await settle(page);
+  await expect(page).toHaveScreenshot("piccolo-intro.png");
+  await expect(register(page, "low")).toHaveScreenshot("piccolo-low.png", TALL);
+  await expect(register(page, "high")).toHaveScreenshot("piccolo-high.png", TALL);
+});
 
 test("look alternatives open, solfège", async ({ page }) => {
   await open(page);

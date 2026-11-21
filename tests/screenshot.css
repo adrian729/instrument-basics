@@ -1,3 +1,5 @@
-/* For the screenshots of a part of the page taller than the screen: the header and the switches left in
-   their place, not stuck over the part as it's taken. */
+/* For the screenshots of a part of the page: the header and the switches left in their place, not stuck over
+   the part as it's taken; and no room kept for them when the part's scrolled to (scroll-padding), which would
+   push the end of a part near the page's end out of the screen, and out of its screenshot. */
 body > header, .switches { position: static !important; }
+html { scroll-padding-top: 0 !important; }

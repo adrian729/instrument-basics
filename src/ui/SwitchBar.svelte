@@ -1,10 +1,15 @@
 <!--
-  The switches above the chart, in named groups: how notes are named, and what's shown of the alternatives.
+  The switches above the chart, in named groups: the instrument, how notes are named, and what's shown of the
+  alternatives.
 -->
 <script lang="ts">
   import { choices, choose, VALUES, type Choices } from "../lib/store.svelte";
 
   type Choice = { value: string; text: string; title: string };
+  const INSTRUMENT: Choice[] = [
+    { value: "flute", text: "Flute", title: "The concert flute, in C" },
+    { value: "piccolo", text: "Piccolo", title: "The piccolo, sounding an octave higher" },
+  ];
   const NAMES: Choice[] = [
     { value: "letters", text: "C D E", title: "Letter names, with octave numbers (C4 is middle C)" },
     { value: "solfege", text: "Do Re Mi", title: "Solfège names" },
@@ -30,6 +35,7 @@
 {/snippet}
 
 <div class="switch-row">
+  {@render group("Instrument", "instrument", INSTRUMENT)}
   {@render group("Note names", "names", NAMES)}
   {@render group("Alternatives", "alternatives", ALTERNATIVES)}
 </div>
