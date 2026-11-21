@@ -1,4 +1,4 @@
-# Ducktape Piccolo
+# Flute Basics
 
 A fingering chart for the Boehm piccolo: every note from its lowest D to the D three octaves up, at written pitch, each with the standard fingering first and the alternatives under it (for tuning, soft or loud playing, and response). Each note is shown on the treble staff, with a diagram of the keys and the same fingering in words. Notes can be named with letters (with octave numbers) or in solfège, and the alternatives folded, shown or left out.
 
@@ -25,7 +25,7 @@ The tests build the site and serve it on port 8899, then check its data, its beh
 - `src/lib/store.svelte.ts`: the switches' choices, saved in the browser. `src/ui/SwitchBar.svelte` shows them; `src/views/controller.svelte.ts` makes the chart follow them.
 - `src/views/`: the chart (`chart.ts`), drawn as SVG: the key diagram (`keys.ts`) and the staff (`staff.ts`).
 - `src/views/glyphs.ts`: the clef, sharp, flat and whole note, as paths from Noto Music, made by `scripts/glyphs.py` (its docstring says how to run it).
-- `src/styles.css`: the styles, Ducktape's colours and DM Mono, with a print layout.
+- `src/styles.css`: the styles: ducktape-colors' colours and DM Mono, with a print layout.
 
 ## Sources
 

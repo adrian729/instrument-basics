@@ -1,4 +1,4 @@
-/* The page's styles (the switches' too: SwitchBar.svelte's markup, styled here). Ducktape's colours and
+/* The page's styles (the switches' too: SwitchBar.svelte's markup, styled here). ducktape-colors' colours and
    type: four colours, turned round for the dark theme, and DM Mono throughout. */
 :root {
   color-scheme: light;
@@ -71,7 +71,7 @@ h2 { font-size: 1.15rem; line-height: 1.3; text-wrap: balance; }
 .legend ul b { color: var(--fg); }
 .legend-keys { width: 100%; height: auto; }
 
-/* The switches (SwitchBar.svelte): small segmented switches in named groups, as on Ducktape's other pages. */
+/* The switches (SwitchBar.svelte): small segmented switches in named groups, as in ducktape-colors. */
 .switches { position: sticky; top: var(--header-height, 3.5rem); z-index: 2; margin: -1rem 0; padding: 0.6rem 0; background: var(--bg); }
 @media (max-width: 600px) { .switches { position: static; } } /* (no room to keep them on a phone) */
 .switch-row { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 0.55rem 1.4rem; font-size: 0.75rem; }
