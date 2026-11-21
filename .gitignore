@@ -1,0 +1,11 @@
+# Local working notes (todos, plans)
+/tmp/
+
+# Python bytecode
+__pycache__/
+
+# Node, Vite and Playwright
+node_modules/
+dist/
+test-results/
+playwright-report/

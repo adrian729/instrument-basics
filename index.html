@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ducktape Piccolo | Fingering chart</title>
+  <meta name="description" content="Fingerings for every note of the Boehm piccolo, from its lowest D to the top, with the alternatives for tuning and response.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <!-- The theme chosen in this browser (light or dark; none: the system's), set before the page is drawn. -->
+  <script>try { const t = localStorage.getItem("theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}</script>
+  <link rel="preload" href="fonts/DMMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
+</head>
+<body>
+  <header>
+    <nav>
+      <a class="brand" href="#">
+        <img src="favicon.svg" alt="" width="20" height="20">
+        <div><strong>Ducktape Piccolo</strong> <span>| Fingering chart</span></div>
+      </a>
+      <div class="registers-nav">
+        <a href="#low">1st octave</a>
+        <a href="#middle">2nd</a>
+        <a href="#high">3rd</a>
+        <a href="#extreme">Top</a>
+      </div>
+      <button type="button" class="theme-switch" aria-label="Dark theme" aria-pressed="false"><svg viewBox="-8 -8 16 16" width="16" height="16" aria-hidden="true"><circle r="6.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M 0 -6.5 A 6.5 6.5 0 0 1 0 6.5 Z" fill="currentColor"/></svg></button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="intro" aria-labelledby="intro-title">
+      <h1 id="intro-title">Every fingering for the piccolo</h1>
+      <p class="lede">Every note from the lowest D to the top, the standard fingering first and the alternatives under it, for tuning, soft or loud playing, and response. For the Boehm piccolo; the first two octaves are fingered as on the flute, the third differs on a few notes.</p>
+      <ul class="facts">
+        <li><b>There's no foot joint.</b> No piccolo has one: its lowest note is D, all six fingers down, and the flute's low C♯, C and B keys aren't needed for anything.</li>
+        <li><b>It sounds an octave higher.</b> Piccolo music is written an octave below what's heard. The chart names written notes, and each card says what you'll hear.</li>
+        <li><b>The right pinky stays down</b> on the E♭ key for almost every note. The diagrams show the few where it's lifted, as for low D and middle D.</li>
+      </ul>
+    </section>
+
+    <section class="legend" id="legend" aria-labelledby="legend-title">
+      <div class="legend-text">
+        <h2 id="legend-title">Reading the diagrams</h2>
+        <ul>
+          <li>The piccolo as you see it playing: the mouthpiece on the left, the left hand nearer it, the right hand further out.</li>
+          <li><b>Dark is pressed, white is up.</b> The numbers are your fingers: 1 the index, 2 the middle, 3 the ring finger.</li>
+          <li>The thumb has two keys, under the piccolo. Use <b>B</b>; a few fingerings ask for the <b>B♭</b> lever.</li>
+          <li>The pinkies' keys: <b>G♯</b> for the left, <b>E♭</b> for the right.</li>
+          <li>The dashed <b>D</b> and <b>D♯</b> are the trill keys, between your right-hand fingers, pressed with whichever finger is free. The <b>side</b> B♭ lever, beside right 1, is pressed with the side of that finger. Only a few notes use these.</li>
+          <li>Under each diagram the same fingering in words. Open-hole and closed-hole piccolos are fingered alike.</li>
+        </ul>
+      </div>
+    </section>
+
+    <div id="switches" class="switches"></div>
+    <div id="chart" class="chart"></div>
+  </main>
+
+  <footer>
+    <p>The piccolo tends to be sharp low down and flat at the very top: most alternatives are for that, or for soft and loud playing, or to make a note speak. Try them with a tuner, and keep what works on yours.</p>
+    <p>The fingerings are from the piccolo pages of <a href="https://www.wfg.woodwind.org/flute/">The Woodwind Fingering Guide</a> (<a href="https://www.wfg.woodwind.org/flute/picc_alt_1.html">first octave</a>, <a href="https://www.wfg.woodwind.org/flute/picc_alt_2.html">second</a>, <a href="https://www.wfg.woodwind.org/flute/picc_alt_3.html">third</a>), their comments adapted. The music symbols are from Noto Music.</p>
+  </footer>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
