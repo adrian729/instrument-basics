@@ -180,6 +180,8 @@ footer p { max-width: 80ch; }
 
 /* Forced colours (Windows' high contrast): the chosen switch and the part being read, shown without tints. */
 @media (forced-colors: active) {
+  /* (the theme's colours too: the diagrams' and the staff's aren't forced, so they follow the system's) */
+  :root, :root[data-theme], :root:not([data-theme="light"]) { --bg: Canvas; --card: Canvas; --body: Canvas; --fg: CanvasText; --muted: GrayText; --line: GrayText; }
   .switch button[aria-pressed="true"] { forced-color-adjust: none; background: Highlight; color: HighlightText; }
   .toc-links a[aria-current] { text-decoration: underline; border-left-width: 3px; }
 }

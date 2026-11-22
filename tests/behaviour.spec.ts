@@ -474,6 +474,40 @@ test.describe("the page", () => {
     await expect(page.locator("#switches")).toHaveCSS("position", "static");
   });
 
+  test("back or forward to another group: the keyboard's focus put back on the kind pressed", async ({ page }) => {
+    await open(page, {}, "/?instrument=flute");
+    await page.locator(".toc").getByRole("link", { name: "3rd" }).click();
+    await pick(page, "saxophones", "tenor-sax");
+    await switchButton(page, "instrument", "tenor-sax").focus();
+    await page.goBack();
+    await expect(page.locator("html")).toHaveAttribute("data-instrument", "flute");
+    await expect(switchButton(page, "instrument", "flute")).toBeFocused();
+  });
+
+  test("each group's kind kept across tabs", async ({ page, context }) => {
+    await open(page, {}, "/?instrument=flute");
+    const other = await context.newPage();
+    await other.goto("/?instrument=flute");
+    await expect(cards(other).first()).toBeVisible();
+    await pick(other, "saxophones", "tenor-sax");
+    await pick(page, "flutes", "piccolo");
+    const third = await context.newPage();
+    await third.goto("/?instrument=flute");
+    await groupSelect(third).selectOption("saxophones");
+    await expect(third.locator("html")).toHaveAttribute("data-instrument", "tenor-sax");
+  });
+
+  test("forced colours, whatever theme is chosen: the staff and the keys in the system's colours", async ({ page }) => {
+    await page.emulateMedia({ forcedColors: "active", colorScheme: "light" });
+    await open(page, { theme: "dark" });
+    const fills = await standard(page, "D4").evaluate((fig) => ({
+      down: getComputedStyle(fig.querySelector(".key.down :is(circle, rect)")!).fill,
+      card: getComputedStyle(fig.closest(".note")!).backgroundColor,
+    }));
+    expect(fills.down).not.toBe(fills.card);
+    expect(fills.down).not.toBe("rgb(232, 232, 227)"); // (not the dark theme's light text colour)
+  });
+
   test("printed in the dark theme: dark text on white, and the contents left out", async ({ page }) => {
     await open(page, { theme: "dark" });
     await page.emulateMedia({ media: "print" });

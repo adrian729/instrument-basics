@@ -43,22 +43,25 @@ export const choices: Choices = $state({ instrument: valid("instrument", link) ?
 // The instrument last chosen in each group, for the picker to come back to; the one the page opened on, too:
 // a link's always, a remembered one if its group has none yet. Kept here, and saved when storage allows.
 const KINDS = "instrument-basics-kinds";
-const kinds: Partial<Record<GroupId, InstrumentId>> = (() => {
+const readKinds = (): Partial<Record<GroupId, InstrumentId>> => {
   try { const v = JSON.parse(stored(KINDS) ?? "{}"); return v && typeof v === "object" && !Array.isArray(v) ? v : {}; } catch { return {}; }
-})();
+};
+const kinds = readKinds();
+// One group's kind set, over what other tabs may have saved since (read again first).
+const saveKind = (group: GroupId, id: InstrumentId) => { Object.assign(kinds, readKinds(), { [group]: id }); store(KINDS, JSON.stringify(kinds)); };
 const opened = instrument(choices.instrument).group;
-if (valid("instrument", linked()) || !kinds[opened]) kinds[opened] = choices.instrument;
-store(KINDS, JSON.stringify(kinds));
+if (valid("instrument", linked()) || !kinds[opened]) saveKind(opened, choices.instrument);
 
 // Back or forward to an entry whose address names another instrument (the registers' links add entries): that
-// one. (While it's made, `traversal.now` says so, for the chart to keep the entry's fragment.)
+// one, the chart made again before this returns (main.ts calls it on popstate). While it's made,
+// `traversal.now` says so, for the chart to keep the entry's fragment.
 export const traversal = { now: false };
-addEventListener("popstate", () => {
+export function traverse() {
   const id = linked();
   if (!valid("instrument", id) || id === choices.instrument) return;
   traversal.now = true;
   try { choose("instrument", id); flushSync(); } finally { traversal.now = false; }
-});
+}
 
 // A group chosen: its instrument chosen last, if it's still one of its, else its default.
 export function chooseGroup(id: GroupId) {
@@ -73,8 +76,7 @@ export function choose<K extends keyof Choices>(key: K, value: Choices[K]) {
   // A chosen instrument goes in the address too, so that the page's link is to its chart.
   if (key === "instrument") {
     const id = value as InstrumentId;
-    kinds[instrument(id).group] = id;
-    store(KINDS, JSON.stringify(kinds));
+    saveKind(instrument(id).group, id);
     const url = new URL(location.href);
     url.searchParams.set("instrument", value);
     history.replaceState(history.state, "", url);
