@@ -73,7 +73,7 @@ export function saxDiagram(f: SaxFingering, label: string, lowA: boolean, legend
     call(8, 68, "mouthpiece", "start");
     call(67, -6, "palm keys");
     call(118, -6, "front F");
-    call(254, -6, "side keys");
+    call(254, -6, "side keys (right hand)");
     const y1 = 114 + ROW, y2 = 126 + ROW;
     call(lowA ? 130 : 118, y1, lowA ? "thumb keys" : "octave key");
     call(229, y1, "left pinky");

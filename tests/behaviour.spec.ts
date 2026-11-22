@@ -465,7 +465,8 @@ test.describe("the page", () => {
     await open(page);
     await expect(page.locator("#announce")).toHaveText("");
     await pick(page, "trumpets", "bb-trumpet");
-    await expect(page.locator("#announce")).toHaveText("B♭ trumpet fingering chart");
+    await expect(page.locator("#announce")).toHaveText("B-flat trumpet fingering chart");
+    await expect(card(page, "C#4").locator(".staff")).toHaveAttribute("aria-label", "Written C-sharp 4 / D-flat 4 on the treble staff");
   });
 
   test("on a short screen (a phone turned, or zoomed in) the switches don't stay stuck", async ({ page }) => {

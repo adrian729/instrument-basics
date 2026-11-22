@@ -4,7 +4,7 @@
 // again when it's changed; the other hooks change what follows a choice.
 import { group, instrument as find, type Instrument, type InstrumentId, type Shown } from "../data/instruments";
 import type { Note } from "../data/types";
-import { nameParts, nameText, rangeText, soundingText, type Names } from "../lib/notes";
+import { nameParts, nameText, rangeText, soundingText, spoken, type Names } from "../lib/notes";
 import { traversal, type Alternatives } from "../lib/store.svelte";
 import { staff, stepsFor } from "./staff";
 
@@ -86,7 +86,7 @@ export function makeChart(root: HTMLElement, legend: HTMLElement): Chart {
     if (location.hash && (!hash || !document.getElementById(hash) || register)) history.replaceState(history.state, "", location.pathname + location.search);
     hooks.names(names);
     hooks.alternatives(alternatives);
-    if (made) document.querySelector("#announce")!.textContent = `${shown.name[0].toUpperCase()}${shown.name.slice(1)} fingering chart`; // (for screen readers: the chart changed)
+    if (made) document.querySelector("#announce")!.textContent = spoken(`${shown.name[0].toUpperCase()}${shown.name.slice(1)} fingering chart`); // (for screen readers: the chart changed)
     made = true;
   }
 
@@ -101,7 +101,7 @@ export function makeChart(root: HTMLElement, legend: HTMLElement): Chart {
         const title = c.querySelector(".note-name")!;
         title.replaceChildren(...nameParts(n.pitch, names).flatMap((p, i) => [...(i ? [" / "] : []), p.name, ...(p.octave ? [h("sub", {}, p.octave)] : [])]));
         c.querySelector(".sounds")!.textContent = soundingText(n.pitch, names, shown.transposition);
-        c.querySelector(".staff")!.setAttribute("aria-label", `Written ${nameText(n.pitch, names)}${names === "letters" ? "" : ` (${nameText(n.pitch, "letters")})`} on the treble staff`); // (the octave, solfège's names have none)
+        c.querySelector(".staff")!.setAttribute("aria-label", spoken(`Written ${nameText(n.pitch, names)}${names === "letters" ? "" : ` (${nameText(n.pitch, "letters")})`} on the treble staff`)); // (the octave, solfège's names have none)
       }
     },
     alternatives(how) {

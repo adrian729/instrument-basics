@@ -41,7 +41,7 @@ export const FLUTE: Register<FluteFingering>[] = [
       ["G5", "B 123 | --- Eb"],
       ["G#5", "B 123 G# | --- Eb", ["B 123 G# | 123 lowC#", "Great for pp: low C♯'s fingering with the G♯ key, overblown (a harmonic)."]],
       ["A5", "B 12- | --- Eb", ["B 12- G# | 1-- Eb", "Good for ff, and less likely to crack up to E."]],
-      ["A#5", ["Bb 1-- | --- Eb", "The B♭ thumb lever."], ["B 1-- | 1-- Eb", "One-and-one."], ["B 1-- | --- Eb side", "The side B♭ lever. For trills with B."]],
+      ["A#5", ["Bb 1-- | --- Eb", "The B♭ thumb lever."], ["B 1-- | 1-- Eb", "One-and-one. Fine next to B."], ["B 1-- | --- Eb side", "The side B♭ lever. For trills with B."]],
       ["B5", "B 1-- | --- Eb", ["B 1-3 | 12- Eb", "Good for pp: a harmonic, low E's fingering with left 2 up."]],
       ["C6", "- 1-- | --- Eb", ["B 123 | 1-- Eb", "Low F's fingering, overblown (a harmonic): a veiled sound."], ["B -23 | 12- Eb", "Sharp. For slurs from D."]],
       ["C#6", ["- --- | --- Eb", "Can be sharp."], ["- --- | 123", "Flatter."], ["B -23 | -23 Eb", "For slurs from D."]],
@@ -68,7 +68,7 @@ export const FLUTE: Register<FluteFingering>[] = [
     id: "extreme", name: "Extreme top", nav: "Top",
     about: "The fourth octave: in contemporary music and a few solos, hardly ever in orchestral parts. Very fast air, and loud. Every flute answers these differently: try each fingering.",
     notes: rows(parseFlute, [
-      ["C#7", "- -2- G# | 1--", ["- -23 G# | 1--", "Flat."], ["- -2- | 1-- giz", "On a B foot, with the gizmo key."]],
+      ["C#7", "- -2- G# | 1--", ["- -23 G# | 1--", "Flat."], ["- -2- | 1-- giz", "On a B foot, with the gizmo key: try it if the first is hard to make speak."]],
       ["D7", ["B --3 | 12- lowC", "The right pinky on the low C roller."], ["B --3 | 12- Eb", "The E♭ key instead of low C: the top notes differ from flute to flute, so try both."], ["Bb --- | --3 lowB", "Speaks well. Needs a B foot."], ["Bb --- | --3", "Easy to finger, but harder to make speak than with a foot key down."]],
       ["D#7", ["B --3 G# | -2- trD", "Right 2 and the D trill key."], ["B --3 | -2-", "Flat, with fewer keys."]],
       ["E7", ["- 12- | -2- trD#", "Sharp. On an open-hole flute, cover most of left 3's hole to bring it down."], ["- 12- | --3 Eb lowC# trD#", "Sharp, but speaks very easily."]],

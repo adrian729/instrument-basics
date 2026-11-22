@@ -38,7 +38,7 @@ export const PICCOLO: Register<FluteFingering>[] = [
       ["G5", "B 123 | --- Eb"],
       ["G#5", "B 123 G# | --- Eb"],
       ["A5", "B 12- | --- Eb", ["B 12- G# | 1-- Eb", "Good for ff."]],
-      ["A#5", ["Bb 1-- | --- Eb", "The B♭ thumb lever."], ["B 1-- | 1-- Eb", "One-and-one. Good for ff."], ["B 1-- | --- Eb side", "The side B♭ lever."]],
+      ["A#5", ["Bb 1-- | --- Eb", "The B♭ thumb lever."], ["B 1-- | 1-- Eb", "One-and-one. Good for ff."], ["B 1-- | --- Eb side", "The side B♭ lever. Good in fast passages."]],
       ["B5", "B 1-- | --- Eb", ["B 1-- | --3 Eb", "Brighter. Good for ff."]],
       ["C6", "- 1-- | --- Eb", ["- 1-- | --3 Eb", "Brighter. Good for ff."], ["- 123 | 1-3", "Sharp, but good for pp, with an excellent response."]],
       ["C#6", ["- --- | --- Eb", "Can be sharp."], ["- --- | 123 Eb", "Better in tune."]],

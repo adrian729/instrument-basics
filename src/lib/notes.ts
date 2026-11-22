@@ -52,6 +52,9 @@ const SIMPLE: Record<string, string> = {
   "0,0": "", "1,1": "a semitone", "1,2": "a tone", "2,3": "a minor third", "2,4": "a major third", "3,5": "a fourth", "3,6": "an augmented fourth",
   "4,6": "a diminished fifth", "4,7": "a fifth", "5,8": "a minor sixth", "5,9": "a major sixth", "6,10": "a minor seventh", "6,11": "a major seventh",
 };
+// A name as a screen reader should say it: "C-sharp 4 / D-flat 4", "B-flat trumpet" (not "C music sharp sign").
+export const spoken = (s: string) => s.replace(/([A-Za-z])♯/g, "$1-sharp ").replace(/([A-Za-z])♭/g, "$1-flat ").replace(/ {2,}/g, " ").replace(/ (?=\)|$)/g, "");
+
 // The transposition in words: "a tone lower", "an octave and a major sixth lower"; "" for none.
 export function intervalWords(t: Transposition): string {
   if (!t.semitones) return "";

@@ -9,7 +9,7 @@ import { rows, type Note, type Register } from "./types";
 
 const FOURTH = "The 4th valve, which lowers a fourth.";
 const SHARP = "Sharp: pull the slides out.";
-const OLD = "As on the trumpet, without the 4th valve: easier among the trumpet's fingerings, but sharp.";
+const OLD = "As on the trumpet, without the 4th valve: sharp, but handy in a passage played without it.";
 
 const OWN = rows(parseValves, [
   ["C#3", ["1234", `The lowest note: every valve. ${SHARP}`]],
