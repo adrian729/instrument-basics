@@ -4,8 +4,9 @@ import { FLUTE as FLUTE_DATA } from "../src/data/flute";
 import { INSTRUMENTS, instrument } from "../src/data/instruments";
 import { PICCOLO as PICCOLO_DATA } from "../src/data/piccolo";
 import { parseFlute as parseFingering } from "../src/notations/flute/notation";
-import { staffStep } from "../src/lib/notes";
-import { test, expect, open, register, registers, cards, card, noteName, standard, alternatives, switchButton, choose, themeSwitch, legendKeys, facts } from "./app";
+import { parsePitch } from "../src/data/types";
+import { intervalWords, soundingText, staffStep } from "../src/lib/notes";
+import { test, expect, open, register, registers, cards, card, noteName, standard, alternatives, switchButton, choose, themeSwitch, legendKeys, facts, legendText } from "./app";
 
 const CHROMATIC = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 const semitone = (id: string) => { const m = /^([A-G]#?)(\d)$/.exec(id)!; return Number(m[2]) * 12 + CHROMATIC.indexOf(m[1]); };
@@ -60,6 +61,31 @@ test.describe("the data", () => {
     expect(first(PICCOLO, "F#6")).toMatchObject({ right: [false, true, true], eFlat: false });
   });
 
+  test("what's heard: the transposition in words, and the note heard", () => {
+    const t = (steps: number, semitones: number) => ({ steps, semitones });
+    expect(intervalWords(t(0, 0))).toBe("");
+    expect(intervalWords(t(7, 12))).toBe("an octave higher"); // piccolo
+    expect(intervalWords(t(-1, -2))).toBe("a tone lower"); // B♭ trumpet, soprano saxophone
+    expect(intervalWords(t(6, 10))).toBe("a minor seventh higher"); // B♭ piccolo trumpet
+    expect(intervalWords(t(-5, -9))).toBe("a major sixth lower"); // alto saxophone
+    expect(intervalWords(t(-8, -14))).toBe("an octave and a tone lower"); // tenor saxophone
+    expect(intervalWords(t(-12, -21))).toBe("an octave and a major sixth lower"); // baritone saxophone
+    const heard = (id: string, steps: number, semitones: number, names: "letters" | "solfege" = "letters") => soundingText(parsePitch(id), names, t(steps, semitones));
+    expect(heard("C4", 0, 0)).toBe("Sounds as written");
+    expect(heard("D4", 7, 12)).toBe("Sounds D5");
+    expect(heard("D4", 7, 12, "solfege")).toBe("Sounds an octave higher");
+    expect(heard("C4", -1, -2)).toBe("Sounds B♭3");
+    expect(heard("C#4", -1, -2)).toBe("Sounds B3"); // (not C♭4)
+    expect(heard("D#4", -1, -2)).toBe("Sounds C♯4 / D♭4");
+    expect(heard("C4", -1, -2, "solfege")).toBe("Sounds Si♭, a tone lower");
+    expect(heard("C4", -5, -9)).toBe("Sounds E♭3");
+    expect(heard("F#4", -5, -9)).toBe("Sounds A3"); // (not B𝄫)
+    expect(heard("A3", -12, -21)).toBe("Sounds C2");
+    expect(heard("C4", 6, 10)).toBe("Sounds B♭4");
+    for (const i of INSTRUMENTS) for (const r of i.registers) for (const n of r.notes)
+      for (const names of ["letters", "solfege"] as const) expect(soundingText(n.pitch, names, i.transposition), `${i.id} ${n.id}`).toMatch(/^Sounds \S/);
+  });
+
   test("the staff's steps: D4 under the bottom line, F5 the top line", () => {
     expect(staffStep("B", 3)).toBe(-3);
     expect(staffStep("D", 4)).toBe(-1);
@@ -87,8 +113,11 @@ test.describe("first visit", () => {
     await expect(noteName(page, "C#5")).toHaveText("C♯5 / D♭5");
     await expect(card(page, "C4").locator(".sounds")).toHaveText("Sounds as written");
     await expect(page.locator("details.alternatives[open]")).toHaveCount(0);
-    await expect(facts(page, "flute")).toBeVisible();
-    await expect(facts(page, "piccolo")).toBeHidden();
+    await expect(page.locator("h1")).toHaveText("Every fingering for the flute");
+    await expect(facts(page)).toContainText("The foot joint");
+    await expect(legendText(page)).toContainText("gizmo");
+    await expect(page.locator(".registers-nav a")).toHaveText(["1st octave", "2nd", "3rd", "Top"]);
+    await expect(page.locator("html")).not.toHaveAttribute("data-pending");
     await expect(page).toHaveURL(/\/$/); // the address left alone until a choice
   });
 
@@ -161,8 +190,10 @@ test.describe("the switches", () => {
     await expect(cards(page).first()).toHaveAttribute("data-note", "D4");
     await expect(card(page, "D4").locator(".sounds")).toHaveText("Sounds D5");
     await expect(register(page, "extreme").locator(".range")).toHaveText("C♯7 – D7");
-    await expect(facts(page, "piccolo")).toBeVisible();
-    await expect(facts(page, "flute")).toBeHidden();
+    await expect(page.locator("h1")).toHaveText("Every fingering for the piccolo");
+    await expect(facts(page)).toContainText("There's no foot joint");
+    await expect(legendText(page)).not.toContainText("gizmo");
+    await expect(page.locator("footer .tip")).toContainText("sharp low down");
     // No foot joint anywhere: not in the key, not in a card.
     await expect(page.locator('svg.keys [data-key^="low-"], svg.keys [data-key="gizmo"]')).toHaveCount(0);
     await page.goto("/");
@@ -178,6 +209,8 @@ test.describe("the switches", () => {
     await expect(switchButton(page, "instrument", "piccolo")).toHaveAttribute("aria-pressed", "true");
     await expect(register(page, "high").locator("h2")).toBeInViewport();
     await expect(cards(page)).toHaveCount(PICCOLO.length);
+    await expect(page.locator("html")).not.toHaveAttribute("data-pending");
+    await expect(facts(page)).toContainText("There's no foot joint");
     await page.goto("/");
     await expect(switchButton(page, "instrument", "piccolo")).toHaveAttribute("aria-pressed", "true");
   });

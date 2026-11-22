@@ -74,4 +74,12 @@ export const FLUTE_NOTATION: Notation<FluteFingering> = {
   blank: "- --- | ---",
   legendLabel: (options) => "The keys: the thumb's B♭ lever and B key; left 1, 2 and 3; the G♯ key; right 1, 2 and 3, the side B♭ lever by right 1 and the D and D♯ trill keys between them; the E♭ key"
     + (options.foot ? "; the foot joint's low C♯, C and B keys and the gizmo" : ""),
+  legend: ({ name, options }) => [
+    `The ${name} seen from above as you play it: the mouthpiece on the left, the left hand nearer it, the right hand further out.`,
+    "<b>Dark is pressed, white is up.</b> The numbers are your fingers: 1 the index, 2 the middle, 3 the ring finger.",
+    `Above the body, the left pinky's <b>G♯</b>. Below it, the keys on your side of the instrument: the thumb's two (use <b>B</b>; a few fingerings ask for the <b>B♭</b> lever), the right hand's side lever and trill keys, and the right pinky's <b>E♭</b>${options.foot ? " with the foot joint's rollers for low <b>C♯</b> and <b>C</b>" : ""}.`,
+    ...(options.foot ? ["The foot joint's <b>B</b> key and <b>giz</b>mo are a B foot's: on a C foot, use the fingerings without them."] : []),
+    "The dashed <b>D</b> and <b>D♯</b> are the trill keys' touches, between your right-hand fingers, pressed with whichever finger is free. The <b>side</b> B♭ lever, by right 1, is pressed with the side of that finger. Only a few notes use these.",
+    `Under each diagram the same fingering in words. Open-hole and closed-hole ${name}s are fingered alike.`,
+  ],
 };

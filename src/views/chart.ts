@@ -1,7 +1,8 @@
 // The chart: a section per register, a card per note (its staff, its name, what it sounds, its standard
-// fingering, its alternatives folded under it), and the diagrams' key. Made for an instrument, and made again
-// when it's changed; the other hooks change what follows a choice.
-import { instrument as find, type Instrument, type InstrumentId, type Shown } from "../data/instruments";
+// fingering, its alternatives folded under it), the diagrams' key, and the instrument's text around them (the
+// heading, what to know, the registers' links, the footer's tip and credits). Made for an instrument, and made
+// again when it's changed; the other hooks change what follows a choice.
+import { group, instrument as find, type Instrument, type InstrumentId, type Shown } from "../data/instruments";
 import type { Note } from "../data/types";
 import { nameParts, nameText, rangeText, soundingText, type Names } from "../lib/notes";
 import type { Alternatives } from "../lib/store.svelte";
@@ -51,6 +52,16 @@ export function makeChart(root: HTMLElement, legend: HTMLElement): Chart {
       shown = find(id);
       document.documentElement.dataset.instrument = id;
       document.title = `Instrument Basics | ${shown.name[0].toUpperCase()}${shown.name.slice(1)} fingering chart`;
+      const html = (selector: string, content: string) => { document.querySelector(selector)!.innerHTML = content; }; // (the data's own text)
+      const items = (list: string[]) => list.map((s) => `<li>${s}</li>`).join("");
+      document.querySelector("#intro-title")!.textContent = `Every fingering for the ${shown.name}`;
+      html(".intro .facts", items(shown.facts));
+      html(".legend-text ul", items(shown.legend));
+      html("footer .tip", shown.tip);
+      html("footer .sources", group(shown.group).sources);
+      document.querySelector(".registers-nav")!.replaceChildren(...shown.registers.map((r) => h("a", { href: `#${r.id}` }, r.nav)));
+      // An address naming a register this instrument hasn't, left without it.
+      if (location.hash && !shown.registers.some((r) => `#${r.id}` === decodeURIComponent(location.hash))) history.replaceState(history.state, "", location.pathname + location.search);
       legend.querySelector(".legend-keys")?.remove();
       legend.prepend(shown.legendDiagram());
       root.replaceChildren(...shown.registers.map((r) => {
@@ -67,6 +78,7 @@ export function makeChart(root: HTMLElement, legend: HTMLElement): Chart {
       cards = new Map(notes.map((n) => [n.id, root.querySelector<HTMLElement>(`[data-note="${CSS.escape(n.id)}"]`)!]));
       hooks.names(names);
       hooks.alternatives(alternatives);
+      delete document.documentElement.dataset.pending;
     },
     names(to) {
       names = to;

@@ -23,7 +23,7 @@ export async function open(page: Page, saved: Record<string, string> = {}, path 
     for (const [k, v] of Object.entries(saved)) localStorage.setItem(k, v);
   }, saved);
   await page.goto(path);
-  await expect(card(page, "D4")).toBeVisible();
+  await expect(cards(page).first()).toBeVisible();
   await page.evaluate(() => document.fonts.ready);
 }
 
@@ -37,7 +37,8 @@ export const alternatives = (page: Page, note: string) => card(page, note).locat
 export const switchButton = (page: Page, key: string, value: string) => page.locator(`#switches [data-${key}="${value}"]`);
 export const themeSwitch = (page: Page) => page.locator(".theme-switch");
 export const legendKeys = (page: Page) => page.locator("#legend svg.keys");
-export const facts = (page: Page, instrument: string) => page.locator(`.intro .facts[data-for="${instrument}"]`);
+export const facts = (page: Page) => page.locator(".intro .facts");
+export const legendText = (page: Page) => page.locator(".legend-text ul");
 
 export async function choose(page: Page, key: string, value: string) {
   await switchButton(page, key, value).click();

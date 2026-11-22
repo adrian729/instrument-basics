@@ -63,9 +63,8 @@ h2 { font-size: 1.15rem; line-height: 1.3; text-wrap: balance; }
 .facts li { padding-top: 0.75rem; border-top: 1px solid var(--line); color: var(--muted); }
 .facts b { color: var(--fg); }
 
-/* What's for one instrument only (data-for), shown for it alone (html[data-instrument], set by index.html's
-   first script and then the chart). */
-:root[data-instrument="flute"] [data-for="piccolo"], :root[data-instrument="piccolo"] [data-for="flute"] { display: none; }
+/* The flute's text, hidden until the chart has put another instrument's in (data-pending: index.html). */
+:root[data-pending] :is(.intro h1, .intro .facts, .legend-text ul, .registers-nav, footer .tip, footer .sources) { visibility: hidden; }
 
 /* The key: the keys named, beside how to read them. */
 .legend { display: grid; grid-template-columns: minmax(0, 26rem) minmax(0, 1fr); gap: 1.5rem 2.5rem; align-items: center; }

@@ -6,7 +6,7 @@
 // (.legend-keys for the key above the chart) with role img and a label, each key a g.key with a data-key, and
 // .down while pressed.
 import type { Fingered } from "../data/types";
-import type { Options } from "../data/instruments";
+import type { Options } from "../data/instrument";
 
 export interface Notation<F extends Fingered> {
   // A fingering from the data's notation; throws on anything else, so that a typo fails the tests.
@@ -20,4 +20,6 @@ export interface Notation<F extends Fingered> {
   // The legend's fingering (nothing pressed), and its label for an instrument with these options.
   blank: string;
   legendLabel(options: Options): string;
+  // Reading the diagrams, for this instrument: the legend's bullets (HTML).
+  legend(about: { name: string; options: Options }): string[];
 }

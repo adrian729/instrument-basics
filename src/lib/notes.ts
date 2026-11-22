@@ -1,5 +1,5 @@
 // Notes' names (letters or solfège), what's heard of a written note, and where a note sits on the staff.
-import type { Transposition } from "../data/instruments";
+import type { Transposition } from "../data/instrument";
 import type { Letter, Pitch } from "../data/types";
 
 export type Names = "letters" | "solfege";
