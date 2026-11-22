@@ -58,7 +58,7 @@ export function makeChart(root: HTMLElement, legend: HTMLElement): Chart {
     document.title = `Instrument Basics | ${shown.name[0].toUpperCase()}${shown.name.slice(1)} fingering chart`;
     const html = (selector: string, content: string) => { document.querySelector(selector)!.innerHTML = content; }; // (the data's own text)
     const items = (list: string[]) => list.map((s) => `<li>${s}</li>`).join("");
-    document.querySelector("#intro-title")!.textContent = `Every fingering for the ${shown.name}`;
+    document.querySelector("#intro-title")!.textContent = `Fingerings for the ${shown.name}`;
     html(".intro .facts", items(shown.facts));
     html(".legend-text ul", items(shown.legend));
     html("footer .tip", shown.tip);

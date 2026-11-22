@@ -2,8 +2,8 @@
 // same for soprano, alto, tenor and baritone, which are fingered alike. Each note's first fingering is the
 // standard one; the rest are alternatives, for an easier passage, tuning or tone. From The Woodwind Fingering
 // Guide's saxophone pages (wfg.woodwind.org/sax/sax_bas_1.html, _2; sax_alt_1.html, _2, _4), its comments
-// adapted. Left out: the altissimo above F♯6, whose fingerings differ from one saxophone to another, and the
-// guide's alternatives without a reason given. (The notation: notations/sax.)
+// adapted: a choice of its alternatives, one or a few for each purpose. Left out: the altissimo above F♯6,
+// whose fingerings differ from one saxophone to another. (The notation: notations/sax.)
 import { parseSax, type SaxFingering } from "../notations/sax/notation";
 import { rows, type Register } from "./types";
 
@@ -28,7 +28,7 @@ export const SAX: Register<SaxFingering>[] = [
       ["A#4", ["12- | sBb ---", "The side B♭ key, with the side of right 1: good anywhere, and in chromatic passages."], ["1-- bis | ---", "The bis key, pressed by left 1 together with the B key: in flat keys, where there's no B."], ["1-- | 1--", "One-and-one: next to F."], ["1-- | -2-", "Next to F♯."]],
       ["B4", "1-- | ---"],
       ["C5", "-2- | ---", ["1-- | sC ---", "The side C key: next to B."], ["-23 G# | ---", "In fast passages with A♭."]],
-      ["C#5", ["--- | ---", "Every key open."], ["T --3 | 123", "In tune as the leading note to D."], ["--- | 123 Eb", "Next to E♭. Flat when loud on a soprano."]],
+      ["C#5", "--- | ---", ["T --3 | 123", "In tune as the leading note to D."], ["--- | 123 Eb", "Next to E♭. Flat when loud on a soprano."]],
     ]),
   },
   {

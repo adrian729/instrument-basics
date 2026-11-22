@@ -2,8 +2,8 @@
 // foot) to F7, in the fourth octave. A flute sounds as written. Each note's first fingering is the
 // standard one; the rest are alternatives, for tuning, soft or loud playing, response, or slurs. From The
 // Woodwind Fingering Guide's flute pages (wfg.woodwind.org/flute/fl_alt_1.html, _2, _3, _4), its comments
-// adapted; left out are its fingerings that need a half-covered hole, the C♯ trill key some flutes have, or
-// another flute (bass, alto). (The notation: notations/flute/notation.ts.)
+// adapted: a choice of its alternatives, one or a few for each purpose, never those that need a half-covered
+// hole, the C♯ trill key some flutes have, or another flute (bass, alto). (The notation: notations/flute/notation.ts.)
 import { parseFlute, type FluteFingering } from "../notations/flute/notation";
 import { rows, type Register } from "./types";
 

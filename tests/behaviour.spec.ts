@@ -163,7 +163,7 @@ test.describe("first visit", () => {
     await expect(noteName(page, "C#5")).toHaveText("C♯5 / D♭5");
     await expect(card(page, "C4").locator(".sounds")).toHaveText("Sounds as written");
     await expect(page.locator("details.alternatives[open]")).toHaveCount(0);
-    await expect(page.locator("h1")).toHaveText("Every fingering for the flute");
+    await expect(page.locator("h1")).toHaveText("Fingerings for the flute");
     await expect(facts(page)).toContainText("The foot joint");
     await expect(legendText(page)).toContainText("gizmo");
     await expect(page.locator(".toc-links a")).toHaveText(["Overview", "1st octave", "2nd", "3rd", "Top"]);
@@ -240,7 +240,7 @@ test.describe("the switches", () => {
     await expect(cards(page).first()).toHaveAttribute("data-note", "D4");
     await expect(card(page, "D4").locator(".sounds")).toHaveText("Sounds D5");
     await expect(register(page, "extreme").locator(".range")).toHaveText("C♯7 – D7");
-    await expect(page.locator("h1")).toHaveText("Every fingering for the piccolo");
+    await expect(page.locator("h1")).toHaveText("Fingerings for the piccolo");
     await expect(facts(page)).toContainText("There's no foot joint");
     await expect(legendText(page)).not.toContainText("gizmo");
     await expect(page.locator("footer .tip")).not.toContainText("fast slur"); // (the piccolo's own tip)
@@ -260,7 +260,7 @@ test.describe("the switches", () => {
     await expect(page.locator("html")).toHaveAttribute("data-instrument", "bb-trumpet");
     await expect(page).toHaveURL(/\?instrument=bb-trumpet$/); // (the flute's #extreme dropped)
     await expect(page).toHaveTitle("Instrument Basics | B♭ trumpet fingering chart");
-    await expect(page.locator("h1")).toHaveText("Every fingering for the B♭ trumpet");
+    await expect(page.locator("h1")).toHaveText("Fingerings for the B♭ trumpet");
     await expect(page.locator(".toc-links a")).toHaveText(["Overview", "Low", "Middle", "High"]);
     await expect(cards(page)).toHaveCount(instrument("bb-trumpet").registers.flatMap((r) => r.notes).length);
     await expect(cards(page).first()).toHaveAttribute("data-note", "F#3");
@@ -287,7 +287,7 @@ test.describe("the switches", () => {
     await groupSelect(page).selectOption("saxophones");
     await expect(page.locator("html")).toHaveAttribute("data-instrument", "alto-sax");
     await expect(page.locator('#switches [data-group="instrument"] button')).toHaveText(["Soprano", "Alto", "Tenor", "Baritone"]);
-    await expect(page.locator("h1")).toHaveText("Every fingering for the alto saxophone");
+    await expect(page.locator("h1")).toHaveText("Fingerings for the alto saxophone");
     await expect(cards(page).first()).toHaveAttribute("data-note", "A#3");
     await expect(card(page, "C4").locator(".sounds")).toHaveText("Sounds E♭3");
     await expect(standard(page, "A#4").locator(".in-words")).toHaveText("Left 1 2Right side B♭");
