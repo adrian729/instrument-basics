@@ -161,7 +161,7 @@ test.describe("first visit", () => {
     }
     await expect(noteName(page, "C4")).toHaveText("C4");
     await expect(noteName(page, "C#5")).toHaveText("C♯5 / D♭5");
-    await expect(card(page, "C4").locator(".sounds")).toHaveText("Sounds as written");
+    await expect(card(page, "C4").locator(".sounds [aria-hidden]")).toHaveText("Sounds as written");
     await expect(page.locator("details.alternatives[open]")).toHaveCount(0);
     await expect(page.locator("h1")).toHaveText("Fingerings for the flute");
     await expect(facts(page)).toContainText("The foot joint");
@@ -238,7 +238,7 @@ test.describe("the switches", () => {
     await expect(page).toHaveURL(/\?instrument=piccolo$/);
     await expect(cards(page)).toHaveCount(PICCOLO.length);
     await expect(cards(page).first()).toHaveAttribute("data-note", "D4");
-    await expect(card(page, "D4").locator(".sounds")).toHaveText("Sounds D5");
+    await expect(card(page, "D4").locator(".sounds [aria-hidden]")).toHaveText("Sounds D5");
     await expect(register(page, "extreme").locator(".range")).toHaveText("C♯7 – D7");
     await expect(page.locator("h1")).toHaveText("Fingerings for the piccolo");
     await expect(facts(page)).toContainText("There's no foot joint");
@@ -264,7 +264,7 @@ test.describe("the switches", () => {
     await expect(page.locator(".toc-links a")).toHaveText(["Overview", "Low", "Middle", "High"]);
     await expect(cards(page)).toHaveCount(instrument("bb-trumpet").registers.flatMap((r) => r.notes).length);
     await expect(cards(page).first()).toHaveAttribute("data-note", "F#3");
-    await expect(card(page, "C4").locator(".sounds")).toHaveText("Sounds B♭3");
+    await expect(card(page, "C4").locator(".sounds [aria-hidden]")).toHaveText("Sounds B♭3");
     await expect(standard(page, "C4").locator(".in-words")).toHaveText("Valves none (open)");
     await expect(standard(page, "D4").locator(".in-words")).toHaveText("Valves 1 3");
     await expect(standard(page, "D4").locator("svg.keys")).toHaveAttribute("aria-label", "Press: valve 1, valve 3");
@@ -274,11 +274,11 @@ test.describe("the switches", () => {
     await expect(facts(page)).toContainText("a tone lower");
     await expect(page.locator("footer .sources")).toContainText("Yamaha");
     await choose(page, "instrument", "c-trumpet");
-    await expect(card(page, "C4").locator(".sounds")).toHaveText("Sounds as written");
+    await expect(card(page, "C4").locator(".sounds [aria-hidden]")).toHaveText("Sounds as written");
     await choose(page, "instrument", "piccolo-trumpet");
     await expect(legendKeys(page).locator(".key")).toHaveCount(4);
     await expect(standard(page, "D4").locator('[data-key="valve4"]')).toHaveClass(/down/);
-    await expect(card(page, "C4").locator(".sounds")).toHaveText("Sounds B♭4");
+    await expect(card(page, "C4").locator(".sounds [aria-hidden]")).toHaveText("Sounds B♭4");
     await expect(cards(page).first()).toHaveAttribute("data-note", "C#3");
   });
 
@@ -289,18 +289,18 @@ test.describe("the switches", () => {
     await expect(page.locator('#switches [data-group="instrument"] button')).toHaveText(["Soprano", "Alto", "Tenor", "Baritone"]);
     await expect(page.locator("h1")).toHaveText("Fingerings for the alto saxophone");
     await expect(cards(page).first()).toHaveAttribute("data-note", "A#3");
-    await expect(card(page, "C4").locator(".sounds")).toHaveText("Sounds E♭3");
+    await expect(card(page, "C4").locator(".sounds [aria-hidden]")).toHaveText("Sounds E♭3");
     await expect(standard(page, "A#4").locator(".in-words")).toHaveText("Left 1 2Right side B♭");
     await expect(standard(page, "F#6").locator(".in-words")).toHaveText("Left octave · palm D · palm E♭ · palm FRight side E · high F♯");
     const down = await standard(page, "D5").locator(".key.down").evaluateAll((els) => els.map((e) => (e as SVGElement).dataset.key));
     expect(down.sort()).toEqual(["left1", "left2", "left3", "octave", "right1", "right2", "right3"]);
     await expect(legendKeys(page).locator('[data-key="low-a"]')).toHaveCount(0);
     await choose(page, "instrument", "tenor-sax");
-    await expect(card(page, "C4").locator(".sounds")).toHaveText("Sounds B♭2");
+    await expect(card(page, "C4").locator(".sounds [aria-hidden]")).toHaveText("Sounds B♭2");
     await choose(page, "instrument", "baritone-sax");
     await expect(cards(page).first()).toHaveAttribute("data-note", "A3");
     await expect(standard(page, "A3").locator('[data-key="low-a"]')).toHaveClass(/down/);
-    await expect(card(page, "C4").locator(".sounds")).toHaveText("Sounds E♭2");
+    await expect(card(page, "C4").locator(".sounds [aria-hidden]")).toHaveText("Sounds E♭2");
     await expect(register(page, "low").locator(".range")).toHaveText("A3 – C♯5");
   });
 
@@ -332,10 +332,10 @@ test.describe("the switches", () => {
     await choose(page, "names", "solfege");
     await expect(noteName(page, "D4")).toHaveText("Re");
     await expect(noteName(page, "A#4")).toHaveText("La♯ / Si♭");
-    await expect(card(page, "D4").locator(".sounds")).toHaveText("Sounds as written");
+    await expect(card(page, "D4").locator(".sounds [aria-hidden]")).toHaveText("Sounds as written");
     await choose(page, "instrument", "piccolo");
     await expect(noteName(page, "D4")).toHaveText("Re");
-    await expect(card(page, "D4").locator(".sounds")).toHaveText("Sounds an octave higher");
+    await expect(card(page, "D4").locator(".sounds [aria-hidden]")).toHaveText("Sounds an octave higher");
     await page.reload();
     await expect(switchButton(page, "names", "solfege")).toHaveAttribute("aria-pressed", "true");
     await expect(noteName(page, "G4")).toHaveText("Sol");
@@ -467,6 +467,9 @@ test.describe("the page", () => {
     await pick(page, "trumpets", "bb-trumpet");
     await expect(page.locator("#announce")).toHaveText("B-flat trumpet fingering chart");
     await expect(card(page, "C#4").locator(".staff")).toHaveAttribute("aria-label", "Written C-sharp 4 / D-flat 4 on the treble staff");
+    await expect(page.getByRole("heading", { name: "C-sharp 4 / D-flat 4" })).toBeVisible();
+    await expect(card(page, "C4").locator(".sounds")).toContainText("Sounds B-flat 3");
+    await expect(page.getByRole("button", { name: "B-flat", exact: true })).toHaveAttribute("aria-pressed", "true");
   });
 
   test("on a short screen (a phone turned, or zoomed in) the switches don't stay stuck", async ({ page }) => {

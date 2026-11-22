@@ -6,6 +6,7 @@
 <script lang="ts">
   import { GROUPS, instrument, type GroupId } from "../data/instruments";
   import { choices, choose, chooseGroup, VALUES, type Choices } from "../lib/store.svelte";
+  import { spoken } from "../lib/notes";
 
   type Choice = { value: string; text: string; title: string };
   const NAMES: Choice[] = [
@@ -48,7 +49,7 @@
       {#if kinds.length > 1}
         <div class="switch" role="group" aria-label="Kind">
           {#each kinds as i (i.id)}
-            <button type="button" data-instrument={i.id} title={i.title} aria-pressed={choices.instrument === i.id} onclick={() => choose("instrument", i.id)}>{i.kind}</button>
+            <button type="button" data-instrument={i.id} title={i.title} aria-label={spoken(i.kind)} aria-pressed={choices.instrument === i.id} onclick={() => choose("instrument", i.id)}>{i.kind}</button>
           {/each}
         </div>
       {/if}

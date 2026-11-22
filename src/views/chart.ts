@@ -100,7 +100,9 @@ export function makeChart(root: HTMLElement, legend: HTMLElement): Chart {
         const c = cards.get(n.id)!;
         const title = c.querySelector(".note-name")!;
         title.replaceChildren(...nameParts(n.pitch, names).flatMap((p, i) => [...(i ? [" / "] : []), p.name, ...(p.octave ? [h("sub", {}, p.octave)] : [])]));
-        c.querySelector(".sounds")!.textContent = soundingText(n.pitch, names, shown.transposition);
+        title.setAttribute("aria-label", spoken(nameText(n.pitch, names))); // (sharps and flats in words, for screen readers; the same below)
+        const sounds = soundingText(n.pitch, names, shown.transposition);
+        c.querySelector(".sounds")!.replaceChildren(h("span", { ariaHidden: "true" }, sounds), h("span", { className: "visually-hidden" }, spoken(sounds)));
         c.querySelector(".staff")!.setAttribute("aria-label", spoken(`Written ${nameText(n.pitch, names)}${names === "letters" ? "" : ` (${nameText(n.pitch, "letters")})`} on the treble staff`)); // (the octave, solfège's names have none)
       }
     },
