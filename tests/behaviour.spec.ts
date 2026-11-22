@@ -166,7 +166,7 @@ test.describe("first visit", () => {
     await expect(page.locator("h1")).toHaveText("Every fingering for the flute");
     await expect(facts(page)).toContainText("The foot joint");
     await expect(legendText(page)).toContainText("gizmo");
-    await expect(page.locator(".registers-nav a")).toHaveText(["1st octave", "2nd", "3rd", "Top"]);
+    await expect(page.locator(".toc-links a")).toHaveText(["Overview", "1st octave", "2nd", "3rd", "Top"]);
     await expect(page.locator("html")).not.toHaveAttribute("data-pending");
     await expect(page).toHaveURL(/\/$/); // the address left alone until a choice
   });
@@ -261,7 +261,7 @@ test.describe("the switches", () => {
     await expect(page).toHaveURL(/\?instrument=bb-trumpet$/); // (the flute's #extreme dropped)
     await expect(page).toHaveTitle("Instrument Basics | B♭ trumpet fingering chart");
     await expect(page.locator("h1")).toHaveText("Every fingering for the B♭ trumpet");
-    await expect(page.locator(".registers-nav a")).toHaveText(["Low", "Middle", "High"]);
+    await expect(page.locator(".toc-links a")).toHaveText(["Overview", "Low", "Middle", "High"]);
     await expect(cards(page)).toHaveCount(instrument("bb-trumpet").registers.flatMap((r) => r.notes).length);
     await expect(cards(page).first()).toHaveAttribute("data-note", "F#3");
     await expect(card(page, "C4").locator(".sounds")).toHaveText("Sounds B♭3");
@@ -341,7 +341,7 @@ test.describe("the switches", () => {
     await expect(noteName(page, "G4")).toHaveText("Sol");
   });
 
-  test("the alternatives: folded, opened one by one, all shown, or none, remembered", async ({ page }) => {
+  test("the alternatives: folded, opened one by one, or all shown, remembered", async ({ page }) => {
     await open(page);
     const alt = alternatives(page, "A#4");
     await expect(alt.locator("summary")).toHaveText("2 alternatives");
@@ -353,14 +353,18 @@ test.describe("the switches", () => {
     await expect(page.locator("details.alternatives:not([open])")).toHaveCount(0);
     await choose(page, "instrument", "piccolo"); // the new chart's, shown too
     await expect(page.locator("details.alternatives:not([open])")).toHaveCount(0);
-    await choose(page, "alternatives", "none");
-    await expect(alternatives(page, "A#4")).toBeHidden();
     await page.reload();
-    await expect(switchButton(page, "alternatives", "none")).toHaveAttribute("aria-pressed", "true");
-    await expect(alternatives(page, "A#4")).toBeHidden();
+    await expect(switchButton(page, "alternatives", "open")).toHaveAttribute("aria-pressed", "true");
+    await expect(page.locator("details.alternatives:not([open])")).toHaveCount(0);
     await choose(page, "alternatives", "folded");
-    await expect(alternatives(page, "A#4")).toBeVisible();
     await expect(page.locator("details.alternatives[open]")).toHaveCount(0);
+    await expect(switchButton(page, "alternatives", "none")).toHaveCount(0);
+  });
+
+  test("the alternatives left out before (a choice no longer offered): folded", async ({ page }) => {
+    await open(page, { "instrument-basics-alternatives": "none" });
+    await expect(switchButton(page, "alternatives", "folded")).toHaveAttribute("aria-pressed", "true");
+    await expect(alternatives(page, "A#4")).toBeVisible();
   });
 
   test("a stored value that isn't a choice falls back to the default", async ({ page }) => {
@@ -373,6 +377,43 @@ test.describe("the switches", () => {
 });
 
 test.describe("the page", () => {
+  test("the page's links stand beside the chart, the part being read marked", async ({ page }) => {
+    await open(page, {}, "/?instrument=alto-sax");
+    const toc = page.locator(".toc");
+    await expect(toc.locator(".toc-toggle")).toBeHidden();
+    await expect(toc.getByRole("link")).toHaveText(["Overview", "Low", "Middle", "High"]);
+    await expect(toc.getByRole("link", { name: "Overview" })).toHaveAttribute("aria-current", "location");
+    await toc.getByRole("link", { name: "Middle" }).click();
+    await expect(page).toHaveURL(/#middle$/);
+    await expect(toc.getByRole("link", { name: "Middle" })).toHaveAttribute("aria-current", "location");
+    await expect(toc.locator("[aria-current]")).toHaveCount(1);
+    await toc.getByRole("link", { name: "Overview" }).click();
+    await expect(page.locator("h1")).toBeInViewport();
+    await expect(toc.getByRole("link", { name: "Overview" })).toHaveAttribute("aria-current", "location");
+    await pick(page, "trumpets", "bb-trumpet"); // (another instrument: the overview's address kept)
+    await expect(page).toHaveURL(/#intro$/);
+  });
+
+  test("the page's links fold under a button on a phone @phone", async ({ page }) => {
+    await open(page, {}, "/?instrument=bb-trumpet");
+    const button = page.getByRole("button", { name: "Contents" });
+    const high = page.locator(".toc").getByRole("link", { name: "High" });
+    await expect(high).toBeHidden();
+    await button.click();
+    await expect(button).toHaveAttribute("aria-expanded", "true");
+    await high.click();
+    await expect(page).toHaveURL(/#high$/);
+    await expect(high).toBeHidden();
+    await expect(register(page, "high")).toBeInViewport();
+    await button.click();
+    await page.keyboard.press("Escape");
+    await expect(high).toBeHidden();
+    await expect(button).toBeFocused();
+    await button.click();
+    await page.locator("h1").click({ force: true });
+    await expect(high).toBeHidden();
+  });
+
   test("the theme's switch, remembered, and back to the system's", async ({ page }) => {
     await open(page);
     await expect(page.locator("html")).not.toHaveAttribute("data-theme");

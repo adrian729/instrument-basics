@@ -6,14 +6,14 @@
 import { defaultOf, GROUPS, INSTRUMENTS, instrument, type GroupId, type InstrumentId } from "../data/instruments";
 import type { Names } from "./notes";
 
-export type Alternatives = "folded" | "open" | "none"; // under each note: folded away, shown, or left out
+export type Alternatives = "folded" | "open"; // under each note: folded away, or shown
 export type Choices = { instrument: InstrumentId; names: Names; alternatives: Alternatives };
 
 // Each switch's choices, the most used first, the first its default.
 export const VALUES = {
   instrument: INSTRUMENTS.map((i) => i.id),
   names: ["letters", "solfege"] as Names[],
-  alternatives: ["folded", "open", "none"] as Alternatives[],
+  alternatives: ["folded", "open"] as Alternatives[],
 };
 const KEY: Record<keyof Choices, string> = { instrument: "instrument-basics-instrument", names: "instrument-basics-names", alternatives: "instrument-basics-alternatives" };
 

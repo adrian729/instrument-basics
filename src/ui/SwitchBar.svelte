@@ -15,7 +15,6 @@
   const ALTERNATIVES: Choice[] = [
     { value: "folded", text: "Folded", title: "The alternatives folded under each note, opened one by one" },
     { value: "open", text: "Shown", title: "Every alternative shown" },
-    { value: "none", text: "None", title: "The standard fingerings alone" },
   ];
   // (Each list in VALUES' order, its first the default.)
   const ordered = (key: keyof Choices, list: Choice[]) => (VALUES[key] as string[]).map((v) => list.find((c) => c.value === v)!);

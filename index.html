@@ -22,19 +22,27 @@
         <img src="favicon.svg" alt="" width="20" height="20">
         <div><strong>Instrument Basics</strong> <span>| Fingering charts</span></div>
       </a>
-      <div class="registers-nav">
-        <a href="#low">1st octave</a>
-        <a href="#middle">2nd</a>
-        <a href="#high">3rd</a>
-        <a href="#extreme">Top</a>
-      </div>
       <button type="button" class="theme-switch" aria-label="Dark theme" aria-pressed="false"><svg viewBox="-8 -8 16 16" width="16" height="16" aria-hidden="true"><circle r="6.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M 0 -6.5 A 6.5 6.5 0 0 1 0 6.5 Z" fill="currentColor"/></svg></button>
     </nav>
   </header>
 
+  <!-- The page's links (the overview, then the registers), floating at the top right (src/views/toc.ts): beside the chart on a wide screen, folded
+       under a button on a narrower one. -->
+  <nav class="toc" aria-label="Registers">
+    <button type="button" class="toc-toggle" aria-expanded="false" aria-controls="toc-links">Contents</button>
+    <div class="toc-links" id="toc-links">
+      <p class="toc-title" aria-hidden="true">Contents</p>
+      <a href="#intro">Overview</a>
+      <a href="#low">1st octave</a>
+      <a href="#middle">2nd</a>
+      <a href="#high">3rd</a>
+      <a href="#extreme">Top</a>
+    </div>
+  </nav>
+
   <main>
     <!-- The instrument's text, the flute's here: the chart (src/views/chart.ts) puts in the instrument's. -->
-    <section class="intro" aria-labelledby="intro-title">
+    <section class="intro" id="intro" aria-labelledby="intro-title">
       <h1 id="intro-title">Every fingering for the flute</h1>
       <p class="lede">Every note from the bottom to the top, the standard fingering first and the alternatives under it, for tuning, soft or loud playing, and response. Choose the instrument with the switches above the chart.</p>
       <ul class="facts">

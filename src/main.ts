@@ -5,6 +5,7 @@ import { flushSync, mount } from "svelte";
 import SwitchBar from "./ui/SwitchBar.svelte";
 import { makeChart } from "./views/chart";
 import { follow } from "./views/controller.svelte";
+import { toc } from "./views/toc";
 
 // The header's height and the switches', for what sticks below them and where a register's link scrolls to.
 const measure = (selector: string, name: string) =>
@@ -15,6 +16,7 @@ measure("#switches", "--switches-height");
 const chart = makeChart(document.querySelector<HTMLElement>("#chart")!, document.querySelector<HTMLElement>("#legend")!);
 mount(SwitchBar, { target: document.querySelector("#switches")! });
 follow(chart);
+toc(document.querySelector<HTMLElement>(".toc")!);
 flushSync(); // (the chart made now, not after this script)
 
 // Opened at a register's link (#high), there once the chart is in.

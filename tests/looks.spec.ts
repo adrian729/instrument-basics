@@ -71,6 +71,7 @@ test("look phone @phone", async ({ page }) => {
   await open(page);
   await settle(page);
   await expect(page).toHaveScreenshot("phone-intro.png");
+  await page.getByRole("button", { name: "Contents" }).click();
   await page.getByRole("link", { name: "3rd" }).click();
   await expect(register(page, "high").locator("h2")).toBeInViewport();
   await page.evaluate(() => new Promise((r) => setTimeout(r, 600))); // (the smooth scroll's end)

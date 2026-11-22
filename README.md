@@ -10,7 +10,7 @@ The instruments, in the picker's groups:
 - **Trumpets**: the B♭ trumpet and the C trumpet (written F♯3 to C6, fingered alike), and the four-valve piccolo trumpet in B♭ (written C♯3 to G5, its 4th valve shown).
 - **Saxophones**: soprano, alto, tenor and baritone (written B♭3 to F♯6, and the baritone's low A), fingered alike. The altissimo is left out.
 
-The picker is the instrument's group, from a list that can grow long, then its kind among the group's (each group comes back to the kind last chosen in it). The instrument is remembered, and in the address for a link to one (`?instrument=alto-sax`). Notes can be named with letters (with octave numbers) or in solfège, and the alternatives folded, shown or left out.
+The picker is the instrument's group, from a list that can grow long, then its kind among the group's (each group comes back to the kind last chosen in it). The instrument is remembered, and in the address for a link to one (`?instrument=alto-sax`). Notes can be named with letters (with octave numbers) or in solfège, and the alternatives folded or shown.
 
 ## Run locally
 
