@@ -3,7 +3,7 @@
 // saved as it's made. The switches show them (SwitchBar.svelte); the chart follows them
 // (views/controller.svelte.ts). index.html's first script reads the instrument the same way, before the page
 // is drawn.
-import { GROUPS, INSTRUMENTS, instrument, type GroupId, type InstrumentId } from "../data/instruments";
+import { defaultOf, GROUPS, INSTRUMENTS, instrument, type GroupId, type InstrumentId } from "../data/instruments";
 import type { Names } from "./notes";
 
 export type Alternatives = "folded" | "open" | "none"; // under each note: folded away, shown, or left out
@@ -35,11 +35,11 @@ export const choices: Choices = $state({ instrument: read("instrument"), names: 
 const KINDS = "instrument-basics-kinds";
 const kinds = (): Partial<Record<GroupId, InstrumentId>> => { try { return JSON.parse(stored(KINDS) ?? "{}"); } catch { return {}; } };
 
-// A group chosen: its instrument chosen last, if it's still one of its, else its first.
+// A group chosen: its instrument chosen last, if it's still one of its, else its default.
 export function chooseGroup(id: GroupId) {
   const group = GROUPS.find((g) => g.id === id)!;
   const last = kinds()[id];
-  choose("instrument", group.instruments.find((i) => i.id === last)?.id ?? group.instruments[0].id);
+  choose("instrument", group.instruments.find((i) => i.id === last)?.id ?? defaultOf(group));
 }
 
 export function choose<K extends keyof Choices>(key: K, value: Choices[K]) {

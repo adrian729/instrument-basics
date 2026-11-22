@@ -1,9 +1,10 @@
 // What the page does: the data it's made from, the chart in order, the switches and what they remember (the
 // instrument in the address too), the theme, and the registers' links.
 import { FLUTE as FLUTE_DATA } from "../src/data/flute";
-import { GROUPS, INSTRUMENTS, instrument } from "../src/data/instruments";
+import { defaultOf, GROUPS, INSTRUMENTS, instrument } from "../src/data/instruments";
 import { PICCOLO as PICCOLO_DATA } from "../src/data/piccolo";
 import { parseFlute as parseFingering } from "../src/notations/flute/notation";
+import { parseSax } from "../src/notations/sax/notation";
 import { parseValves } from "../src/notations/valves/notation";
 import { parsePitch } from "../src/data/types";
 import { intervalWords, soundingText, staffStep } from "../src/lib/notes";
@@ -16,7 +17,8 @@ const FLUTE = notesOf("flute"), PICCOLO = notesOf("piccolo");
 const first = (notes: typeof FLUTE, id: string) => notes.find((n) => n.id === id)!.fingerings[0];
 
 test.describe("the data", () => {
-  const RANGES = [["flute", "B3", "F7"], ["piccolo", "D4", "D7"], ["bb-trumpet", "F#3", "C6"], ["c-trumpet", "F#3", "C6"], ["piccolo-trumpet", "C#3", "G5"]] as const;
+  const RANGES = [["flute", "B3", "F7"], ["piccolo", "D4", "D7"], ["bb-trumpet", "F#3", "C6"], ["c-trumpet", "F#3", "C6"], ["piccolo-trumpet", "C#3", "G5"],
+    ["soprano-sax", "A#3", "F#6"], ["alto-sax", "A#3", "F#6"], ["tenor-sax", "A#3", "F#6"], ["baritone-sax", "A3", "F#6"]] as const;
   test("every instrument's range is tested", () => expect(RANGES.map((r) => r[0])).toEqual(INSTRUMENTS.map((i) => i.id)));
   for (const [id, lowest, highest] of RANGES) {
     test(`the ${id}: every semitone from ${lowest} to ${highest}, once, in order`, () => {
@@ -71,6 +73,24 @@ test.describe("the data", () => {
     for (const id of ["bb-trumpet", "c-trumpet"]) expect(["C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5"].map((n) => valves(id, n))).toEqual(["0", "13", "12", "1", "0", "12", "2", "0"]);
     expect(valves("piccolo-trumpet", "D4")).toBe("4");
     expect(valves("piccolo-trumpet", "C#3")).toBe("1234");
+  });
+
+  test("the saxophone's notation: read as written, and a typo refused", () => {
+    expect(parseSax("T pD pEb pF --- | sE hiF# ---")).toMatchObject({ left: [false, false, false], right: [false, false, false], keys: ["T", "pD", "pEb", "pF", "sE", "hiF#"] });
+    expect(parseSax("1-- bis | ---")).toMatchObject({ left: [true, false, false], keys: ["bis"] });
+    expect(parseSax("123 lowBb | 123 lowC")).toMatchObject({ left: [true, true, true], right: [true, true, true], keys: ["lowBb", "lowC"] });
+    for (const bad of ["123 123", "123 | 123 | 123", "123 sE | 123", "123 | 123 G#", "T T 123 | 123", "123 | 12", "12- 1-- | ---", "123 | 123 Bb"]) expect(() => parseSax(bad), bad).toThrow();
+  });
+
+  test("the saxophones' fingerings everyone knows, and the baritone's low A only on it", () => {
+    const keys = (id: string, note: string) => instrument(id as "alto-sax").registers.flatMap((r) => r.notes).find((n) => n.id === note)?.fingerings[0].source;
+    for (const id of ["soprano-sax", "alto-sax", "tenor-sax", "baritone-sax"]) {
+      expect(keys(id, "D4")).toBe("123 | 123");
+      expect(keys(id, "G4")).toBe("123 | ---");
+      expect(keys(id, "C#5")).toBe("--- | ---");
+      expect(keys(id, "D5")).toBe("T 123 | 123");
+      expect(keys(id, "A3")).toBe(id === "baritone-sax" ? "lowA 123 | 123 lowC" : undefined);
+    }
   });
 
   test("the piccolo has no foot joint: none of its fingerings uses one", () => {
@@ -262,6 +282,28 @@ test.describe("the switches", () => {
     await expect(cards(page).first()).toHaveAttribute("data-note", "C#3");
   });
 
+  test("the saxophones: the alto first, what's heard, their keys, the baritone's low A", async ({ page }) => {
+    await open(page);
+    await groupSelect(page).selectOption("saxophones");
+    await expect(page.locator("html")).toHaveAttribute("data-instrument", "alto-sax");
+    await expect(page.locator('#switches [data-group="instrument"] button')).toHaveText(["Soprano", "Alto", "Tenor", "Baritone"]);
+    await expect(page.locator("h1")).toHaveText("Every fingering for the alto saxophone");
+    await expect(cards(page).first()).toHaveAttribute("data-note", "A#3");
+    await expect(card(page, "C4").locator(".sounds")).toHaveText("Sounds E♭3");
+    await expect(standard(page, "A#4").locator(".in-words")).toHaveText("Left 1 2Right side B♭");
+    await expect(standard(page, "F#6").locator(".in-words")).toHaveText("Left octave · palm D · palm E♭ · palm FRight side E · high F♯");
+    const down = await standard(page, "D5").locator(".key.down").evaluateAll((els) => els.map((e) => (e as SVGElement).dataset.key));
+    expect(down.sort()).toEqual(["left1", "left2", "left3", "octave", "right1", "right2", "right3"]);
+    await expect(legendKeys(page).locator('[data-key="low-a"]')).toHaveCount(0);
+    await choose(page, "instrument", "tenor-sax");
+    await expect(card(page, "C4").locator(".sounds")).toHaveText("Sounds B♭2");
+    await choose(page, "instrument", "baritone-sax");
+    await expect(cards(page).first()).toHaveAttribute("data-note", "A3");
+    await expect(standard(page, "A3").locator('[data-key="low-a"]')).toHaveClass(/down/);
+    await expect(card(page, "C4").locator(".sounds")).toHaveText("Sounds E♭2");
+    await expect(register(page, "low").locator(".range")).toHaveText("A3 – C♯5");
+  });
+
   test("each group comes back to the kind last chosen in it", async ({ page }) => {
     await open(page);
     await choose(page, "instrument", "piccolo");
@@ -362,7 +404,7 @@ test.describe("the page", () => {
     await expect(groupSelect(page).locator("option")).toHaveText(GROUPS.map((g) => g.name));
     for (const g of GROUPS) {
       await groupSelect(page).selectOption(g.id);
-      await expect(page.locator("html")).toHaveAttribute("data-instrument", g.instruments[0].id); // its first
+      await expect(page.locator("html")).toHaveAttribute("data-instrument", defaultOf(g));
       const pills = page.locator('#switches [data-group="instrument"] button');
       if (g.instruments.length > 1) await expect(pills).toHaveText(g.instruments.map((i) => i.kind));
       else await expect(pills).toHaveCount(0);

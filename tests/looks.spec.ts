@@ -1,5 +1,6 @@
 // How the page looks: the intro and key, each register of the flute, the piccolo's start and its third octave
 // (where the two differ most), the B♭ trumpet's start and low register, the piccolo trumpet's low register,
+// the alto saxophone's start and high register, the baritone's low register,
 // a few switches and the dark theme, on desktop, and the start (and a trumpet's picker) on a phone;
 // compared with tests/screenshots. After a change meant to change them: `pnpm test:update`, then look at the
 // new ones before committing.
@@ -38,6 +39,16 @@ test("look trumpets", async ({ page }) => {
   await page.goto("/?instrument=piccolo-trumpet");
   await settle(page);
   await expect(register(page, "low")).toHaveScreenshot("piccolo-trumpet-low.png", TALL);
+});
+
+test("look saxophones", async ({ page }) => {
+  await open(page, { "instrument-basics-instrument": "alto-sax" });
+  await settle(page);
+  await expect(page).toHaveScreenshot("sax-intro.png");
+  await expect(register(page, "high")).toHaveScreenshot("sax-high.png", TALL);
+  await page.goto("/?instrument=baritone-sax");
+  await settle(page);
+  await expect(register(page, "low")).toHaveScreenshot("baritone-low.png", TALL);
 });
 
 test("look alternatives open, solfège", async ({ page }) => {

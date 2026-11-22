@@ -5,12 +5,12 @@
 import type { Notation } from "../notations/types";
 import type { Fingered, Register } from "./types";
 
-export type InstrumentId = "flute" | "piccolo" | "bb-trumpet" | "c-trumpet" | "piccolo-trumpet";
-export type GroupId = "flutes" | "trumpets";
+export type InstrumentId = "flute" | "piccolo" | "bb-trumpet" | "c-trumpet" | "piccolo-trumpet" | "soprano-sax" | "alto-sax" | "tenor-sax" | "baritone-sax";
+export type GroupId = "flutes" | "trumpets" | "saxophones";
 export type Clef = "treble"; // (only the treble clef is drawn yet)
-// What the diagrams depend on: a flute's foot joint; a valved instrument's valves, as the semitones each
+// What the diagrams depend on: a flute's foot joint; a baritone saxophone's low A key; a valved instrument's valves, as the semitones each
 // lowers (the trumpet's [2, 1, 3]), and the open horn's lowest harmonic, written (the trumpet's C3).
-export type Options = { foot?: boolean; valves?: number[]; openHorn?: string };
+export type Options = { foot?: boolean; valves?: number[]; openHorn?: string; lowA?: boolean };
 // How it sounds against what's written: up (or down, negative) so many letters and semitones (the B♭ trumpet
 // −1 and −2: a written C sounds B♭).
 export type Transposition = { steps: number; semitones: number };
@@ -31,8 +31,10 @@ type About = {
   tip: string; // the footer's advice on the alternatives
 };
 export type Instrument = About & { registers: Register<Shown>[]; legend: string[]; legendDiagram(): SVGSVGElement };
-// sources: the footer's credits for the group's data (HTML). Its first instrument is its default.
-export type Group = { id: GroupId; name: string; sources: string; instruments: Instrument[] };
+// sources: the footer's credits for the group's data (HTML). Its default is its first instrument, unless
+// another is named (the saxophones are listed by size, the alto the usual first).
+export type Group = { id: GroupId; name: string; sources: string; instruments: Instrument[]; default?: InstrumentId };
+export const defaultOf = (g: Group) => g.default ?? g.instruments[0].id;
 
 // An instrument from its data, read through its notation (typed together here, so that nothing else needs to
 // know which notation a fingering is in). A fingering for other models only is left out, and a note left
