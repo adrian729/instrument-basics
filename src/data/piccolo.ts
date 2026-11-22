@@ -2,14 +2,15 @@
 // octave higher). Each note's first fingering is the standard one; the rest are alternatives, for tuning,
 // soft or loud playing, or response. From The Woodwind Fingering Guide's piccolo pages
 // (wfg.woodwind.org/flute/picc_alt_1.html, _2, _3), its comments adapted. A piccolo has no foot joint, so
-// nothing here uses the flute's low C♯, C or B keys. (The notation: fingerings.ts.)
-import { rows, type Register } from "./fingerings";
+// nothing here uses the flute's low C♯, C or B keys. (The notation: notations/flute/notation.ts.)
+import { parseFlute, type FluteFingering } from "../notations/flute/notation";
+import { rows, type Register } from "./types";
 
-export const PICCOLO: Register[] = [
+export const PICCOLO: Register<FluteFingering>[] = [
   {
-    id: "low", name: "First octave", range: "D4 – C♯5",
+    id: "low", name: "First octave", nav: "1st octave",
     about: "The low register, with a slow, relaxed air stream. All six fingers down is the lowest note: there's no foot joint below it.",
-    notes: rows([
+    notes: rows(parseFlute, [
       ["D4", ["B 123 | 123", "The lowest note. Right pinky off the E♭ key."]],
       ["D#4", "B 123 | 123 Eb"],
       ["E4", "B 123 | 12- Eb"],
@@ -25,9 +26,9 @@ export const PICCOLO: Register[] = [
     ]),
   },
   {
-    id: "middle", name: "Second octave", range: "D5 – C♯6",
+    id: "middle", name: "Second octave", nav: "2nd",
     about: "From E up, the first octave's fingers again, with faster, more focused air. D and D♯ lift the left index finger.",
-    notes: rows([
+    notes: rows(parseFlute, [
       ["D5", ["B -23 | 123", "Left 1 up, right pinky off E♭. Tends to be sharp."]],
       ["D#5", ["B -23 | 123 Eb", "Left 1 up."]],
       ["E5", "B 123 | 12- Eb", ["B 123 | 12- Eb trD", "The D trill key added keeps it from cracking."]],
@@ -43,9 +44,9 @@ export const PICCOLO: Register[] = [
     ]),
   },
   {
-    id: "high", name: "Third octave", range: "D6 – C7",
+    id: "high", name: "Third octave", nav: "3rd",
     about: "Where piccolo and flute charts differ: F♯ and G♯ have piccolo fingerings of their own, and the flute's are kept as alternatives. Fast, narrow air, the throat open.",
-    notes: rows([
+    notes: rows(parseFlute, [
       ["D6", "B -23 | --- Eb", ["B -23 G# | 1-- Eb", "Sharp."], ["B -23 G# | -2- Eb", "Sharper. Good for pp."]],
       ["D#6", "B 123 G# | 123 Eb"],
       ["E6", "B 12- | 12- Eb", ["B 12- | 12- Eb trD", "The D trill key added keeps it from cracking."], ["B 12- | 12-", "Right pinky off. Hard to crack, a little flatter."]],
@@ -60,9 +61,9 @@ export const PICCOLO: Register[] = [
     ]),
   },
   {
-    id: "extreme", name: "Extreme top", range: "C♯7 – D7",
+    id: "extreme", name: "Extreme top", nav: "Top",
     about: "Beyond the usual written range: rarely asked for, and needing strong, very fast air. Loud, and hard to tune.",
-    notes: rows([
+    notes: rows(parseFlute, [
       ["C#7", "- -23 G# | 1--", ["- -2- G# | 1--", "Sharper."], ["- -23 G# | 1-3 Eb trD#", "Flat, and speaks easily."]],
       ["D7", "B --3 | 12-", ["B --3 | 12- Eb", "With the E♭ key."], ["Bb --- | --3 Eb", "The B♭ thumb lever, right 3 and the E♭ key."]],
     ]),

@@ -3,14 +3,15 @@
 // standard one; the rest are alternatives, for tuning, soft or loud playing, response, or slurs. From The
 // Woodwind Fingering Guide's flute pages (wfg.woodwind.org/flute/fl_alt_1.html, _2, _3, _4), its comments
 // adapted; left out are its fingerings that need a half-covered hole, the C♯ trill key some flutes have, or
-// another flute (bass, alto). (The notation: fingerings.ts.)
-import { rows, type Register } from "./fingerings";
+// another flute (bass, alto). (The notation: notations/flute/notation.ts.)
+import { parseFlute, type FluteFingering } from "../notations/flute/notation";
+import { rows, type Register } from "./types";
 
-export const FLUTE: Register[] = [
+export const FLUTE: Register<FluteFingering>[] = [
   {
-    id: "low", name: "First octave", range: "B3 – C♯5",
+    id: "low", name: "First octave", nav: "1st octave",
     about: "The low register, with a slow, relaxed air stream. The right pinky's foot-joint keys give the lowest notes: low C♯ and C on every flute, low B with a B foot.",
-    notes: rows([
+    notes: rows(parseFlute, [
       ["B3", ["B 123 | 123 lowB", "Only with a B foot. The right pinky on the low B key."]],
       ["C4", ["B 123 | 123 lowC", "The lowest note on a C foot. The right pinky on the low C roller."]],
       ["C#4", ["B 123 | 123 lowC#", "The right pinky on the low C♯ roller."]],
@@ -29,9 +30,9 @@ export const FLUTE: Register[] = [
     ]),
   },
   {
-    id: "middle", name: "Second octave", range: "D5 – C♯6",
+    id: "middle", name: "Second octave", nav: "2nd",
     about: "From E up, the first octave's fingers again, with faster, more focused air. D and D♯ lift the left index finger.",
-    notes: rows([
+    notes: rows(parseFlute, [
       ["D5", ["B -23 | 123", "Left 1 up, right pinky off E♭."], ["B 123 | 123", "Low D's fingering, overblown (a harmonic): darker, for slurs from low D."]],
       ["D#5", ["B -23 | 123 Eb", "Left 1 up."]],
       ["E5", "B 123 | 12- Eb", ["B 123 | 12- Eb trD#", "The D♯ trill key added keeps it from cracking."]],
@@ -47,9 +48,9 @@ export const FLUTE: Register[] = [
     ]),
   },
   {
-    id: "high", name: "Third octave", range: "D6 – C7",
+    id: "high", name: "Third octave", nav: "3rd",
     about: "Fingerings of their own, most of them harmonics of lower notes with a hole or two opened. Fast, narrow air, the throat open.",
-    notes: rows([
+    notes: rows(parseFlute, [
       ["D6", "B -23 | --- Eb", ["B -23 G# | 1-- Eb", "Very sharp: good for pp."]],
       ["D#6", "B 123 G# | 123 Eb", ["B 123 G# | 123 Eb lowC#", "Slightly flat. Excellent for ff."], ["B -23 | --- Eb trD#", "For slurs from D."]],
       ["E6", "B 12- | 12- Eb", ["B 12- | 12-", "Right pinky off. Flat, and good for hard attacks."], ["B 12- | 12- Eb trD#", "Sharp, and less likely to crack down to A."]],
@@ -64,9 +65,9 @@ export const FLUTE: Register[] = [
     ]),
   },
   {
-    id: "extreme", name: "Extreme top", range: "C♯7 – F7",
+    id: "extreme", name: "Extreme top", nav: "Top",
     about: "The fourth octave: in contemporary music and a few solos, hardly ever in orchestral parts. Very fast air, and loud. Every flute answers these differently: try each fingering.",
-    notes: rows([
+    notes: rows(parseFlute, [
       ["C#7", "- -2- G# | 1--", ["- -23 G# | 1--", "Flat."], ["- -2- | 1-- giz", "On a B foot, with the gizmo key."]],
       ["D7", ["B --3 | 12- lowC", "The right pinky on the low C roller."], ["B --3 | 12- Eb", "The E♭ key instead of low C."], ["Bb --- | --3 lowB", "Speaks well. Needs a B foot."], ["Bb --- | --3", "Easy to finger, but harder to make speak than with a foot key down."]],
       ["D#7", ["B --3 G# | -2- trD", "Right 2 and the D trill key."], ["B --3 | -2-", "Flat, with fewer keys."]],

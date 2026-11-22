@@ -1,8 +1,5 @@
-// The chart's data: the instruments (instruments.ts), each a list of registers, each a list of notes at
-// written pitch, each with its fingerings, the standard one first (flute.ts, piccolo.ts). Here: the types,
-// and the short notation the fingerings are written in.
-//
-// A fingering is written as the player reads it, left hand then right:
+// The Boehm flute's notation (the flute's and the piccolo's): a fingering as the player reads it, left hand
+// then right:
 //   thumb  B (the B key), Bb (the B♭ lever) or - (off)
 //   then   the left hand's fingers 1 2 3 (index, middle, ring), - for one up; then G# (the left pinky's key)
 //   |      then the right hand's 1 2 3 the same way; then any of the keys below, once each, in any order:
@@ -10,11 +7,14 @@
 //          (a B foot's low B key) and giz (a B foot's gizmo, for top C); trD (the D trill key, between right
 //          1 and 2), trD# (the D♯ trill key, between right 2 and 3) and side (the side B♭ lever, by right 1)
 // e.g. "B 123 G# | --- Eb": the B thumb key, all three left fingers, the G♯ key, and the E♭ key.
+import type { Fingered } from "../../data/types";
+import type { Notation } from "../types";
+import { keysDiagram } from "./diagram";
 
 export type Thumb = "B" | "Bb" | null;
 export type Extra = "trD" | "trD#" | "side";
 export type Foot = "lowC#" | "lowC" | "lowB" | "giz";
-export type Fingering = {
+export type FluteFingering = Fingered & {
   thumb: Thumb;
   left: [boolean, boolean, boolean];
   gSharp: boolean;
@@ -22,20 +22,13 @@ export type Fingering = {
   eFlat: boolean;
   foot: Foot[];
   extras: Extra[];
-  note: string;
-  source: string; // as written in the data
 };
-export type Letter = "C" | "D" | "E" | "F" | "G" | "A" | "B";
-export type Pitch = { letter: Letter; sharp: boolean; octave: number };
-export type Note = { id: string; pitch: Pitch; fingerings: Fingering[] };
-export type Register = { id: string; name: string; range: string; about: string; notes: Note[] };
 
 const FINGERS = /^[1-][2-][3-]$/;
 const EXTRAS: string[] = ["trD", "trD#", "side"];
 const FOOT: string[] = ["lowC#", "lowC", "lowB", "giz"];
 
-// One fingering from its notation (see above); throws on anything else, so that a typo fails the tests.
-export function parseFingering(source: string, note = ""): Fingering {
+export function parseFlute(source: string, note = ""): FluteFingering {
   const [leftSide, rightSide, ...rest] = source.split("|").map((s) => s.trim().split(/\s+/));
   if (!leftSide || !rightSide || rest.length) throw new Error(`"${source}": needs one |`);
   const [thumb, left, ...leftKeys] = leftSide;
@@ -53,14 +46,32 @@ export function parseFingering(source: string, note = ""): Fingering {
   };
 }
 
-export function parsePitch(id: string): Pitch {
-  const m = /^([A-G])(#?)(\d)$/.exec(id);
-  if (!m) throw new Error(`"${id}": a note is like D4 or F#5`);
-  return { letter: m[1] as Letter, sharp: m[2] === "#", octave: Number(m[3]) };
-}
+const FOOT_NAMES: Record<Foot, string> = { "lowC#": "low C♯", lowC: "low C", lowB: "low B", giz: "gizmo" };
+const FOOT_LABELS: Record<Foot, string> = { "lowC#": "low C-sharp key", lowC: "low C key", lowB: "low B key", giz: "gizmo key" };
+const fingers = (down: boolean[]) => down.flatMap((d, i) => (d ? [String(i + 1)] : [])).join(" ");
 
-// A register's notes from rows of [note, fingering, ...]: each fingering its notation, or [notation, comment].
-export type Row = [id: string, ...fingerings: (string | [string, string])[]];
-export const rows = (list: Row[]): Note[] => list.map(([id, ...fs]) => ({
-  id, pitch: parsePitch(id), fingerings: fs.map((f) => (typeof f === "string" ? parseFingering(f) : parseFingering(f[0], f[1]))),
-}));
+export const FLUTE_NOTATION: Notation<FluteFingering> = {
+  parse: parseFlute,
+  diagram: (f, options, label, legend) => keysDiagram(f, label, options.foot ?? false, legend),
+  words(f) {
+    const left = [f.thumb === "Bb" ? "thumb B♭" : f.thumb === "B" ? "thumb B" : "", fingers(f.left), f.gSharp ? "G♯" : ""].filter(Boolean);
+    const right = [
+      fingers(f.right), f.extras.includes("side") ? "side B♭" : "", f.extras.includes("trD") ? "D trill" : "", f.extras.includes("trD#") ? "D♯ trill" : "", f.eFlat ? "E♭" : "",
+      ...f.foot.map((k) => FOOT_NAMES[k]),
+    ].filter(Boolean);
+    return [["Left", left.join(" · ") || "nothing"], ["Right", right.join(" · ") || "nothing"]];
+  },
+  label(f) {
+    const keys = [
+      f.thumb === "Bb" ? "B-flat thumb lever" : f.thumb === "B" ? "B thumb key" : "",
+      ...f.left.flatMap((d, i) => (d ? [`left ${i + 1}`] : [])), f.gSharp ? "G-sharp key" : "",
+      ...f.right.flatMap((d, i) => (d ? [`right ${i + 1}`] : [])),
+      f.extras.includes("side") ? "side B-flat lever" : "", f.extras.includes("trD") ? "D trill key" : "", f.extras.includes("trD#") ? "D-sharp trill key" : "",
+      f.eFlat ? "E-flat key" : "", ...f.foot.map((k) => FOOT_LABELS[k]),
+    ].filter(Boolean);
+    return keys.length ? `Press: ${keys.join(", ")}` : "Every key open";
+  },
+  blank: "- --- | ---",
+  legendLabel: (options) => "The keys: the thumb's B♭ lever and B key; left 1, 2 and 3; the G♯ key; right 1, 2 and 3, the side B♭ lever by right 1 and the D and D♯ trill keys between them; the E♭ key"
+    + (options.foot ? "; the foot joint's low C♯, C and B keys and the gizmo" : ""),
+};

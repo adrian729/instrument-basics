@@ -3,7 +3,7 @@
 // Bravura): a staff space is 250, so one step (a line to the next space) is 125; the bottom line is at 0.
 // The lines' thickness and the ledger lines' reach are the font's engraving defaults; the gaps are in
 // staff spaces.
-import type { Pitch } from "../data/fingerings";
+import type { Pitch } from "../data/types";
 import { spellings, staffStep } from "../lib/notes";
 import { ENGRAVING, GLYPHS, type Glyph } from "./glyphs";
 import { el } from "./svg";

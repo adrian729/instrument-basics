@@ -5,8 +5,8 @@
 // below the body, the left pinky's G♯ above it, as in The Woodwind Fingering Guide's labelled photos. A
 // flute's has its foot joint's keys too, clustered with E♭ as on the instrument. Keys few notes use are dashed
 // while up, or left out.
-import type { Fingering } from "../data/fingerings";
-import { el, text } from "./svg";
+import type { FluteFingering as Fingering } from "./notation";
+import { el, text } from "../../views/svg";
 
 const LEFT = [84, 114, 144];
 const RIGHT = [196, 234, 272];

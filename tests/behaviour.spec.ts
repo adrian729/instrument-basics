@@ -1,13 +1,15 @@
 // What the page does: the data it's made from, the chart in order, the switches and what they remember (the
 // instrument in the address too), the theme, and the registers' links.
-import { parseFingering } from "../src/data/fingerings";
+import { FLUTE as FLUTE_DATA } from "../src/data/flute";
 import { INSTRUMENTS, instrument } from "../src/data/instruments";
+import { PICCOLO as PICCOLO_DATA } from "../src/data/piccolo";
+import { parseFlute as parseFingering } from "../src/notations/flute/notation";
 import { staffStep } from "../src/lib/notes";
 import { test, expect, open, register, registers, cards, card, noteName, standard, alternatives, switchButton, choose, themeSwitch, legendKeys, facts } from "./app";
 
 const CHROMATIC = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 const semitone = (id: string) => { const m = /^([A-G]#?)(\d)$/.exec(id)!; return Number(m[2]) * 12 + CHROMATIC.indexOf(m[1]); };
-const notesOf = (id: "flute" | "piccolo") => instrument(id).registers.flatMap((r) => r.notes);
+const notesOf = (id: "flute" | "piccolo") => (id === "flute" ? FLUTE_DATA : PICCOLO_DATA).flatMap((r) => r.notes);
 const FLUTE = notesOf("flute"), PICCOLO = notesOf("piccolo");
 const first = (notes: typeof FLUTE, id: string) => notes.find((n) => n.id === id)!.fingerings[0];
 

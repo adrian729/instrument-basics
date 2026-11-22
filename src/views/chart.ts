@@ -1,11 +1,10 @@
 // The chart: a section per register, a card per note (its staff, its name, what it sounds, its standard
 // fingering, its alternatives folded under it), and the diagrams' key. Made for an instrument, and made again
 // when it's changed; the other hooks change what follows a choice.
-import { parseFingering, type Fingering, type Note } from "../data/fingerings";
-import { instrument as find, type Instrument, type InstrumentId } from "../data/instruments";
-import { fingeringLabel, fingeringText, nameParts, nameText, soundingText, type Names } from "../lib/notes";
+import { instrument as find, type Instrument, type InstrumentId, type Shown } from "../data/instruments";
+import type { Note } from "../data/types";
+import { nameParts, nameText, rangeText, soundingText, type Names } from "../lib/notes";
 import type { Alternatives } from "../lib/store.svelte";
-import { keysDiagram } from "./keys";
 import { staff, stepsFor } from "./staff";
 
 export type Chart = { instrument(id: InstrumentId): void; names(names: Names): void; alternatives(how: Alternatives): void };
@@ -18,38 +17,32 @@ const h = <K extends keyof HTMLElementTagNameMap>(tag: K, props: Partial<HTMLEle
   return e;
 };
 
-function fingering(f: Fingering, standard: boolean, foot: boolean) {
-  const words = fingeringText(f);
+function fingering(f: Shown, standard: boolean) {
   return h("figure", { className: standard ? "fingering standard" : "fingering" },
-    keysDiagram(f, fingeringLabel(f), foot),
+    f.diagram(),
     h("figcaption", {},
-      h("p", { className: "in-words" }, h("span", {}, h("b", {}, "Left "), words.left), h("span", {}, h("b", {}, "Right "), words.right)),
+      h("p", { className: "in-words" }, ...f.words.map(([label, text]) => h("span", {}, h("b", {}, `${label} `), text))),
       ...(f.note ? [h("p", { className: "comment" }, f.note)] : [])));
 }
 
-function card(n: Note, fit: { low: number; high: number }, foot: boolean) {
+function card(n: Note<Shown>, fit: { low: number; high: number }) {
   const [first, ...rest] = n.fingerings;
   const article = h("article", { className: "note", dataset: { note: n.id } },
     h("div", { className: "note-head" },
       staff(n.pitch, fit, ""),
       h("div", {}, h("h3", { className: "note-name" }), h("p", { className: "sounds" }))),
-    fingering(first, true, foot));
+    fingering(first, true));
   if (rest.length) {
     article.append(h("details", { className: "alternatives" },
       h("summary", {}, rest.length === 1 ? "1 alternative" : `${rest.length} alternatives`),
-      h("div", { className: "alternative-list" }, ...rest.map((f) => fingering(f, false, foot)))));
+      h("div", { className: "alternative-list" }, ...rest.map((f) => fingering(f, false)))));
   }
   return article;
 }
 
-const LEGEND: Record<InstrumentId, string> = {
-  flute: "The keys: the thumb's B♭ lever and B key; left 1, 2 and 3; the G♯ key; right 1, 2 and 3, the side B♭ lever by right 1 and the D and D♯ trill keys between them; the E♭ key; the foot joint's low C♯, C and B keys and the gizmo",
-  piccolo: "The keys: the thumb's B♭ lever and B key; left 1, 2 and 3; the G♯ key; right 1, 2 and 3, the side B♭ lever by right 1 and the D and D♯ trill keys between them; the E♭ key",
-};
-
 export function makeChart(root: HTMLElement, legend: HTMLElement): Chart {
   let shown: Instrument;
-  let notes: Note[] = [];
+  let notes: Note<Shown>[] = [];
   let cards = new Map<string, HTMLElement>();
   let names: Names = "letters", alternatives: Alternatives = "folded";
 
@@ -59,15 +52,15 @@ export function makeChart(root: HTMLElement, legend: HTMLElement): Chart {
       document.documentElement.dataset.instrument = id;
       document.title = `Instrument Basics | ${shown.name[0].toUpperCase()}${shown.name.slice(1)} fingering chart`;
       legend.querySelector(".legend-keys")?.remove();
-      legend.prepend(keysDiagram(parseFingering("- --- | ---"), LEGEND[id], shown.foot, true));
+      legend.prepend(shown.legendDiagram());
       root.replaceChildren(...shown.registers.map((r) => {
         const fit = stepsFor(r.notes.map((n) => n.pitch));
         return h("section", { className: "register", id: r.id },
           h("header", { className: "register-head" },
-            h("p", { className: "range" }, r.range),
+            h("p", { className: "range" }, rangeText(r.notes[0].pitch, r.notes.at(-1)!.pitch)),
             h("h2", { id: `${r.id}-title` }, r.name),
             h("p", { className: "about" }, r.about)),
-          h("div", { className: "notes" }, ...r.notes.map((n) => card(n, fit, shown.foot))));
+          h("div", { className: "notes" }, ...r.notes.map((n) => card(n, fit))));
       }));
       for (const r of shown.registers) document.getElementById(r.id)!.setAttribute("aria-labelledby", `${r.id}-title`);
       notes = shown.registers.flatMap((r) => r.notes);
@@ -81,7 +74,7 @@ export function makeChart(root: HTMLElement, legend: HTMLElement): Chart {
         const c = cards.get(n.id)!;
         const title = c.querySelector(".note-name")!;
         title.replaceChildren(...nameParts(n.pitch, names).flatMap((p, i) => [...(i ? [" / "] : []), p.name, ...(p.octave ? [h("sub", {}, p.octave)] : [])]));
-        c.querySelector(".sounds")!.textContent = soundingText(n.pitch, names, shown.octavesUp);
+        c.querySelector(".sounds")!.textContent = soundingText(n.pitch, names, shown.transposition);
         c.querySelector(".staff")!.setAttribute("aria-label", `Written ${nameText(n.pitch, names)} on the treble staff`);
       }
     },
