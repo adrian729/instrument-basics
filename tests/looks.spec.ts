@@ -22,7 +22,7 @@ for (const id of ["low", "middle", "high", "extreme"]) {
 }
 
 test("look piccolo", async ({ page }) => {
-  await open(page, { "flute-basics-instrument": "piccolo" });
+  await open(page, { "instrument-basics-instrument": "piccolo" });
   await settle(page);
   await expect(page).toHaveScreenshot("piccolo-intro.png");
   await expect(register(page, "low")).toHaveScreenshot("piccolo-low.png", TALL);

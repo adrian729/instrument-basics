@@ -1,4 +1,4 @@
-# Flute Basics
+# Instrument Basics
 
 Fingering charts for the Boehm concert flute and piccolo: every note from the bottom to the top at written pitch (the flute from the foot joint's low B to F7, the piccolo from its low D to D7), each with the standard fingering first and the alternatives under it (for tuning, soft or loud playing, response and slurs). Each note is shown on the treble staff, with a diagram of the keys and the same fingering in words. A switch picks the instrument (remembered, and in the address as `?instrument=piccolo` for a link to one); notes can be named with letters (with octave numbers) or in solfège, and the alternatives folded, shown or left out.
 

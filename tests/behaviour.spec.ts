@@ -71,7 +71,7 @@ test.describe("first visit", () => {
   test("the flute: the registers in order, every note a card, letters and the alternatives folded", async ({ page }) => {
     await open(page);
     await expect(page.locator("html")).toHaveAttribute("data-instrument", "flute");
-    await expect(page).toHaveTitle("Flute Basics | Flute fingering chart");
+    await expect(page).toHaveTitle("Instrument Basics | Flute fingering chart");
     await expect(registers(page).locator("h2")).toHaveText(["First octave", "Second octave", "Third octave", "Extreme top"]);
     await expect(cards(page)).toHaveCount(FLUTE.length);
     expect(await cards(page).evaluateAll((els) => els.map((e) => (e as HTMLElement).dataset.note))).toEqual(FLUTE.map((n) => n.id));
@@ -153,7 +153,7 @@ test.describe("the switches", () => {
     await open(page);
     await choose(page, "instrument", "piccolo");
     await expect(page.locator("html")).toHaveAttribute("data-instrument", "piccolo");
-    await expect(page).toHaveTitle("Flute Basics | Piccolo fingering chart");
+    await expect(page).toHaveTitle("Instrument Basics | Piccolo fingering chart");
     await expect(page).toHaveURL(/\?instrument=piccolo$/);
     await expect(cards(page)).toHaveCount(PICCOLO.length);
     await expect(cards(page).first()).toHaveAttribute("data-note", "D4");
@@ -172,7 +172,7 @@ test.describe("the switches", () => {
   });
 
   test("a link to one instrument opens it, and it's remembered", async ({ page }) => {
-    await open(page, { "flute-basics-instrument": "flute" }, "/?instrument=piccolo#high");
+    await open(page, { "instrument-basics-instrument": "flute" }, "/?instrument=piccolo#high");
     await expect(switchButton(page, "instrument", "piccolo")).toHaveAttribute("aria-pressed", "true");
     await expect(register(page, "high").locator("h2")).toBeInViewport();
     await expect(cards(page)).toHaveCount(PICCOLO.length);
@@ -217,7 +217,7 @@ test.describe("the switches", () => {
   });
 
   test("a stored value that isn't a choice falls back to the default", async ({ page }) => {
-    await open(page, { "flute-basics-instrument": "tuba", "flute-basics-names": "klingon", "flute-basics-alternatives": "all" }, "/?instrument=oboe");
+    await open(page, { "instrument-basics-instrument": "tuba", "instrument-basics-names": "klingon", "instrument-basics-alternatives": "all" }, "/?instrument=oboe");
     await expect(switchButton(page, "instrument", "flute")).toHaveAttribute("aria-pressed", "true");
     await expect(page.locator("html")).toHaveAttribute("data-instrument", "flute");
     await expect(switchButton(page, "names", "letters")).toHaveAttribute("aria-pressed", "true");

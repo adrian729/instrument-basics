@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Flute Basics | Flute and piccolo fingering charts</title>
+  <title>Instrument Basics | Flute and piccolo fingering charts</title>
   <meta name="description" content="Fingerings for every note of the Boehm flute and piccolo, from the lowest note to the top, with the alternatives for tuning and response.">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <!-- Set before the page is drawn: the theme chosen in this browser (light or dark; none: the system's), and
        the instrument, from the address or this browser (as src/lib/store.svelte.ts reads it; the flute if none). -->
   <script>
     try { const t = localStorage.getItem("theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
-    { let i = new URLSearchParams(location.search).get("instrument"); try { if (i !== "flute" && i !== "piccolo") i = localStorage.getItem("flute-basics-instrument"); } catch {} document.documentElement.dataset.instrument = i === "piccolo" ? "piccolo" : "flute"; }
+    { let i = new URLSearchParams(location.search).get("instrument"); try { if (i !== "flute" && i !== "piccolo") i = localStorage.getItem("instrument-basics-instrument"); } catch {} document.documentElement.dataset.instrument = i === "piccolo" ? "piccolo" : "flute"; }
   </script>
   <link rel="preload" href="fonts/DMMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
 </head>
@@ -19,7 +19,7 @@
     <nav>
       <a class="brand" href="#">
         <img src="favicon.svg" alt="" width="20" height="20">
-        <div><strong>Flute Basics</strong> <span>| Fingering charts</span></div>
+        <div><strong>Instrument Basics</strong> <span>| Fingering charts</span></div>
       </a>
       <div class="registers-nav">
         <a href="#low">1st octave</a>

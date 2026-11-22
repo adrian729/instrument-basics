@@ -15,7 +15,7 @@ export const VALUES = {
   names: ["letters", "solfege"] as Names[],
   alternatives: ["folded", "open", "none"] as Alternatives[],
 };
-const KEY: Record<keyof Choices, string> = { instrument: "flute-basics-instrument", names: "flute-basics-names", alternatives: "flute-basics-alternatives" };
+const KEY: Record<keyof Choices, string> = { instrument: "instrument-basics-instrument", names: "instrument-basics-names", alternatives: "instrument-basics-alternatives" };
 
 const stored = (key: string): string | null => { try { return localStorage.getItem(key); } catch { return null; } };
 const store = (key: string, value: string) => { try { localStorage.setItem(key, value); } catch {} };

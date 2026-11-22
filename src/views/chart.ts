@@ -57,7 +57,7 @@ export function makeChart(root: HTMLElement, legend: HTMLElement): Chart {
     instrument(id) {
       shown = find(id);
       document.documentElement.dataset.instrument = id;
-      document.title = `Flute Basics | ${shown.name[0].toUpperCase()}${shown.name.slice(1)} fingering chart`;
+      document.title = `Instrument Basics | ${shown.name[0].toUpperCase()}${shown.name.slice(1)} fingering chart`;
       legend.querySelector(".legend-keys")?.remove();
       legend.prepend(keysDiagram(parseFingering("- --- | ---"), LEGEND[id], shown.foot, true));
       root.replaceChildren(...shown.registers.map((r) => {
