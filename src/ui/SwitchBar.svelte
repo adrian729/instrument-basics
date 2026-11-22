@@ -1,15 +1,13 @@
 <!--
-  The switches above the chart, in named groups: the instrument, how notes are named, and what's shown of the
+  The switches above the chart, in named groups: the instrument (its group, from a list that can grow long,
+  then its kind among the group's, if there's more than one), how notes are named, and what's shown of the
   alternatives.
 -->
 <script lang="ts">
-  import { choices, choose, VALUES, type Choices } from "../lib/store.svelte";
+  import { GROUPS, instrument, type GroupId } from "../data/instruments";
+  import { choices, choose, chooseGroup, VALUES, type Choices } from "../lib/store.svelte";
 
   type Choice = { value: string; text: string; title: string };
-  const INSTRUMENT: Choice[] = [
-    { value: "flute", text: "Flute", title: "The concert flute, in C" },
-    { value: "piccolo", text: "Piccolo", title: "The piccolo, sounding an octave higher" },
-  ];
   const NAMES: Choice[] = [
     { value: "letters", text: "C D E", title: "Letter names, with octave numbers (C4 is middle C)" },
     { value: "solfege", text: "Do Re Mi", title: "Solfège names" },
@@ -21,6 +19,9 @@
   ];
   // (Each list in VALUES' order, its first the default.)
   const ordered = (key: keyof Choices, list: Choice[]) => (VALUES[key] as string[]).map((v) => list.find((c) => c.value === v)!);
+
+  const shown = $derived(instrument(choices.instrument));
+  const kinds = $derived(GROUPS.find((g) => g.id === shown.group)!.instruments);
 </script>
 
 {#snippet group(name: string, key: keyof Choices, list: Choice[])}
@@ -35,7 +36,25 @@
 {/snippet}
 
 <div class="switch-row">
-  {@render group("Instrument", "instrument", INSTRUMENT)}
+  <div class="switch-group" data-group="instrument">
+    <span class="group-name" id="group-instrument">Instrument</span>
+    <div class="picker">
+      <span class="select">
+        <select aria-label="Instrument family" value={shown.group} onchange={(e) => chooseGroup(e.currentTarget.value as GroupId)}>
+          {#each GROUPS as g (g.id)}
+            <option value={g.id}>{g.name}</option>
+          {/each}
+        </select>
+      </span>
+      {#if kinds.length > 1}
+        <div class="switch" role="group" aria-label="Kind">
+          {#each kinds as i (i.id)}
+            <button type="button" data-instrument={i.id} title={i.title} aria-pressed={choices.instrument === i.id} onclick={() => choose("instrument", i.id)}>{i.kind}</button>
+          {/each}
+        </div>
+      {/if}
+    </div>
+  </div>
   {@render group("Note names", "names", NAMES)}
   {@render group("Alternatives", "alternatives", ALTERNATIVES)}
 </div>

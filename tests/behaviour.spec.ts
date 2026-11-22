@@ -1,12 +1,13 @@
 // What the page does: the data it's made from, the chart in order, the switches and what they remember (the
 // instrument in the address too), the theme, and the registers' links.
 import { FLUTE as FLUTE_DATA } from "../src/data/flute";
-import { INSTRUMENTS, instrument } from "../src/data/instruments";
+import { GROUPS, INSTRUMENTS, instrument } from "../src/data/instruments";
 import { PICCOLO as PICCOLO_DATA } from "../src/data/piccolo";
 import { parseFlute as parseFingering } from "../src/notations/flute/notation";
+import { parseValves } from "../src/notations/valves/notation";
 import { parsePitch } from "../src/data/types";
 import { intervalWords, soundingText, staffStep } from "../src/lib/notes";
-import { test, expect, open, register, registers, cards, card, noteName, standard, alternatives, switchButton, choose, themeSwitch, legendKeys, facts, legendText } from "./app";
+import { test, expect, open, register, registers, cards, card, noteName, standard, alternatives, switchButton, choose, themeSwitch, legendKeys, facts, legendText, pick, groupSelect } from "./app";
 
 const CHROMATIC = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 const semitone = (id: string) => { const m = /^([A-G]#?)(\d)$/.exec(id)!; return Number(m[2]) * 12 + CHROMATIC.indexOf(m[1]); };
@@ -15,9 +16,11 @@ const FLUTE = notesOf("flute"), PICCOLO = notesOf("piccolo");
 const first = (notes: typeof FLUTE, id: string) => notes.find((n) => n.id === id)!.fingerings[0];
 
 test.describe("the data", () => {
-  for (const [id, lowest, highest] of [["flute", "B3", "F7"], ["piccolo", "D4", "D7"]] as const) {
+  const RANGES = [["flute", "B3", "F7"], ["piccolo", "D4", "D7"], ["bb-trumpet", "F#3", "C6"], ["c-trumpet", "F#3", "C6"], ["piccolo-trumpet", "C#3", "G5"]] as const;
+  test("every instrument's range is tested", () => expect(RANGES.map((r) => r[0])).toEqual(INSTRUMENTS.map((i) => i.id)));
+  for (const [id, lowest, highest] of RANGES) {
     test(`the ${id}: every semitone from ${lowest} to ${highest}, once, in order`, () => {
-      const notes = notesOf(id);
+      const notes = instrument(id).registers.flatMap((r) => r.notes);
       expect(notes[0].id).toBe(lowest);
       expect(notes.at(-1)!.id).toBe(highest);
       const steps = notes.map((n) => semitone(n.id));
@@ -26,7 +29,7 @@ test.describe("the data", () => {
   }
 
   test("every note has a standard fingering, and no fingering twice", () => {
-    for (const n of [...FLUTE, ...PICCOLO]) {
+    for (const n of INSTRUMENTS.flatMap((i) => i.registers.flatMap((r) => r.notes))) {
       expect(n.fingerings.length, n.id).toBeGreaterThan(0);
       const sources = n.fingerings.map((f) => f.source.replace(/\s+/g, " "));
       expect(new Set(sources).size, n.id).toBe(sources.length);
@@ -41,6 +44,33 @@ test.describe("the data", () => {
     expect(parseFingering("Bb 1-3 | --- trD# lowB")).toMatchObject({ thumb: "Bb", foot: ["lowB"], extras: ["trD#"] });
     for (const bad of ["B 123 123 Eb", "X 123 | 123", "B 12 | 123", "B 123 Eb | 123", "B 123 | 123 trE", "B 123 | 123 Eb Eb", "B 123 | 123 lowD", "B 123 lowC | 123", "B 123 | 123 giz giz"])
       expect(() => parseFingering(bad), bad).toThrow();
+  });
+
+  test("the valves: written as pressed, and a typo refused", () => {
+    expect(parseValves("13").valves).toEqual([true, false, true, false]);
+    expect(parseValves("0").valves).toEqual([false, false, false, false]);
+    expect(parseValves("1234").valves).toEqual([true, true, true, true]);
+    for (const bad of ["", "31", "5", "00", "1 3", "112", "0 1"]) expect(() => parseValves(bad), bad).toThrow();
+  });
+
+  test("every valve fingering is a harmonic of the open horn, lowered by its valves", () => {
+    const PARTIALS = [12, 19, 24, 28, 31, 36, 38, 40]; // above the lowest: the 2nd to the 10th harmonics, but the 7th (flat)
+    const valved = INSTRUMENTS.filter((i) => i.options.valves);
+    expect(valved.map((i) => i.id)).toEqual(["bb-trumpet", "c-trumpet", "piccolo-trumpet"]);
+    for (const i of valved) {
+      const open = semitone(i.options.openHorn!);
+      for (const n of i.registers.flatMap((r) => r.notes)) for (const f of n.fingerings) {
+        const lowered = parseValves(f.source).valves.reduce((sum, down, v) => sum + (down ? i.options.valves![v] : 0), 0);
+        expect(PARTIALS, `${i.id} ${n.id}: ${f.source}`).toContain(semitone(n.id) + lowered - open);
+      }
+    }
+  });
+
+  test("the trumpets' fingerings everyone knows", () => {
+    const valves = (id: string, note: string) => instrument(id as "bb-trumpet").registers.flatMap((r) => r.notes).find((n) => n.id === note)!.fingerings[0].source;
+    for (const id of ["bb-trumpet", "c-trumpet"]) expect(["C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5"].map((n) => valves(id, n))).toEqual(["0", "13", "12", "1", "0", "12", "2", "0"]);
+    expect(valves("piccolo-trumpet", "D4")).toBe("4");
+    expect(valves("piccolo-trumpet", "C#3")).toBe("1234");
   });
 
   test("the piccolo has no foot joint: none of its fingerings uses one", () => {
@@ -204,6 +234,46 @@ test.describe("the switches", () => {
     await expect(legendKeys(page).locator('[data-key="low-c"]')).toHaveCount(1);
   });
 
+  test("the trumpets: from the list, their chart, what's heard, their valves, in the address", async ({ page }) => {
+    await open(page, {}, "/#extreme");
+    await groupSelect(page).selectOption("trumpets");
+    await expect(page.locator("html")).toHaveAttribute("data-instrument", "bb-trumpet");
+    await expect(page).toHaveURL(/\?instrument=bb-trumpet$/); // (the flute's #extreme dropped)
+    await expect(page).toHaveTitle("Instrument Basics | B♭ trumpet fingering chart");
+    await expect(page.locator("h1")).toHaveText("Every fingering for the B♭ trumpet");
+    await expect(page.locator(".registers-nav a")).toHaveText(["Low", "Middle", "High"]);
+    await expect(cards(page)).toHaveCount(instrument("bb-trumpet").registers.flatMap((r) => r.notes).length);
+    await expect(cards(page).first()).toHaveAttribute("data-note", "F#3");
+    await expect(card(page, "C4").locator(".sounds")).toHaveText("Sounds B♭3");
+    await expect(standard(page, "C4").locator(".in-words")).toHaveText("Valves none (open)");
+    await expect(standard(page, "D4").locator(".in-words")).toHaveText("Valves 1 3");
+    await expect(standard(page, "D4").locator("svg.keys")).toHaveAttribute("aria-label", "Press: valve 1, valve 3");
+    const down = await standard(page, "D4").locator(".key.down").evaluateAll((els) => els.map((e) => (e as SVGElement).dataset.key));
+    expect(down).toEqual(["valve1", "valve3"]);
+    await expect(legendKeys(page).locator(".key")).toHaveCount(3);
+    await expect(facts(page)).toContainText("a tone lower");
+    await expect(page.locator("footer .sources")).toContainText("Yamaha");
+    await choose(page, "instrument", "c-trumpet");
+    await expect(card(page, "C4").locator(".sounds")).toHaveText("Sounds as written");
+    await choose(page, "instrument", "piccolo-trumpet");
+    await expect(legendKeys(page).locator(".key")).toHaveCount(4);
+    await expect(standard(page, "D4").locator('[data-key="valve4"]')).toHaveClass(/down/);
+    await expect(card(page, "C4").locator(".sounds")).toHaveText("Sounds B♭4");
+    await expect(cards(page).first()).toHaveAttribute("data-note", "C#3");
+  });
+
+  test("each group comes back to the kind last chosen in it", async ({ page }) => {
+    await open(page);
+    await choose(page, "instrument", "piccolo");
+    await pick(page, "trumpets", "c-trumpet");
+    await groupSelect(page).selectOption("flutes");
+    await expect(page.locator("html")).toHaveAttribute("data-instrument", "piccolo");
+    await page.reload();
+    await groupSelect(page).selectOption("trumpets");
+    await expect(page.locator("html")).toHaveAttribute("data-instrument", "c-trumpet");
+    await expect(groupSelect(page)).toHaveValue("trumpets");
+  });
+
   test("a link to one instrument opens it, and it's remembered", async ({ page }) => {
     await open(page, { "instrument-basics-instrument": "flute" }, "/?instrument=piccolo#high");
     await expect(switchButton(page, "instrument", "piccolo")).toHaveAttribute("aria-pressed", "true");
@@ -287,8 +357,15 @@ test.describe("the page", () => {
     await expect(register(page, "extreme").locator("h2")).toBeInViewport();
   });
 
-  test("every instrument is in the switch", async ({ page }) => {
+  test("every instrument is in the picker: its group in the list, then its kind", async ({ page }) => {
     await open(page);
-    await expect(page.locator('#switches [data-group="instrument"] button')).toHaveText(INSTRUMENTS.map((i) => i.name[0].toUpperCase() + i.name.slice(1)));
+    await expect(groupSelect(page).locator("option")).toHaveText(GROUPS.map((g) => g.name));
+    for (const g of GROUPS) {
+      await groupSelect(page).selectOption(g.id);
+      await expect(page.locator("html")).toHaveAttribute("data-instrument", g.instruments[0].id); // its first
+      const pills = page.locator('#switches [data-group="instrument"] button');
+      if (g.instruments.length > 1) await expect(pills).toHaveText(g.instruments.map((i) => i.kind));
+      else await expect(pills).toHaveCount(0);
+    }
   });
 });

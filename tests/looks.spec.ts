@@ -1,5 +1,6 @@
 // How the page looks: the intro and key, each register of the flute, the piccolo's start and its third octave
-// (where the two differ most), a few switches and the dark theme, on desktop, and the same's start on a phone;
+// (where the two differ most), the B♭ trumpet's start and low register, the piccolo trumpet's low register,
+// a few switches and the dark theme, on desktop, and the start (and a trumpet's picker) on a phone;
 // compared with tests/screenshots. After a change meant to change them: `pnpm test:update`, then look at the
 // new ones before committing.
 import { test, expect, open, register, choose } from "./app";
@@ -29,6 +30,16 @@ test("look piccolo", async ({ page }) => {
   await expect(register(page, "high")).toHaveScreenshot("piccolo-high.png", TALL);
 });
 
+test("look trumpets", async ({ page }) => {
+  await open(page, { "instrument-basics-instrument": "bb-trumpet" });
+  await settle(page);
+  await expect(page).toHaveScreenshot("trumpet-intro.png");
+  await expect(register(page, "low")).toHaveScreenshot("trumpet-low.png", TALL);
+  await page.goto("/?instrument=piccolo-trumpet");
+  await settle(page);
+  await expect(register(page, "low")).toHaveScreenshot("piccolo-trumpet-low.png", TALL);
+});
+
 test("look alternatives open, solfège", async ({ page }) => {
   await open(page);
   await choose(page, "alternatives", "open");
@@ -53,4 +64,12 @@ test("look phone @phone", async ({ page }) => {
   await expect(register(page, "high").locator("h2")).toBeInViewport();
   await page.evaluate(() => new Promise((r) => setTimeout(r, 600))); // (the smooth scroll's end)
   await expect(page).toHaveScreenshot("phone-high.png");
+});
+
+test("look phone trumpet @phone", async ({ page }) => {
+  await open(page, { "instrument-basics-instrument": "piccolo-trumpet" });
+  await settle(page);
+  await page.locator("#switches").scrollIntoViewIfNeeded();
+  await expect(page.locator("#switches")).toHaveScreenshot("phone-picker.png");
+  await expect(register(page, "low").locator("article.note").first()).toHaveScreenshot("phone-trumpet-card.png");
 });

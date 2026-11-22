@@ -40,6 +40,15 @@ export const legendKeys = (page: Page) => page.locator("#legend svg.keys");
 export const facts = (page: Page) => page.locator(".intro .facts");
 export const legendText = (page: Page) => page.locator(".legend-text ul");
 
+export const groupSelect = (page: Page) => page.getByRole("combobox", { name: "Instrument family" });
+
+// Picks an instrument: its group in the list, then its kind, if the group has more than one.
+export async function pick(page: Page, group: string, id: string) {
+  await groupSelect(page).selectOption(group);
+  if (await switchButton(page, "instrument", id).count()) await switchButton(page, "instrument", id).click();
+  await expect(page.locator("html")).toHaveAttribute("data-instrument", id);
+}
+
 export async function choose(page: Page, key: string, value: string) {
   await switchButton(page, key, value).click();
   await expect(switchButton(page, key, value)).toHaveAttribute("aria-pressed", "true");

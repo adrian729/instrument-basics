@@ -5,11 +5,12 @@
 import type { Notation } from "../notations/types";
 import type { Fingered, Register } from "./types";
 
-export type InstrumentId = "flute" | "piccolo";
-export type GroupId = "flutes";
+export type InstrumentId = "flute" | "piccolo" | "bb-trumpet" | "c-trumpet" | "piccolo-trumpet";
+export type GroupId = "flutes" | "trumpets";
 export type Clef = "treble"; // (only the treble clef is drawn yet)
-// What the diagrams depend on: a flute's foot joint.
-export type Options = { foot?: boolean };
+// What the diagrams depend on: a flute's foot joint; a valved instrument's valves, as the semitones each
+// lowers (the trumpet's [2, 1, 3]), and the open horn's lowest harmonic, written (the trumpet's C3).
+export type Options = { foot?: boolean; valves?: number[]; openHorn?: string };
 // How it sounds against what's written: up (or down, negative) so many letters and semitones (the B♭ trumpet
 // −1 and −2: a written C sounds B♭).
 export type Transposition = { steps: number; semitones: number };
