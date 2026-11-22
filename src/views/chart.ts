@@ -49,6 +49,7 @@ export function makeChart(root: HTMLElement, legend: HTMLElement): Chart {
   let notes: Note<Shown>[] = [];
   let cards = new Map<string, HTMLElement>();
   let names: Names = "letters", alternatives: Alternatives = "folded";
+  let made = false;
 
   // The chart made for an instrument, its text put in.
   function make(id: InstrumentId) {
@@ -77,8 +78,12 @@ export function makeChart(root: HTMLElement, legend: HTMLElement): Chart {
     for (const r of shown.registers) document.getElementById(r.id)!.setAttribute("aria-labelledby", `${r.id}-title`);
     notes = shown.registers.flatMap((r) => r.notes);
     cards = new Map(notes.map((n) => [n.id, root.querySelector<HTMLElement>(`[data-note="${CSS.escape(n.id)}"]`)!]));
-    // An address naming what this page hasn't (another instrument's register, a malformed "#%"), left without it.
-    if (location.hash && !(hashId() && document.getElementById(hashId()))) history.replaceState(history.state, "", location.pathname + location.search);
+    // An address naming what this page hasn't (another instrument's register, a malformed "#%"), left without it;
+    // and, the instrument changed, one naming a register: it's in another place now, the view where it was.
+    const hash = hashId();
+    const register = made && shown.registers.some((r) => r.id === hash);
+    if (location.hash && (!hash || !document.getElementById(hash) || register)) history.replaceState(history.state, "", location.pathname + location.search);
+    made = true;
     hooks.names(names);
     hooks.alternatives(alternatives);
   }

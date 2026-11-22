@@ -19,5 +19,19 @@ follow(chart);
 toc(document.querySelector<HTMLElement>(".toc")!);
 flushSync(); // (the chart made now, not after this script)
 
+// Back or forward to another instrument, the keyboard's focus on the picker's kinds or the page's links (made
+// again): put back on the one pressed, or the same link.
+addEventListener("popstate", () => {
+  const was = document.activeElement;
+  const href = was?.closest(".toc-links a")?.getAttribute("href");
+  const picker = !!was?.closest(".picker");
+  if (!href && !picker) return;
+  flushSync();
+  if (document.activeElement !== document.body) return;
+  const to = picker ? document.querySelector<HTMLElement>('.picker [aria-pressed="true"]') ?? document.querySelector<HTMLElement>(".picker select")
+    : document.querySelector<HTMLElement>(`.toc-links a[href="${CSS.escape(href!)}"]`) ?? document.querySelector<HTMLElement>(".toc-links a");
+  to?.focus();
+});
+
 // Opened at a register's link (#high), there once the chart is in.
 if (hashId()) document.getElementById(hashId())?.scrollIntoView({ behavior: "instant" });

@@ -37,13 +37,16 @@ else if (linked() !== null) {
 
 export const choices: Choices = $state({ instrument: read("instrument"), names: read("names"), alternatives: read("alternatives") });
 
-// The instrument last chosen in each group, for the picker to come back to; the one the page opened on, too,
-// if its group has none yet.
+// The instrument last chosen in each group, for the picker to come back to; the one the page opened on, too:
+// a link's always, a remembered one if its group has none yet.
 const KINDS = "instrument-basics-kinds";
 const kinds = (): Partial<Record<GroupId, InstrumentId>> => {
   try { const v = JSON.parse(stored(KINDS) ?? "{}"); return v && typeof v === "object" && !Array.isArray(v) ? v : {}; } catch { return {}; }
 };
-store(KINDS, JSON.stringify({ [instrument(choices.instrument).group]: choices.instrument, ...kinds() }));
+{
+  const opened = { [instrument(choices.instrument).group]: choices.instrument };
+  store(KINDS, JSON.stringify(valid("instrument", linked()) ? { ...kinds(), ...opened } : { ...opened, ...kinds() }));
+}
 
 // Back or forward to an entry whose address names another instrument (the registers' links add entries): that one.
 addEventListener("popstate", () => {

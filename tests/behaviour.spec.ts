@@ -420,6 +420,25 @@ test.describe("the page", () => {
     await expect(toc.getByRole("link", { name: "Top" })).toHaveAttribute("aria-current", "location");
   });
 
+  test("at the page's end after a register's link, the last register marked, not the one linked", async ({ page }) => {
+    await open(page, {}, "/?instrument=flute#low");
+    await page.keyboard.press("End");
+    await expect(page.locator(".toc").getByRole("link", { name: "Top" })).toHaveAttribute("aria-current", "location");
+  });
+
+  test("a link's instrument becomes its group's kind, over the one remembered", async ({ page }) => {
+    await open(page, { "instrument-basics-kinds": JSON.stringify({ saxophones: "alto-sax" }) }, "/?instrument=tenor-sax");
+    await pick(page, "flutes", "flute");
+    await groupSelect(page).selectOption("saxophones");
+    await expect(page.locator("html")).toHaveAttribute("data-instrument", "tenor-sax");
+  });
+
+  test("another instrument: a register's fragment dropped, the view where it was", async ({ page }) => {
+    await open(page, {}, "/?instrument=flute#high");
+    await pick(page, "flutes", "piccolo");
+    await expect(page).toHaveURL(/\?instrument=piccolo$/);
+  });
+
   test("printed in the dark theme: dark text on white, and the contents left out", async ({ page }) => {
     await open(page, { theme: "dark" });
     await page.emulateMedia({ media: "print" });
@@ -480,6 +499,12 @@ test.describe("the page", () => {
     await button.click();
     await page.locator("h1").click({ force: true });
     await expect(high).toBeHidden();
+    await button.click(); // the keyboard's focus leaving it closes it too
+    await page.keyboard.press("Tab");
+    await expect(page.locator(".toc").getByRole("link", { name: "Overview" })).toBeFocused();
+    for (let i = 0; i < 4; i++) await page.keyboard.press("Tab");
+    await expect(high).toBeHidden();
+    await expect(button).toHaveAttribute("aria-expanded", "false");
   });
 
   test("the theme's switch, remembered, and back to the system's", async ({ page }) => {

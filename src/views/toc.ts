@@ -1,8 +1,8 @@
 // The page's links, the overview then the registers (index.html's .toc; the chart puts in the instrument's). On a narrower screen they're
-// folded under a button, closed again by a link, Escape or a click elsewhere. The register being read is marked
+// folded under a button, closed again by a link, Escape, or a click or the keyboard's focus elsewhere. The register being read is marked
 // (aria-current): the last whose top has gone under what's stuck at the top of the page, else the overview. At
-// the page's end, where a short last register can't scroll up that far, the register linked to (if it's in
-// sight) or the last.
+// the page's end, where a short last register can't scroll up that far, the register linked to (if its top is
+// in sight) or the last.
 import { hashId } from "./chart";
 
 export function toc(nav: HTMLElement) {
@@ -15,9 +15,10 @@ export function toc(nav: HTMLElement) {
   button.addEventListener("click", () => show(!nav.hasAttribute("data-open")));
   links.addEventListener("click", (e) => { if ((e.target as Element).closest("a")) show(false); });
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && nav.hasAttribute("data-open")) { show(false); button.focus(); }
+    if (e.key === "Escape" && nav.hasAttribute("data-open")) { show(false); if (nav.contains(document.activeElement)) button.focus(); }
   });
   document.addEventListener("click", (e) => { if (!nav.contains(e.target as Node)) show(false); });
+  nav.addEventListener("focusout", (e) => { if (e.relatedTarget && !nav.contains(e.relatedTarget as Node)) show(false); });
 
   let queued = false;
   const mark = () => {
@@ -26,7 +27,7 @@ export function toc(nav: HTMLElement) {
     const registers = [...document.querySelectorAll<HTMLElement>("section.register")];
     let current = registers.filter((r) => r.getBoundingClientRect().top <= top + 1).at(-1)?.id ?? "intro";
     if (registers.length && scrollY + innerHeight >= document.documentElement.scrollHeight - 1) {
-      const linked = registers.find((r) => r.id === hashId() && r.getBoundingClientRect().top < innerHeight);
+      const linked = registers.find((r) => { const t = r.getBoundingClientRect().top; return r.id === hashId() && t >= top - 1 && t < innerHeight; });
       current = (linked ?? registers.at(-1)!).id;
     }
     for (const a of links.querySelectorAll("a")) {
