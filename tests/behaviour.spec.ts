@@ -439,6 +439,41 @@ test.describe("the page", () => {
     await expect(page).toHaveURL(/\?instrument=piccolo$/);
   });
 
+  test("storage blocked: a link's instrument still shown, and each group's kind still remembered", async ({ page }) => {
+    await page.addInitScript(() => Object.defineProperty(window, "localStorage", { get() { throw new DOMException("blocked", "SecurityError"); } }));
+    await page.goto("/?instrument=tenor-sax");
+    await expect(page.locator("h1")).toHaveText("Fingerings for the tenor saxophone");
+    await pick(page, "flutes", "piccolo");
+    await groupSelect(page).selectOption("saxophones");
+    await expect(page.locator("html")).toHaveAttribute("data-instrument", "tenor-sax");
+    await groupSelect(page).selectOption("flutes");
+    await expect(page.locator("html")).toHaveAttribute("data-instrument", "piccolo");
+  });
+
+  test("back or forward keeps the entry's register fragment", async ({ page }) => {
+    await open(page, {}, "/?instrument=flute");
+    await page.locator(".toc").getByRole("link", { name: "1st octave" }).click();
+    await expect(page).toHaveURL(/#low$/);
+    await page.goBack();
+    await pick(page, "saxophones", "alto-sax");
+    await page.goForward();
+    await expect(page.locator("html")).toHaveAttribute("data-instrument", "flute");
+    await expect(page).toHaveURL(/\?instrument=flute#low$/);
+  });
+
+  test("another instrument announced to screen readers", async ({ page }) => {
+    await open(page);
+    await expect(page.locator("#announce")).toHaveText("");
+    await pick(page, "trumpets", "bb-trumpet");
+    await expect(page.locator("#announce")).toHaveText("B♭ trumpet fingering chart");
+  });
+
+  test("on a short screen (a phone turned, or zoomed in) the switches don't stay stuck", async ({ page }) => {
+    await page.setViewportSize({ width: 740, height: 360 });
+    await open(page);
+    await expect(page.locator("#switches")).toHaveCSS("position", "static");
+  });
+
   test("printed in the dark theme: dark text on white, and the contents left out", async ({ page }) => {
     await open(page, { theme: "dark" });
     await page.emulateMedia({ media: "print" });

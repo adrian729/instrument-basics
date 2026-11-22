@@ -13,7 +13,7 @@ const OTHER = "The same note on another harmonic: for tuning, or an easier passa
 export const TRUMPET: Register<ValveFingering>[] = [
   {
     id: "low", name: "Low register", nav: "Low",
-    about: "Below the staff and up its first notes: the 2nd and 3rd harmonics, with every valve combination. The lowest notes use 1-3 and 1-2-3, and are sharp.",
+    about: "Below the staff and up its first notes: the 2nd and 3rd harmonics, with every valve combination. The lowest notes use 1–3 and 1–2–3, and are sharp.",
     notes: rows(parseValves, [
       ["F#3", ["123", `The lowest note. ${SHARP}`]],
       ["G3", ["13", SHARP]],

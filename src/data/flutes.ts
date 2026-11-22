@@ -6,7 +6,7 @@ import { PICCOLO } from "./piccolo";
 
 const WFG = "https://www.wfg.woodwind.org/flute/";
 const pages = (prefix: string, names: string[]) => names.map((n, i) => `<a href="${WFG}${prefix}_${i + 1}.html">${n}</a>`).join(", ");
-const PINKY = (lifted: string) => `<b>The right pinky stays down</b> on the E♭ key for almost every note. The diagrams show the few where it's ${lifted}.`;
+const PINKY = (lifted: string) => `<b>The right pinky stays down</b> on the E♭ key for most notes. The diagrams show the few where it's ${lifted}.`;
 
 export const FLUTES: Group = {
   id: "flutes",

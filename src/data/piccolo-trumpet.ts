@@ -9,7 +9,7 @@ import { rows, type Note, type Register } from "./types";
 
 const FOURTH = "The 4th valve, which lowers a fourth.";
 const SHARP = "Sharp: pull the slides out.";
-const OLD = "Without the 4th valve, as on the trumpet: sharp.";
+const OLD = "As on the trumpet, without the 4th valve: easier among the trumpet's fingerings, but sharp.";
 
 const OWN = rows(parseValves, [
   ["C#3", ["1234", `The lowest note: every valve. ${SHARP}`]],
@@ -35,7 +35,7 @@ const notes = (low: string, high: string): Note<ValveFingering>[] => {
 export const PICCOLO_TRUMPET: Register<ValveFingering>[] = [
   {
     id: "low", name: "Low register", nav: "Low",
-    about: "With the 4th valve, below the trumpet's lowest note: down to written C♯3, every valve down. The piccolo's hardest notes to keep full and in tune.",
+    about: "Down to written C♯3, every valve down: below F♯3 only with the 4th valve. The piccolo's hardest notes to keep full and in tune.",
     notes: notes("C#3", "C4"),
   },
   {

@@ -26,7 +26,7 @@ export const FLUTE: Register<FluteFingering>[] = [
       ["A#4", ["Bb 1-- | --- Eb", "The B♭ thumb lever. Not in passages that also have B."], ["B 1-- | 1-- Eb", "One-and-one: right 1 down. Fine next to B."], ["B 1-- | --- Eb side", "The side B♭ lever, with the side of right 1. For trills with B."]],
       ["B4", "B 1-- | --- Eb"],
       ["C5", "- 1-- | --- Eb"],
-      ["C#5", ["- --- | --- Eb", "Everything open but E♭: can be sharp and thin."], ["- --- | -23 Eb", "Better in tune."], ["- --3 G# | -23 Eb", "A clearer tone."], ["- -23 | 123 lowC#", "A fuller, more colourful tone."]],
+      ["C#5", ["- --- | --- Eb", "Only the right pinky's E♭ key: can be sharp and thin."], ["- --- | -23 Eb", "Better in tune."], ["- --3 G# | -23 Eb", "A clearer tone."], ["- -23 | 123 lowC#", "A fuller, more colourful tone."]],
     ]),
   },
   {
@@ -69,7 +69,7 @@ export const FLUTE: Register<FluteFingering>[] = [
     about: "The fourth octave: in contemporary music and a few solos, hardly ever in orchestral parts. Very fast air, and loud. Every flute answers these differently: try each fingering.",
     notes: rows(parseFlute, [
       ["C#7", "- -2- G# | 1--", ["- -23 G# | 1--", "Flat."], ["- -2- | 1-- giz", "On a B foot, with the gizmo key."]],
-      ["D7", ["B --3 | 12- lowC", "The right pinky on the low C roller."], ["B --3 | 12- Eb", "The E♭ key instead of low C."], ["Bb --- | --3 lowB", "Speaks well. Needs a B foot."], ["Bb --- | --3", "Easy to finger, but harder to make speak than with a foot key down."]],
+      ["D7", ["B --3 | 12- lowC", "The right pinky on the low C roller."], ["B --3 | 12- Eb", "The E♭ key instead of low C: the top notes differ from flute to flute, so try both."], ["Bb --- | --3 lowB", "Speaks well. Needs a B foot."], ["Bb --- | --3", "Easy to finger, but harder to make speak than with a foot key down."]],
       ["D#7", ["B --3 G# | -2- trD", "Right 2 and the D trill key."], ["B --3 | -2-", "Flat, with fewer keys."]],
       ["E7", ["- 12- | -2- trD#", "Sharp. On an open-hole flute, cover most of left 3's hole to bring it down."], ["- 12- | --3 Eb lowC# trD#", "Sharp, but speaks very easily."]],
       ["F7", ["- -2- | -2- trD#", "Left 2, right 2 and the D♯ trill key."], ["B 1-3 | 1-3 Eb lowB", "Sharp. Needs a B foot."]],

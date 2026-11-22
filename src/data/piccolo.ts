@@ -1,7 +1,8 @@
 // Every note of the Boehm piccolo, from its lowest D to the D three octaves up, at written pitch (it sounds an
 // octave higher). Each note's first fingering is the standard one; the rest are alternatives, for tuning,
 // soft or loud playing, or response. From The Woodwind Fingering Guide's piccolo pages
-// (wfg.woodwind.org/flute/picc_alt_1.html, _2, _3), its comments adapted. A piccolo has no foot joint, so
+// (wfg.woodwind.org/flute/picc_alt_1.html, _2, _3), its comments adapted: a choice of its alternatives, one
+// or a few for each purpose. A piccolo has no foot joint, so
 // nothing here uses the flute's low C♯, C or B keys. (The notation: notations/flute/notation.ts.)
 import { parseFlute, type FluteFingering } from "../notations/flute/notation";
 import { rows, type Register } from "./types";
@@ -65,7 +66,7 @@ export const PICCOLO: Register<FluteFingering>[] = [
     about: "Beyond the usual written range: rarely asked for, and needing strong, very fast air. Loud, and hard to tune.",
     notes: rows(parseFlute, [
       ["C#7", "- -23 G# | 1--", ["- -2- G# | 1--", "Sharper."], ["- -23 G# | 1-3 Eb trD#", "Flat, and speaks easily."]],
-      ["D7", "B --3 | 12-", ["B --3 | 12- Eb", "With the E♭ key."], ["Bb --- | --3 Eb", "The B♭ thumb lever, right 3 and the E♭ key."]],
+      ["D7", "B --3 | 12-", ["B --3 | 12- Eb", "With the E♭ key: the top notes differ from piccolo to piccolo, so try each."], ["Bb --- | --3 Eb", "The B♭ thumb lever, right 3 and the E♭ key: if the others are hard to make speak on yours."]],
     ]),
   },
 ];

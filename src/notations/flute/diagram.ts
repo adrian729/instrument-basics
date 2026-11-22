@@ -1,4 +1,4 @@
-// A fingering's diagram: the instrument seen from above as it's played, the mouthpiece on the left, the left
+// A fingering's diagram: the instrument seen from above as it's played, the embouchure hole on the left, the left
 // hand's keys and then the right's, each finger's key a circle with its number, the small keys pills with
 // their names. Filled is pressed. Along it, every key is where it is on the instrument; across it, the keys on
 // the player's side (the thumb's, the side lever, the trill keys' touches and the right pinky's) are drawn
@@ -35,7 +35,7 @@ export function keysDiagram(f: Fingering, label: string, foot: boolean, legend =
   LEFT.forEach((x, i) => finger(x, i + 1, f.left[i], "left"));
   RIGHT.forEach((x, i) => finger(x, i + 1, f.right[i], "right"));
   pill("g-sharp", 152, 8, 24, "G♯", f.gSharp); // the left pinky's, past left 3, on the far side
-  pill("thumb-bb", 40, UNDER, 22, "B♭", f.thumb === "Bb"); // the thumb's: the B♭ lever nearer the mouthpiece than the B key
+  pill("thumb-bb", 40, UNDER, 22, "B♭", f.thumb === "Bb"); // the thumb's: the B♭ lever nearer the head than the B key
   pill("thumb-b", 64, UNDER, 22, "B", f.thumb === "B");
   const side = f.extras.includes("side");
   if (side || legend) pill("side", 170, UNDER, 28, "side", side, legend); // by right 1, drawn only when used
@@ -58,7 +58,7 @@ export function keysDiagram(f: Fingering, label: string, foot: boolean, legend =
   hand(186, width - 8, "RIGHT HAND");
   if (legend) {
     const call = (x: number, y: number, t: string, anchor = "middle") => text(svg, x, y, t, { class: "callout", "text-anchor": anchor });
-    call(18, 6, "mouthpiece", "start");
+    call(18, 6, "embouchure hole", "start");
     call(164, -6, "left pinky");
     const y1 = 114 + more, y2 = 126 + more;
     call(63, y1, "thumb keys");

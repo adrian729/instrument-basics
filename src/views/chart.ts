@@ -5,7 +5,7 @@
 import { group, instrument as find, type Instrument, type InstrumentId, type Shown } from "../data/instruments";
 import type { Note } from "../data/types";
 import { nameParts, nameText, rangeText, soundingText, type Names } from "../lib/notes";
-import type { Alternatives } from "../lib/store.svelte";
+import { traversal, type Alternatives } from "../lib/store.svelte";
 import { staff, stepsFor } from "./staff";
 
 // The id the address's fragment names ("" if none, or if it's malformed: "#%").
@@ -79,13 +79,15 @@ export function makeChart(root: HTMLElement, legend: HTMLElement): Chart {
     notes = shown.registers.flatMap((r) => r.notes);
     cards = new Map(notes.map((n) => [n.id, root.querySelector<HTMLElement>(`[data-note="${CSS.escape(n.id)}"]`)!]));
     // An address naming what this page hasn't (another instrument's register, a malformed "#%"), left without it;
-    // and, the instrument changed, one naming a register: it's in another place now, the view where it was.
+    // and, the instrument changed by a choice (not back or forward to it), one naming a register: it's in another
+    // place now, the view where it was.
     const hash = hashId();
-    const register = made && shown.registers.some((r) => r.id === hash);
+    const register = made && !traversal.now && shown.registers.some((r) => r.id === hash);
     if (location.hash && (!hash || !document.getElementById(hash) || register)) history.replaceState(history.state, "", location.pathname + location.search);
-    made = true;
     hooks.names(names);
     hooks.alternatives(alternatives);
+    if (made) document.querySelector("#announce")!.textContent = `${shown.name[0].toUpperCase()}${shown.name.slice(1)} fingering chart`; // (for screen readers: the chart changed)
+    made = true;
   }
 
   const hooks: Chart = {
@@ -99,7 +101,7 @@ export function makeChart(root: HTMLElement, legend: HTMLElement): Chart {
         const title = c.querySelector(".note-name")!;
         title.replaceChildren(...nameParts(n.pitch, names).flatMap((p, i) => [...(i ? [" / "] : []), p.name, ...(p.octave ? [h("sub", {}, p.octave)] : [])]));
         c.querySelector(".sounds")!.textContent = soundingText(n.pitch, names, shown.transposition);
-        c.querySelector(".staff")!.setAttribute("aria-label", `Written ${nameText(n.pitch, names)} on the treble staff`);
+        c.querySelector(".staff")!.setAttribute("aria-label", `Written ${nameText(n.pitch, names)}${names === "letters" ? "" : ` (${nameText(n.pitch, "letters")})`} on the treble staff`); // (the octave, solfège's names have none)
       }
     },
     alternatives(how) {

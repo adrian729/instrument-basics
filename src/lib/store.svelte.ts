@@ -3,6 +3,7 @@
 // saved as it's made. The switches show them (SwitchBar.svelte); the chart follows them
 // (views/controller.svelte.ts). index.html's first script reads the instrument the same way, before the page
 // is drawn.
+import { flushSync } from "svelte";
 import { defaultOf, GROUPS, INSTRUMENTS, instrument, type GroupId, type InstrumentId } from "../data/instruments";
 import type { Names } from "./notes";
 
@@ -35,29 +36,34 @@ else if (linked() !== null) {
   history.replaceState(history.state, "", url);
 }
 
-export const choices: Choices = $state({ instrument: read("instrument"), names: read("names"), alternatives: read("alternatives") });
+// (the address's read from it, not from storage, which may be blocked or full)
+const link = linked();
+export const choices: Choices = $state({ instrument: valid("instrument", link) ? link : read("instrument"), names: read("names"), alternatives: read("alternatives") });
 
 // The instrument last chosen in each group, for the picker to come back to; the one the page opened on, too:
-// a link's always, a remembered one if its group has none yet.
+// a link's always, a remembered one if its group has none yet. Kept here, and saved when storage allows.
 const KINDS = "instrument-basics-kinds";
-const kinds = (): Partial<Record<GroupId, InstrumentId>> => {
+const kinds: Partial<Record<GroupId, InstrumentId>> = (() => {
   try { const v = JSON.parse(stored(KINDS) ?? "{}"); return v && typeof v === "object" && !Array.isArray(v) ? v : {}; } catch { return {}; }
-};
-{
-  const opened = { [instrument(choices.instrument).group]: choices.instrument };
-  store(KINDS, JSON.stringify(valid("instrument", linked()) ? { ...kinds(), ...opened } : { ...opened, ...kinds() }));
-}
+})();
+const opened = instrument(choices.instrument).group;
+if (valid("instrument", linked()) || !kinds[opened]) kinds[opened] = choices.instrument;
+store(KINDS, JSON.stringify(kinds));
 
-// Back or forward to an entry whose address names another instrument (the registers' links add entries): that one.
+// Back or forward to an entry whose address names another instrument (the registers' links add entries): that
+// one. (While it's made, `traversal.now` says so, for the chart to keep the entry's fragment.)
+export const traversal = { now: false };
 addEventListener("popstate", () => {
   const id = linked();
-  if (valid("instrument", id) && id !== choices.instrument) choose("instrument", id);
+  if (!valid("instrument", id) || id === choices.instrument) return;
+  traversal.now = true;
+  try { choose("instrument", id); flushSync(); } finally { traversal.now = false; }
 });
 
 // A group chosen: its instrument chosen last, if it's still one of its, else its default.
 export function chooseGroup(id: GroupId) {
   const group = GROUPS.find((g) => g.id === id)!;
-  const last = kinds()[id];
+  const last = kinds[id];
   choose("instrument", group.instruments.find((i) => i.id === last)?.id ?? defaultOf(group));
 }
 
@@ -67,7 +73,8 @@ export function choose<K extends keyof Choices>(key: K, value: Choices[K]) {
   // A chosen instrument goes in the address too, so that the page's link is to its chart.
   if (key === "instrument") {
     const id = value as InstrumentId;
-    store(KINDS, JSON.stringify({ ...kinds(), [instrument(id).group]: id }));
+    kinds[instrument(id).group] = id;
+    store(KINDS, JSON.stringify(kinds));
     const url = new URL(location.href);
     url.searchParams.set("instrument", value);
     history.replaceState(history.state, "", url);

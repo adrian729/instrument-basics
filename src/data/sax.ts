@@ -25,7 +25,7 @@ export const SAX: Register<SaxFingering>[] = [
       ["G4", "123 | ---"],
       ["G#4", "123 G# | ---", ["123 lowC# | ---", "The low C♯ key opens G♯ too: next to low C♯."], ["123 lowB | ---", "The same, next to low B."], ["123 lowBb | ---", "The same, next to low B♭."]],
       ["A4", "12- | ---"],
-      ["A#4", ["12- | sBb ---", "The side B♭ key, with the side of right 1: good anywhere, and in chromatic passages."], ["1-- bis | ---", "The bis key, pressed by left 1 together with the B key: in flat keys, where there's no B."], ["1-- | 1--", "One-and-one: next to F."], ["1-- | -2-", "Next to F♯."]],
+      ["A#4", ["12- | sBb ---", "The side B♭ key, with the side of right 1: good anywhere, especially in chromatic passages."], ["1-- bis | ---", "The bis key, pressed by left 1 together with the B key: in flat keys, where there's no B."], ["1-- | 1--", "One-and-one: next to F."], ["1-- | -2-", "Next to F♯."]],
       ["B4", "1-- | ---"],
       ["C5", "-2- | ---", ["1-- | sC ---", "The side C key: next to B."], ["-23 G# | ---", "In fast passages with A♭."]],
       ["C#5", "--- | ---", ["T --3 | 123", "In tune as the leading note to D."], ["--- | 123 Eb", "Next to E♭. Flat when loud on a soprano."]],

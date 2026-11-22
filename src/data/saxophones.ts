@@ -33,7 +33,7 @@ export const SAXOPHONES: Group = {
     }, SAX_NOTATION, SAX),
     define({
       ...about("baritone-sax", "baritone saxophone", "Baritone", "E♭", -12, -21), options: { lowA: true },
-      facts: ["<b>It sounds an octave and a major sixth lower.</b> The baritone saxophone is in E♭, an octave below the alto: a written C sounds the E♭ an octave and a major sixth below. The chart names written notes, and each card says what you'll hear.", "<b>Low A.</b> Most baritones have a low A key, under the left thumb, a semitone below every other saxophone's low B♭: the chart starts there.", ALIKE],
+      facts: ["<b>It sounds an octave and a major sixth lower.</b> The baritone saxophone is in E♭, an octave below the alto: a written C sounds the E♭ an octave and a major sixth below. The chart names written notes, and each card says what you'll hear.", "<b>Low A.</b> Most baritones have a low A key, under the left thumb, for the A a semitone below low B♭, the other saxophones' lowest note: the chart starts there.", ALIKE],
     }, SAX_NOTATION, SAX),
   ],
 };
