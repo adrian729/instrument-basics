@@ -24,11 +24,11 @@ The tests build the site and serve it on port 8899, then check its data, its beh
 - `src/lib/notes.ts`: notes' names (letters or solfège), what's heard, where a note sits on the staff, and a fingering in words.
 - `src/lib/store.svelte.ts`: the switches' choices (instrument, names, alternatives), saved in the browser. `src/ui/SwitchBar.svelte` shows them; `src/views/controller.svelte.ts` makes the chart follow them.
 - `src/views/`: the chart (`chart.ts`, made again when the instrument changes), drawn as SVG: the key diagram (`keys.ts`, the keys placed as in the guide's labelled photos) and the staff (`staff.ts`).
-- `src/views/glyphs.ts`: the clef, sharp, flat and whole note, as paths from Noto Music, made by `scripts/glyphs.py` (its docstring says how to run it).
+- `src/views/glyphs.ts`: the clef, sharp, flat and whole note, as paths from Bravura (the SMuFL reference font), with its engraving defaults (the lines' thickness, the ledger lines' reach), made by `scripts/glyphs.py` (its docstring says how to run it).
 - `src/styles.css`: the styles: ducktape-colors' colours and DM Mono, with a print layout.
 
 ## Sources
 
 The fingerings and their comments are from [The Woodwind Fingering Guide](https://www.wfg.woodwind.org/flute/), the comments adapted: its flute pages ([first octave](https://www.wfg.woodwind.org/flute/fl_alt_1.html), [second](https://www.wfg.woodwind.org/flute/fl_alt_2.html), [third](https://www.wfg.woodwind.org/flute/fl_alt_3.html), [fourth](https://www.wfg.woodwind.org/flute/fl_alt_4.html)) and piccolo pages ([first octave](https://www.wfg.woodwind.org/flute/picc_alt_1.html), [second](https://www.wfg.woodwind.org/flute/picc_alt_2.html), [third](https://www.wfg.woodwind.org/flute/picc_alt_3.html)). Left out: fingerings that need a half-covered hole or the C♯ trill key some flutes have, those meant for the bass or alto flute, many of the flute's fast-slur fingerings, and the piccolo's that close its end with the right little finger. Where the keys sit in the diagrams follows the guide's labelled photos of the two ([flute](https://www.wfg.woodwind.org/flute/fl_fing.html)).
 
-DM Mono (`public/fonts/`) and Noto Music (the paths in `src/views/glyphs.ts`) are under the SIL Open Font License (`public/fonts/OFL.txt`, `scripts/OFL-NotoMusic.txt`).
+DM Mono (`public/fonts/`) and Bravura (the paths in `src/views/glyphs.ts`) are under the SIL Open Font License (`public/fonts/OFL.txt`, `scripts/OFL-Bravura.txt`).
