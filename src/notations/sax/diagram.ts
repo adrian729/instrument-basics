@@ -2,7 +2,7 @@
 // left hand's keys and then the right's, as they go down it. The finger keys are circles with their numbers
 // (the bis and alternate F♯ keys small ones between them), the other keys pills with their names. Above the
 // body, the left palm's keys and the front F key, and the right hand's side keys; below it, the left thumb's
-// octave key (and the baritone's low A), the left pinky's table, the right pinky's keys. Dark is pressed;
+// octave key (and the baritone's low A), the left pinky's table, the right pinky's keys. Filled is pressed;
 // keys few fingerings use are dashed while up.
 import type { SaxFingering, SaxKey } from "./notation";
 import { el, text } from "../../views/svg";

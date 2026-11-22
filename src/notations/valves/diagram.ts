@@ -1,5 +1,5 @@
 // A valved fingering's diagram: the trumpet seen from above as it's played, the mouthpiece on the left, the
-// leadpipe to the valves, the bell on the right. Each valve a circle with its number, dark when pressed: 1
+// leadpipe to the valves, the bell on the right. Each valve a circle with its number, filled when pressed: 1
 // nearest the mouthpiece, the right hand's 1 2 3; a 4th (the piccolo trumpet's) set apart, as it's pressed
 // by the right pinky or the left hand, depending on the trumpet.
 import type { ValveFingering } from "./notation";

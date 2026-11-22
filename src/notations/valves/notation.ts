@@ -25,7 +25,7 @@ export const VALVES_NOTATION: Notation<ValveFingering> = {
   legendLabel: (options) => `The valves, from the mouthpiece out: 1, 2 and 3${(options.valves?.length ?? 3) > 3 ? ", and the 4th set apart" : ""}`,
   legend: ({ name, options }) => [
     `The ${name} seen from above as you play it: the mouthpiece on the left, the bell on the right, and the valves between, 1 nearest you.`,
-    "<b>Dark is pressed, white is up.</b> The right hand plays the valves: 1 the index, 2 the middle, 3 the ring finger.",
+    "<b>Filled is pressed, outlined is up.</b> The right hand plays the valves: 1 the index, 2 the middle, 3 the ring finger.",
     ...((options.valves?.length ?? 3) > 3 ? ["The <b>4th valve</b>, set apart, lowers a fourth, like 1 and 3 together but better in tune. It's pressed by the right pinky or the left hand, depending on the trumpet."] : []),
     "<b>One fingering, several notes.</b> Each plays a series of notes, its harmonics, and your lips choose which: the staff tells you which note you're on.",
     "Under each diagram the same fingering in words.",

@@ -377,6 +377,24 @@ test.describe("the switches", () => {
 });
 
 test.describe("the page", () => {
+  test("the key says how pressed keys look, true in both themes: filled, the rest outlined", async ({ page }) => {
+    await open(page);
+    await expect(legendText(page)).toContainText("Filled is pressed, outlined is up.");
+    for (const theme of ["light", "dark"]) {
+      if (theme === "dark") {
+        await themeSwitch(page).click();
+        await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+      }
+      const looks = await standard(page, "D4").evaluate((fig) => {
+        const fill = (sel: string) => getComputedStyle(fig.querySelector(sel)!).fill;
+        const card = getComputedStyle(fig.closest(".note")!).backgroundColor, text = getComputedStyle(document.body).color;
+        return { down: fill(".key.down :is(circle, rect)"), up: fill(".key:not(.down) :is(circle, rect)"), card, text };
+      });
+      expect(looks.down, theme).toBe(looks.text);
+      expect(looks.up, theme).toBe(looks.card);
+    }
+  });
+
   test("the page's links stand beside the chart, the part being read marked", async ({ page }) => {
     await open(page, {}, "/?instrument=alto-sax");
     const toc = page.locator(".toc");

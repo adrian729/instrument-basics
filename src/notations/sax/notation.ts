@@ -64,7 +64,7 @@ export const SAX_NOTATION: Notation<SaxFingering> = {
   legendLabel: (options) => `The keys: the octave key${options.lowA ? " and low A key" : ""} under the left thumb; the palm keys D, E-flat and F and the front F key; left 1, the bis key, left 2 and 3; the left pinky's G-sharp, low C-sharp, B and B-flat; the side keys E, C and B-flat and the high F-sharp key; right 1, 2, the alternate F-sharp key, right 3; the right pinky's E-flat and low C`,
   legend: ({ name, options }) => [
     `The ${name}'s keys laid out along it: the mouthpiece on the left, then the left hand's keys, then the right's, as they go down the instrument.`,
-    "<b>Dark is pressed, white is up.</b> The numbers are your fingers: 1 the index, 2 the middle, 3 the ring finger.",
+    "<b>Filled is pressed, outlined is up.</b> The numbers are your fingers: 1 the index, 2 the middle, 3 the ring finger.",
     "Above the body, the left palm's <b>D</b>, <b>E♭</b> and <b>F</b> keys and the front F key (<b>f</b>), by left 1; and the right hand's side keys <b>E</b>, <b>C</b> and <b>B♭</b>, with the high <b>F♯</b> key most saxophones have.",
     `Below it, the left thumb's octave key (<b>oct</b>)${options.lowA ? " and the baritone's low <b>A</b> key" : ""}, the left pinky's <b>G♯</b>, <b>C♯</b>, <b>B</b> and <b>B♭</b>, and the right pinky's <b>E♭</b> and <b>C</b>.`,
     "The small key between left 1 and 2 is the <b>bis</b> B♭ key; the dashed one between right 2 and 3, the alternate F♯ key. Dashed keys are the few that only some fingerings use.",

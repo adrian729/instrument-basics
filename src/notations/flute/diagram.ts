@@ -1,6 +1,6 @@
 // A fingering's diagram: the instrument seen from above as it's played, the mouthpiece on the left, the left
 // hand's keys and then the right's, each finger's key a circle with its number, the small keys pills with
-// their names. Dark is pressed. Along it, every key is where it is on the instrument; across it, the keys on
+// their names. Filled is pressed. Along it, every key is where it is on the instrument; across it, the keys on
 // the player's side (the thumb's, the side lever, the trill keys' touches and the right pinky's) are drawn
 // below the body, the left pinky's G♯ above it, as in The Woodwind Fingering Guide's labelled photos. A
 // flute's has its foot joint's keys too, clustered with E♭ as on the instrument. Keys few notes use are dashed
