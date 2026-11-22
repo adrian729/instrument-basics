@@ -126,7 +126,7 @@ h2 { font-size: 1.15rem; line-height: 1.3; text-wrap: balance; }
 .in-words b { color: var(--muted); font-weight: 400; }
 .comment { font-size: 0.8rem; color: var(--muted); }
 
-/* The diagram (keys.ts). Dark is pressed. */
+/* The diagrams (each notation's diagram.ts). Dark is pressed. */
 .keys { display: block; width: 100%; height: auto; font-family: var(--mono); }
 .keys .body { fill: var(--body); }
 .keys .mouth { fill: none; stroke: var(--muted); stroke-width: 1.4; }
