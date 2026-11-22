@@ -10,11 +10,11 @@
   --card: #ffffff;
   --mono: "DM Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 }
-/* The dark theme: the system's, unless light is chosen, or chosen (the header's switch). */
-@media (prefers-color-scheme: dark) {
+/* The dark theme, on screen (printed, the light): the system's, unless light is chosen, or chosen (the header's switch). */
+@media screen and (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) { color-scheme: dark; --bg: #181817; --fg: #e8e8e3; --muted: #9a9a93; --line: #34342f; --body: #2a2a27; --card: #1f1f1d; }
 }
-:root[data-theme="dark"] { color-scheme: dark; --bg: #181817; --fg: #e8e8e3; --muted: #9a9a93; --line: #34342f; --body: #2a2a27; --card: #1f1f1d; }
+@media screen { :root[data-theme="dark"] { color-scheme: dark; --bg: #181817; --fg: #e8e8e3; --muted: #9a9a93; --line: #34342f; --body: #2a2a27; --card: #1f1f1d; } }
 /* DM Mono (SIL Open Font License, fonts/OFL.txt), from github.com/google/fonts/tree/main/ofl/dmmono, as
    WOFF2; the fallback shows until it's in (swap). It has no bold: Medium (500) is the heaviest weight. */
 @font-face { font-family: "DM Mono"; src: url("/fonts/DMMono-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
@@ -33,21 +33,21 @@ a { color: inherit; text-underline-offset: 0.25em; }
 
 /* Header: the site's name and the theme's switch. */
 body > header { position: sticky; top: 0; z-index: 3; background: var(--bg); border-bottom: 1px solid var(--line); }
-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1.5rem; padding: 1rem 1.5rem; }
+body > header nav { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1.5rem; padding: 1rem 1.5rem; }
 /* The site's icon before its name, as tall as a line of it. */
 .brand { display: flex; align-items: flex-start; gap: 0.625rem; line-height: 1.25rem; color: inherit; text-decoration: none; margin-right: auto; }
 .brand img { flex: none; width: 1.25rem; height: 1.25rem; }
 .brand:is(:hover, :focus-visible) strong { text-decoration: underline; }
-nav span { color: var(--muted); }
+.brand span { color: var(--muted); }
 /* The theme's switch: a circle half filled. */
 .theme-switch { display: inline-grid; place-items: center; padding: 0.25rem; margin: -0.25rem; border: 0; background: none; color: var(--muted); cursor: pointer; }
 .theme-switch:is(:hover, :focus-visible) { color: var(--fg); }
-@media (max-width: 600px) { nav { padding: 0.85rem 1rem; } }
+@media (max-width: 600px) { body > header nav { padding: 0.85rem 1rem; } }
 
 /* The page's links (toc.ts): the overview, then the registers,, floating at the top right. Wide enough, they stand in the margin beside the
    chart (main: 72rem, centred), open; narrower, they fold under a button over the page's top right corner, the
    heading and the switches leaving it room. */
-.toc { position: fixed; z-index: 4; top: calc(var(--header-height, 3.5rem) + 0.75rem); right: 1.5rem; display: flex; flex-direction: column; align-items: flex-end; gap: 0.35rem; font-size: 0.75rem; }
+.toc { position: fixed; z-index: 4; top: calc(var(--header-height, 3.5rem) + 1.75rem); right: 1.5rem; display: flex; flex-direction: column; align-items: flex-end; gap: 0.35rem; font-size: 0.75rem; }
 .toc-toggle {
   font: inherit; height: calc(1.9em + 6px); padding: 0 2.1em 0 0.95em; border: 1px solid var(--line); border-radius: 999px;
   background: var(--bg); color: var(--fg); cursor: pointer; position: relative; box-shadow: 0 2px 8px color-mix(in srgb, var(--fg) 8%, transparent);
@@ -65,11 +65,11 @@ nav span { color: var(--muted); }
 .toc-links a:is(:hover, :focus-visible) { color: var(--fg); background: color-mix(in srgb, var(--fg) 6%, transparent); }
 .toc-links a[aria-current] { color: var(--fg); }
 /* (the heading, and the stuck switches, keep clear of the button) */
-@media (max-width: 89.99rem) { .intro h1 { padding-right: 7rem; } }
+@media screen and (max-width: 89.99rem) { .intro h1 { padding-right: 7rem; } }
 @media (min-width: 601px) and (max-width: 89.99rem) { .switch-row { padding-right: 7.5rem; } }
 @media (max-width: 600px) { .toc { right: 1rem; } }
 @media (min-width: 90rem) {
-  .toc { top: calc(var(--header-height, 3.5rem) + 2.5rem); right: auto; left: calc(50% + 36rem); align-items: stretch; }
+  .toc { top: calc(var(--header-height, 3.5rem) + 3.5rem); right: auto; left: calc(50% + 37.5rem); align-items: stretch; }
   .toc-toggle { display: none; }
   .toc-links { display: flex; min-width: 0; padding: 0; background: none; border: 0; box-shadow: none; gap: 0.1rem; }
   .toc-title { display: block; margin-bottom: 0.3rem; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
@@ -180,7 +180,7 @@ footer p { max-width: 80ch; }
 /* Printed: the chart alone, in the light theme, its alternatives as the switch has them, no card split. */
 @media print {
   :root { color-scheme: light; --bg: #fff; --fg: #000; --muted: #555; --line: #ccc; --body: #e8e8e8; --card: #fff; }
-  body > header, .switches { display: none; }
+  body > header, .switches, .toc { display: none; }
   main { padding: 0; gap: 1.5rem; max-width: none; }
   .note { break-inside: avoid; }
   .notes { grid-template-columns: repeat(3, minmax(0, 1fr)); }

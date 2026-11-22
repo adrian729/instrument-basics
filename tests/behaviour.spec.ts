@@ -243,7 +243,7 @@ test.describe("the switches", () => {
     await expect(page.locator("h1")).toHaveText("Every fingering for the piccolo");
     await expect(facts(page)).toContainText("There's no foot joint");
     await expect(legendText(page)).not.toContainText("gizmo");
-    await expect(page.locator("footer .tip")).toContainText("sharp low down");
+    await expect(page.locator("footer .tip")).not.toContainText("fast slur"); // (the piccolo's own tip)
     // No foot joint anywhere: not in the key, not in a card.
     await expect(page.locator('svg.keys [data-key^="low-"], svg.keys [data-key="gizmo"]')).toHaveCount(0);
     await page.goto("/");
@@ -377,6 +377,56 @@ test.describe("the switches", () => {
 });
 
 test.describe("the page", () => {
+  test("odd addresses and storage: a malformed fragment, an unknown instrument, broken memory", async ({ page }) => {
+    await page.goto("/?instrument=alto-sax#%");
+    await expect(card(page, "D5")).toBeVisible();
+    await expect(page.locator("html")).not.toHaveAttribute("data-pending");
+    await expect(page).toHaveURL(/\?instrument=alto-sax$/);
+    await page.goto("/?instrument=trumpet");
+    await expect(cards(page).first()).toBeVisible();
+    await expect(page).not.toHaveURL(/instrument=trumpet/);
+    await page.evaluate(() => localStorage.setItem("instrument-basics-kinds", "null"));
+    await page.reload();
+    await pick(page, "saxophones", "alto-sax");
+  });
+
+  test("a link to the key keeps its fragment and scrolls to it", async ({ page }) => {
+    await open(page, {}, "/?instrument=tenor-sax#legend");
+    await expect(page).toHaveURL(/#legend$/);
+    await expect(page.locator("#legend h2")).toBeInViewport();
+  });
+
+  test("back to an entry that names another instrument: that one", async ({ page }) => {
+    await open(page, {}, "/?instrument=flute");
+    await page.locator(".toc").getByRole("link", { name: "3rd" }).click();
+    await pick(page, "trumpets", "bb-trumpet");
+    await page.goBack();
+    await expect(page).toHaveURL(/\?instrument=flute$/);
+    await expect(page.locator("html")).toHaveAttribute("data-instrument", "flute");
+    await expect(groupSelect(page)).toHaveValue("flutes");
+  });
+
+  test("a group comes back to the kind the page opened on", async ({ page }) => {
+    await open(page, {}, "/?instrument=piccolo");
+    await pick(page, "trumpets", "bb-trumpet");
+    await groupSelect(page).selectOption("flutes");
+    await expect(page.locator("html")).toHaveAttribute("data-instrument", "piccolo");
+  });
+
+  test("the last register marked at the page's end, though too short to reach the top", async ({ page }) => {
+    await open(page, {}, "/?instrument=piccolo");
+    const toc = page.locator(".toc");
+    await toc.getByRole("link", { name: "Top" }).click();
+    await expect(toc.getByRole("link", { name: "Top" })).toHaveAttribute("aria-current", "location");
+  });
+
+  test("printed in the dark theme: dark text on white, and the contents left out", async ({ page }) => {
+    await open(page, { theme: "dark" });
+    await page.emulateMedia({ media: "print" });
+    await expect(page.locator("body")).toHaveCSS("color", "rgb(0, 0, 0)");
+    await expect(page.locator(".toc")).toBeHidden();
+  });
+
   test("the key says how pressed keys look, true in both themes: filled, the rest outlined", async ({ page }) => {
     await open(page);
     await expect(legendText(page)).toContainText("Filled is pressed, outlined is up.");

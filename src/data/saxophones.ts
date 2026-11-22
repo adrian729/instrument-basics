@@ -29,11 +29,11 @@ export const SAXOPHONES: Group = {
     }, SAX_NOTATION, SAX),
     define({
       ...about("tenor-sax", "tenor saxophone", "Tenor", "B♭", -8, -14), options: {},
-      facts: ["<b>It sounds an octave and a tone lower.</b> The tenor saxophone is in B♭, an octave below the soprano: a written C sounds the B♭ an octave and a tone below.", ALIKE, OCTAVE],
+      facts: ["<b>It sounds an octave and a tone lower.</b> The tenor saxophone is in B♭, an octave below the soprano: a written C sounds the B♭ an octave and a tone below. The chart names written notes, and each card says what you'll hear.", ALIKE, OCTAVE],
     }, SAX_NOTATION, SAX),
     define({
       ...about("baritone-sax", "baritone saxophone", "Baritone", "E♭", -12, -21), options: { lowA: true },
-      facts: ["<b>It sounds an octave and a major sixth lower.</b> The baritone saxophone is in E♭, an octave below the alto: a written C sounds the E♭ an octave and a sixth below.", "<b>Low A.</b> Most baritones have a low A key, under the left thumb, a semitone below every other saxophone's low B♭: the chart starts there.", ALIKE],
+      facts: ["<b>It sounds an octave and a major sixth lower.</b> The baritone saxophone is in E♭, an octave below the alto: a written C sounds the E♭ an octave and a major sixth below. The chart names written notes, and each card says what you'll hear.", "<b>Low A.</b> Most baritones have a low A key, under the left thumb, a semitone below every other saxophone's low B♭: the chart starts there.", ALIKE],
     }, SAX_NOTATION, SAX),
   ],
 };

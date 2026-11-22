@@ -10,7 +10,7 @@ import { rows, type Register } from "./types";
 export const SAX: Register<SaxFingering>[] = [
   {
     id: "low", name: "Low register", nav: "Low",
-    about: "No octave key: relaxed air and a loose embouchure. The pinkies' keys give the lowest notes, which take the most air to speak softly.",
+    about: "No octave key: relaxed air and a loose embouchure. The pinkies' keys give the lowest notes, which are the hardest to play softly.",
     notes: rows(parseSax, [
       ["A3", ["lowA 123 | 123 lowC", "The lowest note, on the baritone only: its low A key, with the left thumb.", ["baritone-sax"]]],
       ["A#3", "123 lowBb | 123 lowC"],
@@ -25,7 +25,7 @@ export const SAX: Register<SaxFingering>[] = [
       ["G4", "123 | ---"],
       ["G#4", "123 G# | ---", ["123 lowC# | ---", "The low C♯ key opens G♯ too: next to low C♯."], ["123 lowB | ---", "The same, next to low B."], ["123 lowBb | ---", "The same, next to low B♭."]],
       ["A4", "12- | ---"],
-      ["A#4", ["12- | sBb ---", "The side B♭ key, with the side of right 1: good anywhere, and in chromatic passages."], ["1-- bis | ---", "The bis key, with left 1 across it and the B key: in flat keys, where there's no B."], ["1-- | 1--", "One and one: next to F."], ["1-- | -2-", "Next to F♯."]],
+      ["A#4", ["12- | sBb ---", "The side B♭ key, with the side of right 1: good anywhere, and in chromatic passages."], ["1-- bis | ---", "The bis key, pressed by left 1 together with the B key: in flat keys, where there's no B."], ["1-- | 1--", "One-and-one: next to F."], ["1-- | -2-", "Next to F♯."]],
       ["B4", "1-- | ---"],
       ["C5", "-2- | ---", ["1-- | sC ---", "The side C key: next to B."], ["-23 G# | ---", "In fast passages with A♭."]],
       ["C#5", ["--- | ---", "Every key open."], ["T --3 | 123", "In tune as the leading note to D."], ["--- | 123 Eb", "Next to E♭. Flat when loud on a soprano."]],
@@ -43,7 +43,7 @@ export const SAX: Register<SaxFingering>[] = [
       ["G5", "T 123 | ---"],
       ["G#5", "T 123 G# | ---", ["T 123 lowC# | ---", "The low C♯ key opens G♯ too: next to fingerings with it."]],
       ["A5", "T 12- | ---"],
-      ["A#5", ["T 12- | sBb ---", "The side B♭ key: good anywhere."], ["T 1-- bis | ---", "The bis key: in flat keys, where there's no B."], ["T 1-- | 1--", "One and one: next to F."], ["T 1-- | -2-", "Next to F♯."]],
+      ["A#5", ["T 12- | sBb ---", "The side B♭ key: good anywhere."], ["T 1-- bis | ---", "The bis key: in flat keys, where there's no B."], ["T 1-- | 1--", "One-and-one: next to F."], ["T 1-- | -2-", "Next to F♯."]],
       ["B5", "T 1-- | ---"],
       ["C6", "T -2- | ---", ["T 1-- | sC ---", "The side C key: next to B."]],
       ["C#6", ["T --- | ---", "The octave key alone."], ["T --- | 123", "A better tone, and steadier."]],

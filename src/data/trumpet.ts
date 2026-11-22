@@ -32,7 +32,7 @@ export const TRUMPET: Register<ValveFingering>[] = [
   },
   {
     id: "middle", name: "Middle register", nav: "Middle",
-    about: "The staff's middle: the 4th, 5th and 6th harmonics, closer together, so that several notes share a fingering and a few have two.",
+    about: "The staff's middle: from open G (the 3rd harmonic) up through the 4th, 5th and 6th, closer together, so that several notes share a fingering and a few have two.",
     notes: rows(parseValves, [
       ["G4", "0", ["13", OTHER]],
       ["G#4", "23"],
@@ -50,7 +50,7 @@ export const TRUMPET: Register<ValveFingering>[] = [
   },
   {
     id: "high", name: "High register", nav: "High",
-    about: "Up to high C, the top of the standard range: firm lips and fast air. Above it, the notes are the lead players'.",
+    about: "Up to high C, the top of the standard range: firm lips and fast air. Above it is the lead players' range.",
     notes: rows(parseValves, [
       ["G5", "0", ["13", OTHER]],
       ["G#5", "23"],

@@ -1,6 +1,6 @@
 # Instrument Basics
 
-Fingering charts: every note of an instrument from the bottom to the top at written pitch, each with the standard fingering first and the alternatives under it (for tuning, soft or loud playing, response, or an easier passage). Each note is shown on the staff, with a diagram of the keys or valves and the same fingering in words, and what it sounds on a transposing instrument.
+Fingering charts: every note of an instrument's usual range, from the lowest up, at written pitch, each with the standard fingering first and the alternatives under it (for tuning, soft or loud playing, response, or an easier passage). Each note is shown on the staff, with a diagram of the keys or valves and the same fingering in words, and what it sounds on a transposing instrument.
 
 Live at https://adrian729.github.io/instrument-basics/.
 

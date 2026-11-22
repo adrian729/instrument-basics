@@ -1,4 +1,4 @@
-// The trumpets: the B♭ trumpet (the usual one), the C trumpet (the orchestra's), fingered alike for the same
+// The trumpets: the B♭ trumpet (the usual one), the C trumpet (common in orchestras), fingered alike for the same
 // written notes, and the four-valve piccolo trumpet in B♭.
 import { VALVES_NOTATION } from "../notations/valves/notation";
 import { define, type Group } from "./instrument";
@@ -28,7 +28,7 @@ export const TRUMPETS: Group = {
     define({
       id: "c-trumpet", group: "trumpets", name: "C trumpet", kind: "C", title: "The C trumpet, sounding as written", clef: "treble", transposition: { steps: 0, semitones: 0 }, options: THREE,
       facts: [
-        "<b>It sounds as written.</b> The C trumpet, an orchestra's usual one, reads concert pitch: the note on the page is the note you hear.",
+        "<b>It sounds as written.</b> The C trumpet, common in orchestras (American ones especially) alongside the B♭, reads concert pitch: the note on the page is the note you hear.",
         "<b>Fingered like the B♭ trumpet.</b> The same written note takes the same valves; it just sounds a tone higher.",
         SLIDES,
       ],
@@ -39,7 +39,7 @@ export const TRUMPETS: Group = {
       facts: [
         "<b>It sounds a minor seventh higher.</b> The piccolo trumpet in B♭ is an octave above the B♭ trumpet: a written C sounds the B♭ above it.",
         "<b>The 4th valve</b> lowers a fourth: in tune where 1–3 and 1–2–3 are sharp, and with the others down to written C♯3.",
-        "<b>Fingered like the trumpet</b> everywhere else: the same written note, the same valves, up to written G (sounding F6).",
+        "<b>Fingered like the trumpet</b> everywhere else: the same written note, the same valves, up to written G5 (sounding F6).",
       ],
       tip: TIP,
     }, VALVES_NOTATION, PICCOLO_TRUMPET),

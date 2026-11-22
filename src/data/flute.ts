@@ -1,5 +1,5 @@
 // Every note of the Boehm concert flute, from the foot joint's low B (with a B foot; low C with the usual C
-// foot) to F7 at the top of the fourth octave. A flute sounds as written. Each note's first fingering is the
+// foot) to F7, in the fourth octave. A flute sounds as written. Each note's first fingering is the
 // standard one; the rest are alternatives, for tuning, soft or loud playing, response, or slurs. From The
 // Woodwind Fingering Guide's flute pages (wfg.woodwind.org/flute/fl_alt_1.html, _2, _3, _4), its comments
 // adapted; left out are its fingerings that need a half-covered hole, the C♯ trill key some flutes have, or
@@ -39,7 +39,7 @@ export const FLUTE: Register<FluteFingering>[] = [
       ["F5", "B 123 | 1-- Eb"],
       ["F#5", "B 123 | --3 Eb", ["B 123 | -2- Eb", "For slurs from E."]],
       ["G5", "B 123 | --- Eb"],
-      ["G#5", "B 123 G# | --- Eb", ["B 123 G# | 123 lowC#", "Great for pp: low C♯'s fingering, overblown."]],
+      ["G#5", "B 123 G# | --- Eb", ["B 123 G# | 123 lowC#", "Great for pp: low C♯'s fingering with the G♯ key, overblown (a harmonic)."]],
       ["A5", "B 12- | --- Eb", ["B 12- G# | 1-- Eb", "Good for ff, and less likely to crack up to E."]],
       ["A#5", ["Bb 1-- | --- Eb", "The B♭ thumb lever."], ["B 1-- | 1-- Eb", "One-and-one."], ["B 1-- | --- Eb side", "The side B♭ lever. For trills with B."]],
       ["B5", "B 1-- | --- Eb", ["B 1-3 | 12- Eb", "Good for pp: a harmonic, low E's fingering with left 2 up."]],

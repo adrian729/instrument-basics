@@ -35,8 +35,8 @@ export function saxDiagram(f: SaxFingering, label: string, lowA: boolean, legend
   };
 
   // The left hand: the palm keys and front F above, the thumb's below, the fingers and bis, the pinky's table.
-  pill("palm-d", 34, ABOVE, 20, "D", on("pD"));
-  pill("palm-e-flat", 56, ABOVE, 22, "E♭", on("pEb"));
+  pill("palm-e-flat", 34, ABOVE, 22, "E♭", on("pEb")); // (E♭ the topmost, then D)
+  pill("palm-d", 56, ABOVE, 20, "D", on("pD"));
   pill("palm-f", 80, ABOVE, 20, "F", on("pF"));
   pill("front-f", 108, ABOVE, 20, "f", on("fF"), true);
   pill("octave", 104, UNDER, 28, "oct", on("T")); // under left 1, where the thumb is

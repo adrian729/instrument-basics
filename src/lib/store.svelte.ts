@@ -25,15 +25,31 @@ const read = <K extends keyof Choices>(key: K): Choices[K] => {
   return valid(key, v) ? v : (VALUES[key][0] as Choices[K]);
 };
 
-// The address's instrument wins, and is remembered.
-const linked = new URLSearchParams(location.search).get("instrument");
-if (valid("instrument", linked)) store(KEY.instrument, linked);
+// The address's instrument wins, and is remembered; one that isn't (misspelled, or an old link's), taken out
+// of it, so that a copy of the address doesn't name it.
+const linked = () => new URLSearchParams(location.search).get("instrument");
+if (valid("instrument", linked())) store(KEY.instrument, linked()!);
+else if (linked() !== null) {
+  const url = new URL(location.href);
+  url.searchParams.delete("instrument");
+  history.replaceState(history.state, "", url);
+}
 
 export const choices: Choices = $state({ instrument: read("instrument"), names: read("names"), alternatives: read("alternatives") });
 
-// The instrument last chosen in each group, for the picker to come back to.
+// The instrument last chosen in each group, for the picker to come back to; the one the page opened on, too,
+// if its group has none yet.
 const KINDS = "instrument-basics-kinds";
-const kinds = (): Partial<Record<GroupId, InstrumentId>> => { try { return JSON.parse(stored(KINDS) ?? "{}"); } catch { return {}; } };
+const kinds = (): Partial<Record<GroupId, InstrumentId>> => {
+  try { const v = JSON.parse(stored(KINDS) ?? "{}"); return v && typeof v === "object" && !Array.isArray(v) ? v : {}; } catch { return {}; }
+};
+store(KINDS, JSON.stringify({ [instrument(choices.instrument).group]: choices.instrument, ...kinds() }));
+
+// Back or forward to an entry whose address names another instrument (the registers' links add entries): that one.
+addEventListener("popstate", () => {
+  const id = linked();
+  if (valid("instrument", id) && id !== choices.instrument) choose("instrument", id);
+});
 
 // A group chosen: its instrument chosen last, if it's still one of its, else its default.
 export function chooseGroup(id: GroupId) {

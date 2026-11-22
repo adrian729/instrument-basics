@@ -25,11 +25,11 @@ export const FLUTES: Group = {
     define({
       id: "piccolo", group: "flutes", name: "piccolo", kind: "Piccolo", title: "The piccolo, sounding an octave higher", clef: "treble", transposition: { steps: 7, semitones: 12 }, options: {},
       facts: [
-        "<b>There's no foot joint.</b> No piccolo has one: its lowest note is D, all six fingers down, and the flute's low C♯, C and B keys aren't needed for anything.",
+        "<b>There's no foot joint.</b> No piccolo has one: its lowest note is D, all six fingers down: it has none of the flute's low C♯, C or B keys.",
         "<b>It sounds an octave higher.</b> Piccolo music is written an octave below what's heard. The chart names written notes, and each card says what you'll hear.",
         PINKY("lifted, as for low D and middle D"),
       ],
-      tip: "The piccolo tends to be sharp low down and flat at the very top: most alternatives are for that, or for soft and loud playing, or to make a note speak. Try them with a tuner, and keep what works on yours.",
+      tip: "Most alternatives are for tuning, or for soft and loud playing, or to make a note speak. Try them with a tuner, and keep what works on yours.",
     }, FLUTE_NOTATION, PICCOLO),
   ],
 };

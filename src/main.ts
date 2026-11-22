@@ -3,7 +3,7 @@ import "./styles.css";
 import "./lib/theme";
 import { flushSync, mount } from "svelte";
 import SwitchBar from "./ui/SwitchBar.svelte";
-import { makeChart } from "./views/chart";
+import { hashId, makeChart } from "./views/chart";
 import { follow } from "./views/controller.svelte";
 import { toc } from "./views/toc";
 
@@ -20,4 +20,4 @@ toc(document.querySelector<HTMLElement>(".toc")!);
 flushSync(); // (the chart made now, not after this script)
 
 // Opened at a register's link (#high), there once the chart is in.
-if (location.hash) document.getElementById(decodeURIComponent(location.hash.slice(1)))?.scrollIntoView({ behavior: "instant" });
+if (hashId()) document.getElementById(hashId())?.scrollIntoView({ behavior: "instant" });

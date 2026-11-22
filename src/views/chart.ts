@@ -8,6 +8,9 @@ import { nameParts, nameText, rangeText, soundingText, type Names } from "../lib
 import type { Alternatives } from "../lib/store.svelte";
 import { staff, stepsFor } from "./staff";
 
+// The id the address's fragment names ("" if none, or if it's malformed: "#%").
+export const hashId = () => { try { return decodeURIComponent(location.hash.slice(1)); } catch { return ""; } };
+
 export type Chart = { instrument(id: InstrumentId): void; names(names: Names): void; alternatives(how: Alternatives): void };
 
 const h = <K extends keyof HTMLElementTagNameMap>(tag: K, props: Partial<HTMLElementTagNameMap[K]> & { dataset?: Record<string, string> } = {}, ...children: (Node | string)[]) => {
@@ -47,38 +50,42 @@ export function makeChart(root: HTMLElement, legend: HTMLElement): Chart {
   let cards = new Map<string, HTMLElement>();
   let names: Names = "letters", alternatives: Alternatives = "folded";
 
+  // The chart made for an instrument, its text put in.
+  function make(id: InstrumentId) {
+    shown = find(id);
+    document.documentElement.dataset.instrument = id;
+    document.title = `Instrument Basics | ${shown.name[0].toUpperCase()}${shown.name.slice(1)} fingering chart`;
+    const html = (selector: string, content: string) => { document.querySelector(selector)!.innerHTML = content; }; // (the data's own text)
+    const items = (list: string[]) => list.map((s) => `<li>${s}</li>`).join("");
+    document.querySelector("#intro-title")!.textContent = `Every fingering for the ${shown.name}`;
+    html(".intro .facts", items(shown.facts));
+    html(".legend-text ul", items(shown.legend));
+    html("footer .tip", shown.tip);
+    html("footer .sources", group(shown.group).sources);
+    document.querySelector(".toc-links")!.replaceChildren(h("p", { className: "toc-title", ariaHidden: "true" }, "Contents"), h("a", { href: "#intro" }, "Overview"), ...shown.registers.map((r) => h("a", { href: `#${r.id}` }, r.nav)));
+    legend.querySelector(".legend-keys")?.remove();
+    legend.prepend(shown.legendDiagram());
+    root.replaceChildren(...shown.registers.map((r) => {
+      const fit = stepsFor(r.notes.map((n) => n.pitch));
+      return h("section", { className: "register", id: r.id },
+        h("header", { className: "register-head" },
+          h("p", { className: "range" }, rangeText(r.notes[0].pitch, r.notes.at(-1)!.pitch)),
+          h("h2", { id: `${r.id}-title` }, r.name),
+          h("p", { className: "about" }, r.about)),
+        h("div", { className: "notes" }, ...r.notes.map((n) => card(n, fit))));
+    }));
+    for (const r of shown.registers) document.getElementById(r.id)!.setAttribute("aria-labelledby", `${r.id}-title`);
+    notes = shown.registers.flatMap((r) => r.notes);
+    cards = new Map(notes.map((n) => [n.id, root.querySelector<HTMLElement>(`[data-note="${CSS.escape(n.id)}"]`)!]));
+    // An address naming what this page hasn't (another instrument's register, a malformed "#%"), left without it.
+    if (location.hash && !(hashId() && document.getElementById(hashId()))) history.replaceState(history.state, "", location.pathname + location.search);
+    hooks.names(names);
+    hooks.alternatives(alternatives);
+  }
+
   const hooks: Chart = {
     instrument(id) {
-      shown = find(id);
-      document.documentElement.dataset.instrument = id;
-      document.title = `Instrument Basics | ${shown.name[0].toUpperCase()}${shown.name.slice(1)} fingering chart`;
-      const html = (selector: string, content: string) => { document.querySelector(selector)!.innerHTML = content; }; // (the data's own text)
-      const items = (list: string[]) => list.map((s) => `<li>${s}</li>`).join("");
-      document.querySelector("#intro-title")!.textContent = `Every fingering for the ${shown.name}`;
-      html(".intro .facts", items(shown.facts));
-      html(".legend-text ul", items(shown.legend));
-      html("footer .tip", shown.tip);
-      html("footer .sources", group(shown.group).sources);
-      document.querySelector(".toc-links")!.replaceChildren(h("p", { className: "toc-title", ariaHidden: "true" }, "Contents"), h("a", { href: "#intro" }, "Overview"), ...shown.registers.map((r) => h("a", { href: `#${r.id}` }, r.nav)));
-      // An address naming a register this instrument hasn't, left without it.
-      if (location.hash && !["intro", ...shown.registers.map((r) => r.id)].some((id) => `#${id}` === decodeURIComponent(location.hash))) history.replaceState(history.state, "", location.pathname + location.search);
-      legend.querySelector(".legend-keys")?.remove();
-      legend.prepend(shown.legendDiagram());
-      root.replaceChildren(...shown.registers.map((r) => {
-        const fit = stepsFor(r.notes.map((n) => n.pitch));
-        return h("section", { className: "register", id: r.id },
-          h("header", { className: "register-head" },
-            h("p", { className: "range" }, rangeText(r.notes[0].pitch, r.notes.at(-1)!.pitch)),
-            h("h2", { id: `${r.id}-title` }, r.name),
-            h("p", { className: "about" }, r.about)),
-          h("div", { className: "notes" }, ...r.notes.map((n) => card(n, fit))));
-      }));
-      for (const r of shown.registers) document.getElementById(r.id)!.setAttribute("aria-labelledby", `${r.id}-title`);
-      notes = shown.registers.flatMap((r) => r.notes);
-      cards = new Map(notes.map((n) => [n.id, root.querySelector<HTMLElement>(`[data-note="${CSS.escape(n.id)}"]`)!]));
-      hooks.names(names);
-      hooks.alternatives(alternatives);
-      delete document.documentElement.dataset.pending;
+      try { make(id); } finally { delete document.documentElement.dataset.pending; } // (the text shown, whatever happens)
     },
     names(to) {
       names = to;
