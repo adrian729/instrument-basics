@@ -176,7 +176,6 @@ h2 { font-size: 1.15rem; line-height: 1.3; text-wrap: balance; }
 /* The diagrams (each notation's diagram.ts). Filled (the text colour) is pressed, in both themes. */
 .keys { display: block; width: 100%; height: auto; font-family: var(--mono); }
 .keys .body { fill: var(--body); }
-.keys .drawn { fill: var(--body); stroke: var(--muted); stroke-width: 1.2; stroke-linejoin: round; }
 .keys .mouth { fill: none; stroke: var(--muted); stroke-width: 1.4; }
 .keys .key :is(circle, rect) { fill: var(--card); stroke: var(--fg); stroke-width: 1.6; }
 .keys .key.down :is(circle, rect) { fill: var(--fg); }
@@ -195,7 +194,15 @@ h2 { font-size: 1.15rem; line-height: 1.3; text-wrap: balance; }
 .fingering > .keys.tall { flex: none; width: 6.5rem; }
 /* The valves alone (an upright instrument's): their own size, not the card's width. */
 .fingering > .keys.valves-only { height: auto; align-self: flex-start; } /* (its width set on it) */
-.legend-keys.standing { max-width: 24rem; }
+/* An instrument drawn (the key's, for the valved brass but the trumpets): lines in the text colour, the page's
+   between them, so that what's in front hides what's behind. */
+.keys .art .ink { fill: none; stroke: var(--fg); stroke-linejoin: round; }
+.keys .art .paper { fill: none; stroke: var(--bg); stroke-linejoin: round; }
+.keys .art .sheet { fill: var(--bg); stroke: var(--fg); stroke-linejoin: round; }
+.keys .art .sheet.bare { stroke: none; }
+.keys .leader { stroke: var(--muted); stroke-width: 0.8; }
+.legend-keys.drawing.upright { width: auto; height: 24rem; max-width: 100%; margin-inline: auto; }
+.legend-keys.drawing.lying { max-width: 26rem; }
 .legend-keys.tall { max-width: 20rem; margin-inline: auto; }
 
 /* The alternatives: folded under the standard one, opened one note at a time (or all: the switch). */

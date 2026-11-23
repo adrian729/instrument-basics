@@ -1,21 +1,23 @@
 // A valved fingering's diagram. Each valve a circle with its number, filled when pressed, 1 nearest the
-// mouthpiece: the right hand's 1 2 3, and a 4th set apart. A trumpet's (and the cornet's, flugelhorn's and
-// mellophone's, held the same way) is the instrument seen from above as it's played: the mouthpiece on the
+// mouthpiece: the right hand's 1 2 3, and a 4th set apart. A trumpet's is the instrument seen from above as
+// it's played: the mouthpiece on the
 // left, the leadpipe to the valves, the bell on the right; the piccolo trumpet's 4th valve pressed by the right
-// pinky or the left hand, depending on the trumpet. An upright instrument's (the tenor horn, baritone,
-// euphonium) is its valves alone, as the usual charts draw them: the key's diagram draws the instrument
-// standing, seen from the front, its bell up and its valves on top, and on a compensating euphonium the 4th
-// on the side, lower down, the left index finger's ("midway down the right side": Wikipedia's "Euphonium";
-// Brass Techniques and Pedagogy, "The Euphonium").
+// pinky or the left hand, depending on the trumpet. The other instruments' (each drawn: drawings.ts) is their
+// valves alone, as the usual charts draw them, 1 2 3 from the left, and the key's diagram the instrument
+// itself, its valves numbered where they are; on a compensating euphonium the 4th on the side, lower down,
+// the left index finger's ("midway down the right side": Wikipedia's "Euphonium"; Brass Techniques and
+// Pedagogy, "The Euphonium").
 import type { ValveFingering } from "./notation";
+import type { Drawn } from "../../data/instrument";
 import { el, text } from "../../views/svg";
+import { DRAWINGS, type Drawing } from "./drawings";
 
 const Y = 40; // the valves' centre
 const VALVES = [96, 136, 176, 226];
 const SIDE = 12; // how much lower a side 4th valve is drawn
 
-export function valvesDiagram(f: ValveFingering, label: string, valves: number, upright: boolean, side: boolean, legend = false): SVGSVGElement {
-  if (upright) return legend ? standing(f, label, valves, side) : valvesOnly(f, label, valves, side);
+export function valvesDiagram(f: ValveFingering, label: string, valves: number, drawing: Drawn | undefined, side: boolean, legend = false): SVGSVGElement {
+  if (drawing) return legend ? drawn(f, label, valves, DRAWINGS[drawing]) : valvesOnly(f, label, valves, side);
   const width = 320;
   const svg = el("svg", { viewBox: legend ? `0 -16 ${width} 152` : `0 0 ${width} 104`, class: legend ? "keys legend-keys" : "keys", role: "img", "aria-label": label });
   el("rect", { x: 22, y: Y - 4, width: 230, height: 8, rx: 4, class: "body" }, svg); // the leadpipe and valves' tubing
@@ -49,37 +51,34 @@ function valvesOnly(f: ValveFingering, label: string, valves: number, side: bool
   return svg;
 }
 
-// The key's: the instrument standing, seen from the front, the mouthpiece on the left, the bell up on the right,
-// the valves on top (their caps the circles, numbered), and a side 4th valve on the bell's tube, lower down.
-function standing(f: ValveFingering, label: string, valves: number, side: boolean): SVGSVGElement {
-  const svg = el("svg", { viewBox: "0 -16 340 240", class: "keys legend-keys standing", role: "img", "aria-label": label });
-  const drawn = (d: string) => el("path", { d, class: "drawn" }, svg);
-  // The bell, its tube and the bow under it, round to the tube up to the valves.
-  drawn("M176 8C196 14 204 40 204 70V172C204 194 100 194 100 172V128H74V172C74 222 230 222 230 172V70C230 40 276 14 296 8Z");
-  el("ellipse", { cx: 236, cy: 8, rx: 60, ry: 5, class: "drawn" }, svg);
-  drawn("M100 136H112V146H100Z"); // into valve 1
-  drawn("M180 136H204V146H180Z"); // out of valve 3, to the bell
-  const cx = [122, 146, 170];
-  for (const x of cx) {
-    drawn(`M${x - 10} 92H${x + 10}V160H${x - 10}Z`); // the casing
-    drawn(`M${x - 3} 76H${x + 3}V92H${x - 3}Z`); // the stem
+// The key's: the instrument drawn (drawings.ts), scaled to a size of the page's (the upright ones 300 high, the
+// others 330 wide, so their lines and words come out alike), each valve's number over its button, the 4th's
+// beside its own, and the callouts.
+function drawn(f: ValveFingering, label: string, valves: number, d: Drawing): SVGSVGElement {
+  const s = d.upright ? 300 / d.height : 330 / d.width;
+  const w = d.width * s, h = d.height * s;
+  const [left, right, top, bottom] = d.upright ? [d.fourth ? 66 : 8, 40, 6, 22] : [62, 34, 22, 8];
+  const svg = el("svg", { viewBox: `${-left} ${-top} ${w + left + right} ${h + top + bottom}`, class: `keys legend-keys drawing ${d.upright ? "upright" : "lying"}`, role: "img", "aria-label": label });
+  const art = el("g", { transform: `scale(${s})`, class: "art" }, svg);
+  const line = 1.4 / s; // (the outline, 1.4 at the page's size)
+  for (const [kind, path, size] of d.parts) {
+    if (kind === "tube") {
+      el("path", { d: path, class: "ink", "stroke-width": size + 2 * line }, art);
+      el("path", { d: path, class: "paper", "stroke-width": size }, art);
+    } else if (kind === "shape") el("path", { d: path, class: "sheet", "stroke-width": line }, art);
+    else if (kind === "open") {
+      el("path", { d: `${path}Z`, class: "sheet bare" }, art);
+      el("path", { d: path, class: "ink", "stroke-width": line }, art);
+    } else el("path", { d: path, class: "ink", "stroke-width": line * (size ?? 1) }, art);
   }
-  drawn("M112 100L30 84V92L112 108Z"); // the leadpipe
-  el("rect", { x: 12, y: 82, width: 18, height: 10, rx: 3, class: "mouth" }, svg); // the mouthpiece
-  for (let i = 0; i < 3; i++) valve(svg, i, cx[i], 66, f.valves[i], 10);
-  const call = (x: number, y: number, t: string, anchor = "middle") => text(svg, x, y, t, { class: "callout", "text-anchor": anchor });
-  if (valves > 3) {
-    const y = side ? 135 : 66, x = side ? 254 : 200;
-    if (side) {
-      drawn("M206 120H228V150H206Z"); // its casing, on the bell's tube
-      drawn("M228 132H244V138H228Z"); // its stem
-    } else drawn(`M${x - 3} 76H${x + 3}V92H${x - 3}Z`);
-    valve(svg, 3, x, y, f.valves[3], 10);
-    call(x + 16, y - 5, "4th valve", "start");
-    if (side) call(x + 16, y + 7, "left index", "start");
-  }
-  call(12, 74, "mouthpiece", "start");
-  call(146, 44, "valves: right hand");
-  call(300, 22, "bell", "start");
+  // The numbers spread out over the buttons, a line from each down to its own.
+  const mid = (d.buttons[0][0] + d.buttons[2][0]) * s / 2, gap = d.upright ? -22 : 22;
+  d.buttons.slice(0, 3).forEach(([x, y], i) => {
+    const cx = mid + (i - 1) * gap, cy = y * s - 26;
+    el("path", { d: `M${cx} ${cy + 8.5}L${x * s} ${y * s - 3}`, class: "leader" }, svg);
+    valve(svg, i, cx, cy, f.valves[i], 8.5);
+  });
+  if (valves > 3 && d.fourth) valve(svg, 3, d.fourth[0] * s - 4, d.fourth[1] * s - 16, f.valves[3], 8.5);
+  for (const c of d.callouts) c.text.forEach((t, i) => text(svg, c.at[0] * s + (c.dx ?? 0), c.at[1] * s + (c.dy ?? 0) + i * 11, t, { class: "callout", "text-anchor": c.anchor ?? "middle" }));
   return svg;
 }

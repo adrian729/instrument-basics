@@ -1,7 +1,8 @@
 // How the page looks: the intro and key, each register of the flute, the piccolo's start and its third octave
 // (where the two differ most), the B♭ trumpet's start and low register, the piccolo trumpet's low register,
 // the alto saxophone's start and high register, the baritone's low register, the B♭ clarinet's start and
-// throat notes, the bass clarinet's altissimo (its half-hole), the euphonium's start and low register,
+// throat notes, the bass clarinet's altissimo (its half-hole), the euphonium's start and low register, the key
+// of every brass instrument drawn (and the euphonium's in the dark theme),
 // a few switches and the dark theme, on desktop, and the start (and a trumpet's picker) on a phone;
 // compared with tests/screenshots. After a change meant to change them: `pnpm test:update`, then look at the
 // new ones before committing.
@@ -67,6 +68,18 @@ test("look euphonium", async ({ page }) => {
   await settle(page);
   await expect(page).toHaveScreenshot("euphonium-intro.png");
   await expect(register(page, "low")).toHaveScreenshot("euphonium-low.png", TALL);
+});
+
+test("look brass drawings", async ({ page }) => {
+  await open(page, { "instrument-basics-instrument": "cornet" });
+  for (const id of ["cornet", "flugelhorn", "mellophone", "tenor-horn", "baritone-horn", "euphonium"]) {
+    await page.goto(`/?instrument=${id}`);
+    await settle(page);
+    await expect(page.locator("#legend")).toHaveScreenshot(`key-${id}.png`);
+  }
+  await page.emulateMedia({ colorScheme: "dark" });
+  await settle(page);
+  await expect(page.locator("#legend")).toHaveScreenshot("key-euphonium-dark.png");
 });
 
 test("look compact", async ({ page }) => {

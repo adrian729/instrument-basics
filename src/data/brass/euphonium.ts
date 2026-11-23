@@ -2,18 +2,18 @@
 // notes, fingered from its own chart (euphonium-chart.ts).
 import { VALVES_NOTATION } from "../../notations/valves/notation";
 import { define, type Group } from "../instrument";
-import { NINTH, TIP, WIKIPEDIA } from "./brass";
+import { NINTH, TIP, WIKIPEDIA, DRAWN } from "./brass";
 import { EUPHONIUM_CHART, EVERETT } from "./euphonium-chart";
 
 export const EUPHONIUM: Group = {
   id: "euphonium",
   name: "Euphonium",
   section: "Brass",
-  sources: `The fingerings are from Micah Everett's <a href="${EVERETT}">chromatic fingering chart for euphonium (treble clef)</a>, University of Mississippi, in its order of preference. The range, and the 4th valve, from Wikipedia's ${WIKIPEDIA("Euphonium")}.`,
+  sources: `The fingerings are from Micah Everett's <a href="${EVERETT}">chromatic fingering chart for euphonium (treble clef)</a>, University of Mississippi, in its order of preference. The range, and the 4th valve, from Wikipedia's ${WIKIPEDIA("Euphonium")}.${DRAWN("YEP-621 euphonium", "Yamaha Euphonium YEP-621.tif")}`,
   instruments: [
     define({
       id: "euphonium", group: "euphonium", name: "euphonium", kind: "Euphonium", title: "The euphonium, four valves, in B♭ treble clef, sounding a major ninth lower", clef: "treble", transposition: { steps: -8, semitones: -14 },
-      options: { valves: [2, 1, 3, 5], openHorn: "C3", upright: true, sideValve: true },
+      options: { valves: [2, 1, 3, 5], openHorn: "C3", drawing: "euphonium", sideValve: true },
       facts: [
         NINTH("euphonium"),
         "<b>The 4th valve</b> lowers a fourth: in place of 1–3 and 1–2–3, better in tune, and with the others down to written C♯3. On a compensating euphonium (the better ones have it) the lowest notes are in tune too.",
