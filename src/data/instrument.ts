@@ -19,7 +19,7 @@ export type Clef = "treble"; // (only the treble clef is drawn yet)
 // What the diagrams depend on: a flute's foot joint; a bass clarinet's lowest keys; a baritone saxophone's low
 // A key; a valved instrument's valves, as the semitones each lowers (the trumpet's [2, 1, 3]), the open horn's
 // lowest harmonic, written (the trumpet's C3), and whether it's held upright, its bell up (the euphonium).
-export type Options = { foot?: boolean; bass?: boolean; lowA?: boolean; valves?: number[]; openHorn?: string; upright?: boolean };
+export type Options = { foot?: boolean; bass?: boolean; lowA?: boolean; valves?: number[]; openHorn?: string; upright?: boolean; sideValve?: boolean }; // (sideValve: the 4th on the side, the left hand's, as a compensating euphonium has it)
 // How it sounds against what's written: up (or down, negative) so many letters and semitones (the B♭ trumpet
 // −1 and −2: a written C sounds B♭).
 export type Transposition = { steps: number; semitones: number };

@@ -8,15 +8,17 @@ import { defaultOf, GROUPS, INSTRUMENTS, instrument, type GroupId, type Instrume
 import type { Names } from "./notes";
 
 export type Alternatives = "folded" | "open"; // under each note: folded away, or shown
-export type Choices = { instrument: InstrumentId; names: Names; alternatives: Alternatives };
+export type View = "full" | "compact"; // each note's card in full, or its name and standard fingering, small, for an overview
+export type Choices = { instrument: InstrumentId; names: Names; alternatives: Alternatives; view: View };
 
 // Each switch's choices, the most used first, the first its default.
 export const VALUES = {
   instrument: INSTRUMENTS.map((i) => i.id),
   names: ["letters", "solfege"] as Names[],
   alternatives: ["folded", "open"] as Alternatives[],
+  view: ["full", "compact"] as View[],
 };
-const KEY: Record<keyof Choices, string> = { instrument: "instrument-basics-instrument", names: "instrument-basics-names", alternatives: "instrument-basics-alternatives" };
+const KEY: Record<keyof Choices, string> = { instrument: "instrument-basics-instrument", names: "instrument-basics-names", alternatives: "instrument-basics-alternatives", view: "instrument-basics-view" };
 
 const stored = (key: string): string | null => { try { return localStorage.getItem(key); } catch { return null; } };
 const store = (key: string, value: string) => { try { localStorage.setItem(key, value); } catch {} };
@@ -38,7 +40,7 @@ else if (linked() !== null) {
 
 // (the address's read from it, not from storage, which may be blocked or full)
 const link = linked();
-export const choices: Choices = $state({ instrument: valid("instrument", link) ? link : read("instrument"), names: read("names"), alternatives: read("alternatives") });
+export const choices: Choices = $state({ instrument: valid("instrument", link) ? link : read("instrument"), names: read("names"), alternatives: read("alternatives"), view: read("view") });
 
 // The instrument last chosen in each group, for the picker to come back to; the one the page opened on, too:
 // a link's always, a remembered one if its group has none yet. Kept here, and saved when storage allows.

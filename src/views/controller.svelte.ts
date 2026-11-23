@@ -8,5 +8,6 @@ export function follow(chart: Chart) {
     $effect(() => chart.instrument(choices.instrument));
     $effect(() => chart.names(choices.names));
     $effect(() => chart.alternatives(choices.alternatives));
+    $effect(() => chart.view(choices.view));
   });
 }

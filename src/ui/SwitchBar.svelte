@@ -1,7 +1,7 @@
 <!--
   The switches at the top of the page, in named groups: the instrument (its group, from a list in sections that can
-  grow long, then its kind among the group's, if there's more than one), how notes are named, and what's shown of the
-  alternatives.
+  grow long, then its kind among the group's, if there's more than one), how notes are named, the view (full, or
+  compact), and in full, what's shown of the alternatives.
 -->
 <script lang="ts">
   import { GROUPS, SECTIONS, instrument, type GroupId } from "../data/instruments";
@@ -16,6 +16,10 @@
   const ALTERNATIVES: Choice[] = [
     { value: "folded", text: "Folded", title: "The alternatives folded under each note, opened one by one" },
     { value: "open", text: "Shown", title: "Every alternative shown" },
+  ];
+  const VIEWS: Choice[] = [
+    { value: "full", text: "Full", title: "Each note in full: its staff, its fingerings, drawn and in words, and what they're for" },
+    { value: "compact", text: "Compact", title: "Each note's standard fingering, small, for an overview: an octave on a screen" },
   ];
   // (Each list in VALUES' order, its first the default.)
   const ordered = (key: keyof Choices, list: Choice[]) => (VALUES[key] as string[]).map((v) => list.find((c) => c.value === v)!);
@@ -60,5 +64,6 @@
     </div>
   </div>
   {@render group("Note names", "names", NAMES)}
-  {@render group("Alternatives", "alternatives", ALTERNATIVES)}
+  {@render group("View", "view", VIEWS)}
+  {#if choices.view === "full"}{@render group("Alternatives", "alternatives", ALTERNATIVES)}{/if}
 </div>

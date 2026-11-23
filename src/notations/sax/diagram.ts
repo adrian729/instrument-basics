@@ -35,9 +35,9 @@ export function saxDiagram(f: SaxFingering, label: string, lowA: boolean, legend
   };
 
   // The left hand: the palm keys and front F above, the thumb's below, the fingers and bis, the pinky's table.
-  pill("palm-e-flat", 34, ABOVE, 22, "E♭", on("pEb")); // (E♭ the topmost, then D)
-  pill("palm-d", 58, ABOVE, 20, "D", on("pD"));
-  pill("palm-f", 80, ABOVE, 20, "F", on("pF"));
+  pill("palm-e-flat", 28, ABOVE, 22, "E♭", on("pEb")); // (E♭ the topmost, then D)
+  pill("palm-d", 54, ABOVE, 20, "D", on("pD"));
+  pill("palm-f", 78, ABOVE, 20, "F", on("pF"));
   pill("front-f", 108, ABOVE, 20, "f", on("fF"), true);
   pill("octave", 104, UNDER, 28, "oct", on("T")); // under left 1, where the thumb is
   if (lowA) pill("low-a", 136, UNDER, 20, "A", on("lowA"));
@@ -51,9 +51,9 @@ export function saxDiagram(f: SaxFingering, label: string, lowA: boolean, legend
   pill("low-c-sharp", 206, UNDER + ROW, 22, "C♯", on("lowC#"));
   pill("low-b-flat", 230, UNDER + ROW, 22, "B♭", on("lowBb"));
   // The right hand: the side keys above, the fingers and the alternate F♯ key, the pinky's keys below.
-  pill("side-e", 212, ABOVE, 18, "E", on("sE")); // (along the body above right 1, the high F♯ key's just above it)
-  pill("side-c", 232, ABOVE, 18, "C", on("sC"));
-  pill("side-b-flat", 252, ABOVE, 22, "B♭", on("sBb"));
+  pill("side-e", 206, ABOVE, 18, "E", on("sE")); // (along the body above right 1, the high F♯ key's just above it)
+  pill("side-c", 228, ABOVE, 18, "C", on("sC"));
+  pill("side-b-flat", 250, ABOVE, 22, "B♭", on("sBb"));
   pill("high-f-sharp", 276, ABOVE, 22, "F♯", on("hiF#"), true);
   finger(RIGHT[0], 1, f.right[0], "right");
   finger(RIGHT[1], 2, f.right[1], "right");
@@ -71,9 +71,9 @@ export function saxDiagram(f: SaxFingering, label: string, lowA: boolean, legend
   if (legend) {
     const call = (x: number, y: number, t: string, anchor = "middle") => text(svg, x, y, t, { class: "callout", "text-anchor": anchor });
     call(8, 68, "mouthpiece", "start");
-    call(67, -6, "palm keys");
+    call(63, -6, "palm keys");
     call(118, -6, "front F");
-    call(254, -6, "side keys (right hand)");
+    call(252, -6, "side keys (right hand)");
     const y1 = 114 + ROW, y2 = 126 + ROW;
     call(lowA ? 130 : 118, y1, lowA ? "thumb keys" : "octave key");
     call(229, y1, "left pinky");

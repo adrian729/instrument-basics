@@ -69,6 +69,22 @@ test("look euphonium", async ({ page }) => {
   await expect(register(page, "low")).toHaveScreenshot("euphonium-low.png", TALL);
 });
 
+test("look compact", async ({ page }) => {
+  await open(page, { "instrument-basics-view": "compact" });
+  for (const id of ["flute", "bb-clarinet", "alto-sax", "bb-trumpet", "euphonium"]) {
+    await page.goto(`/?instrument=${id}`);
+    await expect(page.locator(".mini svg").first()).toBeVisible();
+    await settle(page);
+    await expect(page.locator(".register").nth(1)).toHaveScreenshot(`compact-${id}.png`, TALL);
+  }
+});
+
+test("look compact phone @phone", async ({ page }) => {
+  await open(page, { "instrument-basics-instrument": "bb-clarinet", "instrument-basics-view": "compact" });
+  await settle(page);
+  await expect(page.locator(".register").nth(2)).toHaveScreenshot("phone-compact.png", TALL);
+});
+
 test("look alternatives open, solfège", async ({ page }) => {
   await open(page);
   await choose(page, "alternatives", "open");

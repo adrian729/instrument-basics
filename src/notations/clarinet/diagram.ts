@@ -54,7 +54,7 @@ export function clarinetDiagram(f: ClarinetFingering, label: string, bass: boole
   pill("left-f-sharp", 238, UNDER + ROW, 22, "F♯", on("lF#"));
   // The right hand: the side keys above, the fingers and the B sliver, the pinky's below (and the bass
   // clarinet's: its low E♭ under the pinky's E, its thumb keys under right 1 and 2).
-  for (const [i, x] of [226, 244, 262, 280].entries()) pill(`side${i + 1}`, x, ABOVE, 16, String(i + 1), on(`s${i + 1}` as ClarinetKey));
+  for (const [i, x] of [220, 243, 266, 289].entries()) pill(`side${i + 1}`, x, ABOVE, 19, String(i + 1), on(`s${i + 1}` as ClarinetKey));
   hole(RIGHT[0], 1, f.right[0], "right");
   hole(RIGHT[1], 2, f.right[1], "right");
   small("sliver-b", 342, on("B"));

@@ -392,6 +392,29 @@ test.describe("the switches", () => {
     await expect(switchButton(page, "alternatives", "none")).toHaveCount(0);
   });
 
+  test("compact: every note its name and its standard fingering stood up, the alternatives' switch gone, remembered", async ({ page }) => {
+    await open(page);
+    await expect(page.locator(".mini")).toHaveCount(0);
+    await choose(page, "view", "compact");
+    const cards = page.locator("article.note");
+    await expect(page.locator("article.note .mini svg.mini-keys")).toHaveCount(await cards.count());
+    const d4 = page.locator('article.note[data-note="D4"]');
+    await expect(d4.locator(".staff")).toBeHidden();
+    await expect(d4.locator(".fingering").first()).toBeHidden();
+    await expect(d4.locator(".mini .key.down")).toHaveCount(await d4.locator(".fingering").first().locator(".key.down").count()); // (the same keys pressed)
+    const box = await d4.locator(".mini svg").boundingBox();
+    expect(box!.height).toBeGreaterThan(box!.width); // (stood up)
+    await expect(page.locator('[data-group="alternatives"]')).toHaveCount(0);
+    await pick(page, "euphonium", "euphonium"); // (the new chart's, compact too)
+    await expect(page.locator("article.note .mini svg")).toHaveCount(await cards.count());
+    await page.reload();
+    await expect(switchButton(page, "view", "compact")).toHaveAttribute("aria-pressed", "true");
+    await expect(page.locator("article.note .mini svg")).toHaveCount(await cards.count());
+    await choose(page, "view", "full");
+    await expect(page.locator(".mini").first()).toBeHidden();
+    await expect(page.locator('[data-group="alternatives"]')).toBeVisible();
+  });
+
   test("the alternatives left out before (a choice no longer offered): folded", async ({ page }) => {
     await open(page, { "instrument-basics-alternatives": "none" });
     await expect(switchButton(page, "alternatives", "folded")).toHaveAttribute("aria-pressed", "true");
