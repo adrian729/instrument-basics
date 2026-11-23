@@ -19,7 +19,7 @@ export const CLARINETS: Group = {
   name: "Clarinets",
   section: "Woodwinds",
   default: "bb-clarinet",
-  sources: `The fingerings are from <a href="${WFG}">The Woodwind Fingering Guide</a>, their comments adapted: its Boehm clarinet pages (basic: <a href="${WFG}cl_bas_1.html">chalumeau</a>, <a href="${WFG}cl_bas_2.html">clarion</a>, <a href="${WFG}cl_bas_3.html">lower altissimo</a>; alternate: <a href="${WFG}cl_alt_1.html">chalumeau and throat</a>) and bass clarinet pages (<a href="${WFG}basscl_alt_1.html">chalumeau</a>, <a href="${WFG}basscl_alt_2.html">altissimo</a>). Its upper altissimo, above G6, is left out. The ranges and keys from Wikipedia's <a href="https://en.wikipedia.org/wiki/Clarinet">Clarinet</a> and <a href="https://en.wikipedia.org/wiki/Bass_clarinet">Bass clarinet</a>.`,
+  sources: `The fingerings are from <a href="${WFG}">The Woodwind Fingering Guide</a>, their comments adapted: its Boehm clarinet pages (basic: <a href="${WFG}cl_bas_1.html">chalumeau</a>, <a href="${WFG}cl_bas_2.html">clarion</a>, <a href="${WFG}cl_bas_3.html">lower altissimo</a>; alternate: <a href="${WFG}cl_alt_1.html">chalumeau and throat</a>, <a href="${WFG}cl_alt_4.html">upper altissimo</a>) and bass clarinet pages (<a href="${WFG}basscl_alt_1.html">chalumeau</a>, <a href="${WFG}basscl_alt_2.html">altissimo</a>). The ranges and keys from Wikipedia's <a href="https://en.wikipedia.org/wiki/Clarinet">Clarinet</a> and <a href="https://en.wikipedia.org/wiki/Bass_clarinet">Bass clarinet</a>.`,
   instruments: [
     define({
       ...about("eb-clarinet", "E♭ clarinet", "E♭", "E♭", 2, 3), options: {},

@@ -1,4 +1,4 @@
-// The page's choices (the switches above the chart), in one place: read from the address (?instrument=, for a
+// The page's choices (the switches at the top of the page), in one place: read from the address (?instrument=, for a
 // link to one instrument's chart) or what this browser remembers, changed only by the actions here, each
 // saved as it's made. The switches show them (SwitchBar.svelte); the chart follows them
 // (views/controller.svelte.ts). index.html's first script reads the instrument the same way, before the page

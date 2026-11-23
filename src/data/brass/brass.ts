@@ -7,4 +7,5 @@ export const WIKIPEDIA = (article: string, text = article.replaceAll("_", " ")) 
 export const THREE = { valves: [2, 1, 3], openHorn: "C3" };
 export const HARMONICS = "<b>Three valves, every note.</b> Each fingering plays a series of notes, its harmonics, and the lips choose which: so C, G and the C above are all open.";
 export const ALIKE = (others: string) => `<b>Fingered like the trumpet</b>${others}: the same written note takes the same valves.`;
+export const NINTH = (name: string) => `<b>It sounds a major ninth lower</b> (an octave and a tone). Read in treble clef, as in brass bands, the ${name} is in B♭: a written C sounds the B♭ an octave and a tone below. In bass clef it's read at concert pitch: this chart is the treble clef's.`;
 export const TIP = "Most alternatives are for tuning, or for a passage where another valve combination is easier. Try them with a tuner, and keep what works on yours.";

@@ -1,5 +1,5 @@
 <!--
-  The switches above the chart, in named groups: the instrument (its group, from a list in sections that can
+  The switches at the top of the page, in named groups: the instrument (its group, from a list in sections that can
   grow long, then its kind among the group's, if there's more than one), how notes are named, and what's shown of the
   alternatives.
 -->

@@ -41,10 +41,13 @@
   </nav>
 
   <main>
+    <!-- The switches first (src/ui/SwitchBar.svelte): the instrument, how notes are named, the alternatives. -->
+    <div id="switches" class="switches"></div>
+    <p id="announce" class="visually-hidden" aria-live="polite"></p>
     <!-- The instrument's text, the flute's here: the chart (src/views/chart.ts) puts in the instrument's. -->
     <section class="intro" id="intro" aria-labelledby="intro-title">
       <h1 id="intro-title">Fingerings for the flute</h1>
-      <p class="lede">Every note of the usual range, from the lowest up: the standard fingering first, then a choice of alternatives, each with what it's for. Choose the instrument with the switches above the chart.</p>
+      <p class="lede">Every note of the usual range, from the lowest up: the standard fingering first, then a choice of alternatives, each with what it's for.</p>
       <ul class="facts">
         <li><b>The foot joint</b> gives the lowest notes: the right pinky's rollers for low C♯ and C. Most flutes have this C foot; a B foot adds a key for low B, and often the gizmo key, which helps top C.</li>
         <li><b>It sounds as written.</b> The concert flute is in C: the note on the page is the note you hear.</li>
@@ -66,8 +69,6 @@
       </div>
     </section>
 
-    <div id="switches" class="switches"></div>
-    <p id="announce" class="visually-hidden" aria-live="polite"></p>
     <div id="chart" class="chart"></div>
   </main>
 

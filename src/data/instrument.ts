@@ -1,7 +1,8 @@
 // What an instrument is: its data (registers of fingerings, in its notation), how it sounds against what's
 // written, and what's said about it; made here into what the chart shows, each fingering with its diagram and
-// words, through its notation. A group is the picker's: the instruments it shows together, close relatives
-// (woodwinds/flutes.ts...), in a section of the orchestra (woodwinds, brass); instruments.ts lists them all.
+// words, through its notation. A group is the picker's: one instrument in its sizes or keys, shown together
+// (woodwinds/flutes.ts...), or one alone (brass/cornet.ts), in a section (woodwinds, brass); instruments.ts
+// lists them all.
 import type { Notation } from "../notations/types";
 import type { Fingered, Register } from "./types";
 
@@ -10,10 +11,9 @@ export type InstrumentId =
   | "bb-clarinet" | "a-clarinet" | "eb-clarinet" | "bass-clarinet"
   | "soprano-sax" | "alto-sax" | "tenor-sax" | "baritone-sax"
   | "bb-trumpet" | "c-trumpet" | "piccolo-trumpet"
-  | "cornet" | "flugelhorn"
-  | "mellophone" | "tenor-horn"
-  | "euphonium" | "baritone-horn";
-export type GroupId = "flutes" | "clarinets" | "saxophones" | "trumpets" | "cornets" | "alto-horns" | "euphoniums";
+  | "cornet" | "flugelhorn" | "mellophone" | "tenor-horn" | "baritone-horn" | "euphonium";
+// A group is one instrument in its sizes or keys (the flutes, the B♭ and A clarinets...), or one alone.
+export type GroupId = "flutes" | "clarinets" | "saxophones" | "trumpets" | "cornet" | "flugelhorn" | "mellophone" | "tenor-horn" | "baritone-horn" | "euphonium";
 export type Section = "Woodwinds" | "Brass";
 export type Clef = "treble"; // (only the treble clef is drawn yet)
 // What the diagrams depend on: a flute's foot joint; a bass clarinet's lowest keys; a baritone saxophone's low

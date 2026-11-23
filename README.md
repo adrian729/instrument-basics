@@ -8,15 +8,15 @@ The instruments, in the picker's sections and groups:
 
 - Woodwinds
   - **Flutes**: the concert flute (B3, with a B foot, to F7) and the piccolo (D4 to D7, sounding an octave higher). Boehm-system, fingered alike for two octaves; the flute's foot joint keys shown in its diagrams.
-  - **Clarinets**: the E♭, B♭, A and bass clarinets (written E3 to G6; the bass clarinet's from low C3), Boehm-system, fingered alike but for the bass clarinet's lowest keys and its altissimo's half-hole. The upper altissimo is left out.
+  - **Clarinets**: the E♭ (written E3 to A6), B♭ and A (E3 to C7) and bass clarinets (C3 to D♯7), Boehm-system, fingered alike to clarion C but for the bass clarinet's lowest keys; its altissimo its own, with a half-hole.
   - **Saxophones**: soprano, alto, tenor and baritone (written B♭3 to F♯6, and the baritone's low A), fingered alike. The altissimo is left out.
 - Brass (every one in treble clef, and every three-valve one fingered like the trumpet, from the same chart)
   - **Trumpets**: the B♭ trumpet and the C trumpet (written F♯3 to C6), and the four-valve piccolo trumpet in B♭ (written C♯3 to G5, its 4th valve shown).
-  - **Cornet and flugelhorn**, both in B♭ (written F♯3 to C6).
-  - **Mellophone and tenor horn**: the mellophone in F and the tenor horn (the alto horn, in the US) in E♭ (written F♯3 to C6).
-  - **Euphonium and baritone**, in B♭ treble clef, as brass bands read them: the four-valve euphonium (written C♯3 to E6, compensating) and the three-valve baritone horn (written F♯3 to C6).
+  - **Cornet** and **Flugelhorn**, each in B♭ (written F♯3 to C6): fingered like the trumpet at its pitch, but instruments of their own (conical, the flugelhorn a bugle's wide bore), so not among the trumpets.
+  - **Mellophone** in F and **Tenor horn** in E♭ (the alto horn, in the US), each written F♯3 to C6.
+  - **Baritone horn** (three valves, written F♯3 to C6) and **Euphonium** (four, compensating, written C♯3 to G6), in B♭ treble clef, as brass bands read them.
 
-The picker is the instrument's group, from a list in sections that can grow long, then its kind among the group's (each group comes back to the kind last chosen in it). The instrument is remembered, and in the address for a link to one (`?instrument=alto-sax`). Notes can be named with letters (with octave numbers) or in solfège, and the alternatives folded or shown.
+A group is one instrument in its sizes or keys (the flutes, the clarinets, the saxophones, the trumpets), or an instrument alone. The picker, at the top of the page, is the group, from a list in sections that can grow long, then its kind among the group's, if it has more than one (each group comes back to the kind last chosen in it). The instrument is remembered, and in the address for a link to one (`?instrument=alto-sax`). Notes can be named with letters (with octave numbers) or in solfège, and the alternatives folded or shown.
 
 ## Run locally
 
@@ -35,7 +35,7 @@ The tests build the site and serve it on port 8899, then check its data, its beh
 ## Code
 
 - `src/notations/`: a notation per kind of instrument: how its fingerings are written in the data, drawn and said. `flute/` (the Boehm flute's keys: `"B 123 G# | --- Eb"`), `clarinet/` (the Boehm clarinet's: `"T R 123 E | 123"`), `sax/` (`"T 12- | sBb ---"`), `valves/` (valved brass: `"13"`); each explained at the top of its `notation.ts`, and each diagram following one convention (`notations/types.ts`).
-- `src/data/`: the instruments, by section. `types.ts` has what every notation's data shares, `instrument.ts` what an instrument and a group are, `instruments.ts` lists the groups in their sections. `woodwinds/` and `brass/` have a file per group (`flutes.ts`, `clarinets.ts`, `saxophones.ts`, `trumpets.ts`, `cornets.ts`, `alto-horns.ts`, `euphoniums.ts`: each instrument's transposition, what to know, the footer's tip and credits) and the charts they read: every note and its fingerings, an instrument's own or shared (`flute.ts`, `piccolo.ts`, `clarinet.ts` for every clarinet, `sax.ts` for every saxophone; `three-valves.ts` for every three-valve brass instrument, `piccolo-trumpet.ts`, `euphonium.ts`); `brass/brass.ts` has what the brass groups share. Checked when the tests run, so a typo fails them.
+- `src/data/`: the instruments, by section. `types.ts` has what every notation's data shares, `instrument.ts` what an instrument and a group are, `instruments.ts` lists the groups in their sections. `woodwinds/` and `brass/` have a file per group (`flutes.ts`, `clarinets.ts`, `saxophones.ts`, `trumpets.ts`, `cornet.ts`, `flugelhorn.ts`, `mellophone.ts`, `tenor-horn.ts`, `baritone-horn.ts`, `euphonium.ts`: each instrument's transposition, what to know, the footer's tip and credits) and the charts they read: every note and its fingerings, an instrument's own or shared (`flute.ts`, `piccolo.ts`, `clarinet.ts` for every clarinet, `sax.ts` for every saxophone; `three-valves.ts` for every three-valve brass instrument, `piccolo-trumpet.ts`, `euphonium-chart.ts`); `brass/brass.ts` has what the brass groups share. Checked when the tests run, so a typo fails them.
 - `src/lib/notes.ts`: notes' names (letters or solfège), what's heard of a written note (from the transposition, in letters and semitones), and where a note sits on the staff.
 - `src/lib/store.svelte.ts`: the switches' choices (instrument, names, alternatives), saved in the browser. `src/ui/SwitchBar.svelte` shows them; `src/views/controller.svelte.ts` makes the chart follow them.
 - `src/views/`: the chart (`chart.ts`, made again when the instrument changes, its text too) and the staff (`staff.ts`), drawn as SVG.

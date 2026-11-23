@@ -19,10 +19,10 @@ const first = (notes: typeof FLUTE, id: string) => notes.find((n) => n.id === id
 
 test.describe("the data", () => {
   const RANGES = [["flute", "B3", "F7"], ["piccolo", "D4", "D7"],
-    ["eb-clarinet", "E3", "G6"], ["bb-clarinet", "E3", "G6"], ["a-clarinet", "E3", "G6"], ["bass-clarinet", "C3", "G6"],
+    ["eb-clarinet", "E3", "A6"], ["bb-clarinet", "E3", "C7"], ["a-clarinet", "E3", "C7"], ["bass-clarinet", "C3", "D#7"],
     ["soprano-sax", "A#3", "F#6"], ["alto-sax", "A#3", "F#6"], ["tenor-sax", "A#3", "F#6"], ["baritone-sax", "A3", "F#6"],
     ["bb-trumpet", "F#3", "C6"], ["c-trumpet", "F#3", "C6"], ["piccolo-trumpet", "C#3", "G5"], ["cornet", "F#3", "C6"], ["flugelhorn", "F#3", "C6"],
-    ["mellophone", "F#3", "C6"], ["tenor-horn", "F#3", "C6"], ["euphonium", "C#3", "E6"], ["baritone-horn", "F#3", "C6"]] as const;
+    ["mellophone", "F#3", "C6"], ["tenor-horn", "F#3", "C6"], ["baritone-horn", "F#3", "C6"], ["euphonium", "C#3", "G6"]] as const;
   test("every instrument's range is tested", () => expect(RANGES.map((r) => r[0])).toEqual(INSTRUMENTS.map((i) => i.id)));
   for (const [id, lowest, highest] of RANGES) {
     test(`the ${id}: every semitone from ${lowest} to ${highest}, once, in order`, () => {
@@ -62,7 +62,7 @@ test.describe("the data", () => {
   test("every valve fingering is a harmonic of the open horn, lowered by its valves", () => {
     const PARTIALS = [12, 19, 24, 28, 31, 36, 38, 40, 43]; // above the lowest: the 2nd to the 10th harmonics, but the 7th (flat), and the 12th
     const valved = INSTRUMENTS.filter((i) => i.options.valves);
-    expect(valved.map((i) => i.id)).toEqual(["bb-trumpet", "c-trumpet", "piccolo-trumpet", "cornet", "flugelhorn", "mellophone", "tenor-horn", "euphonium", "baritone-horn"]);
+    expect(valved.map((i) => i.id)).toEqual(["bb-trumpet", "c-trumpet", "piccolo-trumpet", "cornet", "flugelhorn", "mellophone", "tenor-horn", "baritone-horn", "euphonium"]);
     for (const i of valved) {
       const open = semitone(i.options.openHorn!);
       for (const n of i.registers.flatMap((r) => r.notes)) for (const f of n.fingerings) {

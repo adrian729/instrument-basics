@@ -1,4 +1,4 @@
-// The page: the theme's switch, the chart and its key, the switches above it, and the chart following them.
+// The page: the theme's switch, the chart and its key, the switches at the top, and the chart following them.
 import "./styles.css";
 import "./lib/theme";
 import { flushSync, mount } from "svelte";
