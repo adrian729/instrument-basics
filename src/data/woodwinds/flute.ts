@@ -4,8 +4,8 @@
 // Woodwind Fingering Guide's flute pages (wfg.woodwind.org/flute/fl_alt_1.html, _2, _3, _4), its comments
 // adapted: a choice of its alternatives, one or a few for each purpose, never those that need a half-covered
 // hole, the C♯ trill key some flutes have, or another flute (bass, alto). (The notation: notations/flute/notation.ts.)
-import { parseFlute, type FluteFingering } from "../notations/flute/notation";
-import { rows, type Register } from "./types";
+import { parseFlute, type FluteFingering } from "../../notations/flute/notation";
+import { rows, type Register } from "../types";
 
 export const FLUTE: Register<FluteFingering>[] = [
   {

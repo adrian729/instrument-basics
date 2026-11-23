@@ -1,10 +1,10 @@
 <!--
-  The switches above the chart, in named groups: the instrument (its group, from a list that can grow long,
-  then its kind among the group's, if there's more than one), how notes are named, and what's shown of the
+  The switches above the chart, in named groups: the instrument (its group, from a list in sections that can
+  grow long, then its kind among the group's, if there's more than one), how notes are named, and what's shown of the
   alternatives.
 -->
 <script lang="ts">
-  import { GROUPS, instrument, type GroupId } from "../data/instruments";
+  import { GROUPS, SECTIONS, instrument, type GroupId } from "../data/instruments";
   import { choices, choose, chooseGroup, VALUES, type Choices } from "../lib/store.svelte";
   import { spoken } from "../lib/notes";
 
@@ -41,8 +41,12 @@
     <div class="picker">
       <span class="select">
         <select aria-label="Instrument family" value={shown.group} onchange={(e) => chooseGroup(e.currentTarget.value as GroupId)}>
-          {#each GROUPS as g (g.id)}
-            <option value={g.id}>{g.name}</option>
+          {#each SECTIONS as s (s.name)}
+            <optgroup label={s.name}>
+              {#each s.groups as g (g.id)}
+                <option value={g.id}>{g.name}</option>
+              {/each}
+            </optgroup>
           {/each}
         </select>
       </span>

@@ -4,8 +4,8 @@
 // (wfg.woodwind.org/flute/picc_alt_1.html, _2, _3), its comments adapted: a choice of its alternatives, one
 // or a few for each purpose. A piccolo has no foot joint, so
 // nothing here uses the flute's low C♯, C or B keys. (The notation: notations/flute/notation.ts.)
-import { parseFlute, type FluteFingering } from "../notations/flute/notation";
-import { rows, type Register } from "./types";
+import { parseFlute, type FluteFingering } from "../../notations/flute/notation";
+import { rows, type Register } from "../types";
 
 export const PICCOLO: Register<FluteFingering>[] = [
   {

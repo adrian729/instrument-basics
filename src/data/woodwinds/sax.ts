@@ -4,8 +4,8 @@
 // Guide's saxophone pages (wfg.woodwind.org/sax/sax_bas_1.html, _2; sax_alt_1.html, _2, _4), its comments
 // adapted: a choice of its alternatives, one or a few for each purpose. Left out: the altissimo above F♯6,
 // whose fingerings differ from one saxophone to another. (The notation: notations/sax.)
-import { parseSax, type SaxFingering } from "../notations/sax/notation";
-import { rows, type Register } from "./types";
+import { parseSax, type SaxFingering } from "../../notations/sax/notation";
+import { rows, type Register } from "../types";
 
 export const SAX: Register<SaxFingering>[] = [
   {

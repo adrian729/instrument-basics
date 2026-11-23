@@ -1,7 +1,7 @@
 // The saxophones: soprano, alto, tenor and baritone, by size, fingered alike (the alto is the usual first).
-import { SAX_NOTATION } from "../notations/sax/notation";
-import { intervalWords } from "../lib/notes";
-import { define, type Group } from "./instrument";
+import { SAX_NOTATION } from "../../notations/sax/notation";
+import { intervalWords } from "../../lib/notes";
+import { define, type Group } from "../instrument";
 import { SAX } from "./sax";
 
 const WFG = "https://www.wfg.woodwind.org/sax/";
@@ -16,6 +16,7 @@ const about = (id: "soprano-sax" | "alto-sax" | "tenor-sax" | "baritone-sax", na
 export const SAXOPHONES: Group = {
   id: "saxophones",
   name: "Saxophones",
+  section: "Woodwinds",
   default: "alto-sax",
   sources: `The fingerings are from <a href="${WFG}">The Woodwind Fingering Guide</a>, their comments adapted: its saxophone pages (basic: <a href="${WFG}sax_bas_1.html">first octave</a>, <a href="${WFG}sax_bas_2.html">second</a>; alternate: <a href="${WFG}sax_alt_1.html">first octave</a>, <a href="${WFG}sax_alt_2.html">second</a>, <a href="${WFG}sax_alt_4.html">lower altissimo</a>). Its altissimo fingerings above F♯ are left out: they differ from one saxophone to another.`,
   instruments: [

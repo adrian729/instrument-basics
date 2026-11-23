@@ -1,16 +1,25 @@
 // What an instrument is: its data (registers of fingerings, in its notation), how it sounds against what's
 // written, and what's said about it; made here into what the chart shows, each fingering with its diagram and
-// words, through its notation. A group is the picker's: the instruments it shows together (flutes.ts...);
-// instruments.ts lists them all.
+// words, through its notation. A group is the picker's: the instruments it shows together, close relatives
+// (woodwinds/flutes.ts...), in a section of the orchestra (woodwinds, brass); instruments.ts lists them all.
 import type { Notation } from "../notations/types";
 import type { Fingered, Register } from "./types";
 
-export type InstrumentId = "flute" | "piccolo" | "bb-trumpet" | "c-trumpet" | "piccolo-trumpet" | "soprano-sax" | "alto-sax" | "tenor-sax" | "baritone-sax";
-export type GroupId = "flutes" | "trumpets" | "saxophones";
+export type InstrumentId =
+  | "flute" | "piccolo"
+  | "bb-clarinet" | "a-clarinet" | "eb-clarinet" | "bass-clarinet"
+  | "soprano-sax" | "alto-sax" | "tenor-sax" | "baritone-sax"
+  | "bb-trumpet" | "c-trumpet" | "piccolo-trumpet"
+  | "cornet" | "flugelhorn"
+  | "mellophone" | "tenor-horn"
+  | "euphonium" | "baritone-horn";
+export type GroupId = "flutes" | "clarinets" | "saxophones" | "trumpets" | "cornets" | "alto-horns" | "euphoniums";
+export type Section = "Woodwinds" | "Brass";
 export type Clef = "treble"; // (only the treble clef is drawn yet)
-// What the diagrams depend on: a flute's foot joint; a baritone saxophone's low A key; a valved instrument's valves, as the semitones each
-// lowers (the trumpet's [2, 1, 3]), and the open horn's lowest harmonic, written (the trumpet's C3).
-export type Options = { foot?: boolean; valves?: number[]; openHorn?: string; lowA?: boolean };
+// What the diagrams depend on: a flute's foot joint; a bass clarinet's lowest keys; a baritone saxophone's low
+// A key; a valved instrument's valves, as the semitones each lowers (the trumpet's [2, 1, 3]), the open horn's
+// lowest harmonic, written (the trumpet's C3), and whether it's held upright, its bell up (the euphonium).
+export type Options = { foot?: boolean; bass?: boolean; lowA?: boolean; valves?: number[]; openHorn?: string; upright?: boolean };
 // How it sounds against what's written: up (or down, negative) so many letters and semitones (the B♭ trumpet
 // −1 and −2: a written C sounds B♭).
 export type Transposition = { steps: number; semitones: number };
@@ -33,7 +42,7 @@ type About = {
 export type Instrument = About & { registers: Register<Shown>[]; legend: string[]; legendDiagram(): SVGSVGElement };
 // sources: the footer's credits for the group's data (HTML). Its default is its first instrument, unless
 // another is named (the saxophones are listed by size, the alto the usual first).
-export type Group = { id: GroupId; name: string; sources: string; instruments: Instrument[]; default?: InstrumentId };
+export type Group = { id: GroupId; name: string; section: Section; sources: string; instruments: Instrument[]; default?: InstrumentId };
 export const defaultOf = (g: Group) => g.default ?? g.instruments[0].id;
 
 // An instrument from its data, read through its notation (typed together here, so that nothing else needs to

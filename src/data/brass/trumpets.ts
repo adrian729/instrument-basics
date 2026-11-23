@@ -1,19 +1,18 @@
 // The trumpets: the B♭ trumpet (the usual one), the C trumpet (common in orchestras), fingered alike for the same
 // written notes, and the four-valve piccolo trumpet in B♭.
-import { VALVES_NOTATION } from "../notations/valves/notation";
-import { define, type Group } from "./instrument";
+import { VALVES_NOTATION } from "../../notations/valves/notation";
+import { define, type Group } from "../instrument";
+import { HARMONICS, THREE, TIP, YAMAHA } from "./brass";
 import { PICCOLO_TRUMPET } from "./piccolo-trumpet";
-import { TRUMPET } from "./trumpet";
+import { SLIDE, threeValves } from "./three-valves";
 
-const YAMAHA = "https://www.yamaha.com/en/musical_instrument_guide/common/images/trumpet/fingering.pdf";
 const SLIDES = "<b>Tuning slides.</b> 1–3 and 1–2–3 are sharp: push the 3rd valve slide out with the left ring finger (the 1st valve's, with the left thumb, helps too).";
-const HARMONICS = "<b>Three valves, every note.</b> Each fingering plays a series of notes, its harmonics, and the lips choose which: so C, G and the C above are all open.";
-const TIP = "Most alternatives are for tuning, or for a passage where another valve combination is easier. Try them with a tuner, and keep what works on yours.";
-const THREE = { valves: [2, 1, 3], openHorn: "C3" };
+const TRUMPET = threeValves(SLIDE);
 
 export const TRUMPETS: Group = {
   id: "trumpets",
   name: "Trumpets",
+  section: "Brass",
   sources: `The fingerings and alternatives are from <a href="${YAMAHA}">Yamaha's trumpet fingering chart</a>; the tuning advice, the ranges and the piccolo trumpet's 4th valve from Wikipedia's <a href="https://en.wikipedia.org/wiki/Trumpet">Trumpet</a> and <a href="https://en.wikipedia.org/wiki/Piccolo_trumpet">Piccolo trumpet</a>.`,
   instruments: [
     define({

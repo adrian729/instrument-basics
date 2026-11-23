@@ -1,7 +1,7 @@
 // The flutes: the concert flute and the piccolo, both Boehm-system, fingered alike for the first two octaves.
-import { FLUTE_NOTATION } from "../notations/flute/notation";
+import { FLUTE_NOTATION } from "../../notations/flute/notation";
 import { FLUTE } from "./flute";
-import { define, type Group } from "./instrument";
+import { define, type Group } from "../instrument";
 import { PICCOLO } from "./piccolo";
 
 const WFG = "https://www.wfg.woodwind.org/flute/";
@@ -11,6 +11,7 @@ const PINKY = (lifted: string) => `<b>The right pinky stays down</b> on the E♭
 export const FLUTES: Group = {
   id: "flutes",
   name: "Flutes",
+  section: "Woodwinds",
   sources: `The fingerings are from <a href="${WFG}">The Woodwind Fingering Guide</a>, their comments adapted: its flute pages (${pages("fl_alt", ["first octave", "second", "third", "fourth"])}) and piccolo pages (${pages("picc_alt", ["first octave", "second", "third"])}).`,
   instruments: [
     define({

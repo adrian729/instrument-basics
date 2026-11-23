@@ -1,9 +1,10 @@
 // What the page does: the data it's made from, the chart in order, the switches and what they remember (the
 // instrument in the address too), the theme, and the registers' links.
-import { FLUTE as FLUTE_DATA } from "../src/data/flute";
-import { defaultOf, GROUPS, INSTRUMENTS, instrument } from "../src/data/instruments";
-import { PICCOLO as PICCOLO_DATA } from "../src/data/piccolo";
+import { FLUTE as FLUTE_DATA } from "../src/data/woodwinds/flute";
+import { defaultOf, GROUPS, INSTRUMENTS, SECTIONS, instrument } from "../src/data/instruments";
+import { PICCOLO as PICCOLO_DATA } from "../src/data/woodwinds/piccolo";
 import { parseFlute as parseFingering } from "../src/notations/flute/notation";
+import { parseClarinet } from "../src/notations/clarinet/notation";
 import { parseSax } from "../src/notations/sax/notation";
 import { parseValves } from "../src/notations/valves/notation";
 import { parsePitch } from "../src/data/types";
@@ -17,8 +18,11 @@ const FLUTE = notesOf("flute"), PICCOLO = notesOf("piccolo");
 const first = (notes: typeof FLUTE, id: string) => notes.find((n) => n.id === id)!.fingerings[0];
 
 test.describe("the data", () => {
-  const RANGES = [["flute", "B3", "F7"], ["piccolo", "D4", "D7"], ["bb-trumpet", "F#3", "C6"], ["c-trumpet", "F#3", "C6"], ["piccolo-trumpet", "C#3", "G5"],
-    ["soprano-sax", "A#3", "F#6"], ["alto-sax", "A#3", "F#6"], ["tenor-sax", "A#3", "F#6"], ["baritone-sax", "A3", "F#6"]] as const;
+  const RANGES = [["flute", "B3", "F7"], ["piccolo", "D4", "D7"],
+    ["eb-clarinet", "E3", "G6"], ["bb-clarinet", "E3", "G6"], ["a-clarinet", "E3", "G6"], ["bass-clarinet", "C3", "G6"],
+    ["soprano-sax", "A#3", "F#6"], ["alto-sax", "A#3", "F#6"], ["tenor-sax", "A#3", "F#6"], ["baritone-sax", "A3", "F#6"],
+    ["bb-trumpet", "F#3", "C6"], ["c-trumpet", "F#3", "C6"], ["piccolo-trumpet", "C#3", "G5"], ["cornet", "F#3", "C6"], ["flugelhorn", "F#3", "C6"],
+    ["mellophone", "F#3", "C6"], ["tenor-horn", "F#3", "C6"], ["euphonium", "C#3", "E6"], ["baritone-horn", "F#3", "C6"]] as const;
   test("every instrument's range is tested", () => expect(RANGES.map((r) => r[0])).toEqual(INSTRUMENTS.map((i) => i.id)));
   for (const [id, lowest, highest] of RANGES) {
     test(`the ${id}: every semitone from ${lowest} to ${highest}, once, in order`, () => {
@@ -56,9 +60,9 @@ test.describe("the data", () => {
   });
 
   test("every valve fingering is a harmonic of the open horn, lowered by its valves", () => {
-    const PARTIALS = [12, 19, 24, 28, 31, 36, 38, 40]; // above the lowest: the 2nd to the 10th harmonics, but the 7th (flat)
+    const PARTIALS = [12, 19, 24, 28, 31, 36, 38, 40, 43]; // above the lowest: the 2nd to the 10th harmonics, but the 7th (flat), and the 12th
     const valved = INSTRUMENTS.filter((i) => i.options.valves);
-    expect(valved.map((i) => i.id)).toEqual(["bb-trumpet", "c-trumpet", "piccolo-trumpet"]);
+    expect(valved.map((i) => i.id)).toEqual(["bb-trumpet", "c-trumpet", "piccolo-trumpet", "cornet", "flugelhorn", "mellophone", "tenor-horn", "euphonium", "baritone-horn"]);
     for (const i of valved) {
       const open = semitone(i.options.openHorn!);
       for (const n of i.registers.flatMap((r) => r.notes)) for (const f of n.fingerings) {
@@ -73,6 +77,29 @@ test.describe("the data", () => {
     for (const id of ["bb-trumpet", "c-trumpet"]) expect(["C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5"].map((n) => valves(id, n))).toEqual(["0", "13", "12", "1", "0", "12", "2", "0"]);
     expect(valves("piccolo-trumpet", "D4")).toBe("4");
     expect(valves("piccolo-trumpet", "C#3")).toBe("1234");
+    for (const id of ["cornet", "flugelhorn", "mellophone", "tenor-horn", "baritone-horn"]) expect(["C4", "D4", "G4", "C5"].map((n) => valves(id, n))).toEqual(["0", "13", "0", "0"]);
+    expect(["C#3", "F3", "G3", "D4", "G4"].map((n) => valves("euphonium", n))).toEqual(["1234", "14", "4", "4", "0"]); // (the 4th valve standard for 1–3's notes)
+  });
+
+  test("the clarinet's notation: read as written, and a typo refused", () => {
+    expect(parseClarinet("T R 123 E | 123 F")).toMatchObject({ left: [true, true, true], right: [true, true, true], keys: ["T", "R", "lE", "rF"] });
+    expect(parseClarinet("R A --- | s2 ---")).toMatchObject({ left: [false, false, false], keys: ["R", "A", "s2"] });
+    expect(parseClarinet("T R 023 | 1-- B G#")).toMatchObject({ left: ["half", true, true], right: [true, false, false], keys: ["T", "R", "B", "rG#"] });
+    for (const bad of ["123 123", "123 | 123 | 123", "123 C# | 123 C#", "123 | 123 Eb", "T T 123 | 123", "123 | 12", "023 | 023", "123 lowC | 123", "123 | s5 123"]) expect(() => parseClarinet(bad), bad).toThrow();
+  });
+
+  test("the clarinets' fingerings everyone knows, and the bass clarinet's lowest notes and half-hole only on it", () => {
+    const keys = (id: string, note: string) => instrument(id as "bb-clarinet").registers.flatMap((r) => r.notes).find((n) => n.id === note)?.fingerings[0].source;
+    for (const id of ["eb-clarinet", "bb-clarinet", "a-clarinet", "bass-clarinet"]) {
+      expect(keys(id, "G3")).toBe("T 123 | 123");
+      expect(keys(id, "C4")).toBe("T 123 | ---");
+      expect(keys(id, "G4")).toBe("--- | ---"); // open G
+      expect(keys(id, "A#4")).toBe("R A --- | ---");
+      expect(keys(id, "D5")).toBe("T R 123 | 123"); // low G's, a twelfth up
+      expect(keys(id, "C6")).toBe("T R --- | ---");
+      expect(keys(id, "C3")).toBe(id === "bass-clarinet" ? "T 123 | lowC 123" : undefined);
+      expect(keys(id, "E6")).toBe(id === "bass-clarinet" ? "T R 023 | --- G#" : "T R -23 | --- G#");
+    }
   });
 
   test("the saxophone's notation: read as written, and a typo refused", () => {
@@ -120,6 +147,9 @@ test.describe("the data", () => {
     expect(intervalWords(t(-5, -9))).toBe("a major sixth lower"); // alto saxophone
     expect(intervalWords(t(-8, -14))).toBe("an octave and a tone lower"); // tenor saxophone
     expect(intervalWords(t(-12, -21))).toBe("an octave and a major sixth lower"); // baritone saxophone
+    expect(intervalWords(t(2, 3))).toBe("a minor third higher"); // E♭ clarinet
+    expect(intervalWords(t(-2, -3))).toBe("a minor third lower"); // A clarinet
+    expect(intervalWords(t(-4, -7))).toBe("a fifth lower"); // mellophone
     const heard = (id: string, steps: number, semitones: number, names: "letters" | "solfege" = "letters") => soundingText(parsePitch(id), names, t(steps, semitones));
     expect(heard("C4", 0, 0)).toBe("Sounds as written");
     expect(heard("D4", 7, 12)).toBe("Sounds D5");
@@ -609,7 +639,12 @@ test.describe("the page", () => {
 
   test("every instrument is in the picker: its group in the list, then its kind", async ({ page }) => {
     await open(page);
-    await expect(groupSelect(page).locator("option")).toHaveText(GROUPS.map((g) => g.name));
+    await expect(groupSelect(page).locator("optgroup")).toHaveCount(SECTIONS.length);
+    for (const [i, s] of SECTIONS.entries()) {
+      await expect(groupSelect(page).locator("optgroup").nth(i)).toHaveAttribute("label", s.name);
+      await expect(groupSelect(page).locator("optgroup").nth(i).locator("option")).toHaveText(s.groups.map((g) => g.name));
+    }
+    expect(SECTIONS.map((s) => s.name)).toEqual(["Woodwinds", "Brass"]);
     for (const g of GROUPS) {
       await groupSelect(page).selectOption(g.id);
       await expect(page.locator("html")).toHaveAttribute("data-instrument", defaultOf(g));

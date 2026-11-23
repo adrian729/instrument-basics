@@ -1,11 +1,11 @@
 // Every note of the four-valve piccolo trumpet in B♭, written C♯3 to G5 (sounding B3 to F6, its range in
 // Herbert, Myers and Wallace, as cited by Wikipedia's "Piccolo trumpet"). The 4th valve lowers a fourth
 // (Wikipedia's "Trumpet"): it stands in for 1 and 3, which are sharp, and with the others reaches below
-// written F♯. The rest are the trumpet's fingerings (trumpet.ts, from Yamaha's chart). (The notation:
+// written F♯. The rest are the trumpet's fingerings (three-valves.ts, from Yamaha's chart). (The notation:
 // notations/valves.)
-import { parseValves, type ValveFingering } from "../notations/valves/notation";
-import { TRUMPET } from "./trumpet";
-import { rows, type Note, type Register } from "./types";
+import { parseValves, type ValveFingering } from "../../notations/valves/notation";
+import { SLIDE, threeValves } from "./three-valves";
+import { rows, type Note, type Register } from "../types";
 
 const FOURTH = "The 4th valve, which lowers a fourth.";
 const SHARP = "Sharp: pull the slides out.";
@@ -25,7 +25,7 @@ const OWN = rows(parseValves, [
 const CHROMATIC = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 const semitone = (id: string) => { const m = /^([A-G]#?)(\d)$/.exec(id)!; return Number(m[2]) * 12 + CHROMATIC.indexOf(m[1]); };
 // The notes from low to high: the piccolo's own where it has them, else the trumpet's.
-const TRUMPET_NOTES = TRUMPET.flatMap((r) => r.notes);
+const TRUMPET_NOTES = threeValves(SLIDE).flatMap((r) => r.notes);
 const notes = (low: string, high: string): Note<ValveFingering>[] => {
   const out: Note<ValveFingering>[] = [];
   for (let s = semitone(low); s <= semitone(high); s++) out.push([...OWN, ...TRUMPET_NOTES].find((n) => semitone(n.id) === s)!);

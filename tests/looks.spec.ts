@@ -1,6 +1,7 @@
 // How the page looks: the intro and key, each register of the flute, the piccolo's start and its third octave
 // (where the two differ most), the B♭ trumpet's start and low register, the piccolo trumpet's low register,
-// the alto saxophone's start and high register, the baritone's low register,
+// the alto saxophone's start and high register, the baritone's low register, the B♭ clarinet's start and
+// throat notes, the bass clarinet's altissimo (its half-hole), the euphonium's start and low register,
 // a few switches and the dark theme, on desktop, and the start (and a trumpet's picker) on a phone;
 // compared with tests/screenshots. After a change meant to change them: `pnpm test:update`, then look at the
 // new ones before committing.
@@ -49,6 +50,23 @@ test("look saxophones", async ({ page }) => {
   await page.goto("/?instrument=baritone-sax");
   await settle(page);
   await expect(register(page, "low")).toHaveScreenshot("baritone-low.png", TALL);
+});
+
+test("look clarinets", async ({ page }) => {
+  await open(page, { "instrument-basics-instrument": "bb-clarinet" });
+  await settle(page);
+  await expect(page).toHaveScreenshot("clarinet-intro.png");
+  await expect(register(page, "throat")).toHaveScreenshot("clarinet-throat.png", TALL);
+  await page.goto("/?instrument=bass-clarinet");
+  await settle(page);
+  await expect(register(page, "altissimo")).toHaveScreenshot("bass-clarinet-altissimo.png", TALL);
+});
+
+test("look euphonium", async ({ page }) => {
+  await open(page, { "instrument-basics-instrument": "euphonium" });
+  await settle(page);
+  await expect(page).toHaveScreenshot("euphonium-intro.png");
+  await expect(register(page, "low")).toHaveScreenshot("euphonium-low.png", TALL);
 });
 
 test("look alternatives open, solfège", async ({ page }) => {
