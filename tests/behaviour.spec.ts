@@ -295,6 +295,7 @@ test.describe("the switches", () => {
     const down = await standard(page, "D5").locator(".key.down").evaluateAll((els) => els.map((e) => (e as SVGElement).dataset.key));
     expect(down.sort()).toEqual(["left1", "left2", "left3", "octave", "right1", "right2", "right3"]);
     await expect(legendKeys(page).locator('[data-key="low-a"]')).toHaveCount(0);
+    await expect(register(page, "low").locator(".range")).toHaveText("B♭3 – C♯5"); // its low B♭, not A♯
     await choose(page, "instrument", "tenor-sax");
     await expect(card(page, "C4").locator(".sounds [aria-hidden]")).toHaveText("Sounds B♭2");
     await choose(page, "instrument", "baritone-sax");

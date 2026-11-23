@@ -29,8 +29,9 @@ const parts = (ss: Spelling[], names: Names) => ss.map((s) => ({ name: spell(s.l
 // for letters; solfège without one, since its octaves are counted differently from country to country.
 export const nameParts = (p: Pitch, names: Names) => parts(spellings(p), names);
 export const nameText = (p: Pitch, names: Names) => nameParts(p, names).map((n) => n.name + n.octave).join(" / ");
-// A range of notes, as a register's head shows it: "B3 – C♯5".
-export const rangeText = (low: Pitch, high: Pitch) => [low, high].map((p) => { const [n] = nameParts(p, "letters"); return n.name + n.octave; }).join(" – ");
+// A range of notes, as a register's head shows it: "B3 – C♯5", each in the usual chromatic spelling (C♯, E♭,
+// F♯, G♯, B♭), so the saxophone's lowest note is its low B♭ and the trumpet's its low F♯.
+export const rangeText = (low: Pitch, high: Pitch) => [low, high].map((p) => { const ns = nameParts(p, "letters"), n = ns[p.letter === "A" || p.letter === "D" ? 1 : 0] ?? ns[0]; return n.name + n.octave; }).join(" – ");
 
 // What's heard of each written spelling: moved by the transposition's letters and semitones (a written C♯ on
 // a B♭ trumpet sounds B, a written D♭ C♭); those that would need a double accidental or are E♯, B♯, C♭ or F♭
