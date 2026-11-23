@@ -156,6 +156,7 @@ h2 { font-size: 1.15rem; line-height: 1.3; text-wrap: balance; }
   .other-name { display: none; }
   .mini { display: block; width: 100%; }
   .mini svg { width: 100%; height: auto; max-height: 15rem; }
+  .mini svg.valves-only { width: 2.4rem; margin-inline: auto; }
   .register { gap: 0.6rem; }
   .chart { gap: 2rem; }
 }
@@ -175,7 +176,7 @@ h2 { font-size: 1.15rem; line-height: 1.3; text-wrap: balance; }
 /* The diagrams (each notation's diagram.ts). Filled (the text colour) is pressed, in both themes. */
 .keys { display: block; width: 100%; height: auto; font-family: var(--mono); }
 .keys .body { fill: var(--body); }
-.keys .bell { stroke: var(--muted); stroke-width: 1.2; vector-effect: non-scaling-stroke; }
+.keys .drawn { fill: var(--body); stroke: var(--muted); stroke-width: 1.2; stroke-linejoin: round; }
 .keys .mouth { fill: none; stroke: var(--muted); stroke-width: 1.4; }
 .keys .key :is(circle, rect) { fill: var(--card); stroke: var(--fg); stroke-width: 1.6; }
 .keys .key.down :is(circle, rect) { fill: var(--fg); }
@@ -188,6 +189,14 @@ h2 { font-size: 1.15rem; line-height: 1.3; text-wrap: balance; }
 .keys .hand { fill: none; stroke: var(--line); stroke-width: 1.4; }
 .keys .hand-name { fill: var(--muted); font-size: 8.5px; letter-spacing: 1px; text-anchor: middle; dominant-baseline: central; }
 .keys .callout { fill: var(--fg); font-size: 9px; }
+.keys .key-name { fill: var(--muted); font-size: 8px; dominant-baseline: central; }
+/* A tall diagram (the saxophone's, drawn standing): beside its words, not over them. */
+.fingering:has(> .keys.tall) { flex-direction: row; align-items: flex-start; gap: 1rem; }
+.fingering > .keys.tall { flex: none; width: 6.5rem; }
+/* The valves alone (an upright instrument's): their own size, not the card's width. */
+.fingering > .keys.valves-only { height: auto; align-self: flex-start; } /* (its width set on it) */
+.legend-keys.standing { max-width: 24rem; }
+.legend-keys.tall { max-width: 20rem; margin-inline: auto; }
 
 /* The alternatives: folded under the standard one, opened one note at a time (or all: the switch). */
 .alternatives { border-top: 1px dashed var(--line); padding-top: 0.6rem; }

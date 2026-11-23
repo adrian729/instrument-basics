@@ -3,7 +3,7 @@
 // top, what was drawn above the body now on its left and what was below it on its right. The keys keep their
 // shape and their labels, upright (only where they are changes), the body and any curve (a bell) are turned
 // with the rest, and across the body distances grow a little, so that two rows of keys stay apart. The hands'
-// brackets and their names are left out, and an upright instrument's bell.
+// brackets and their names are left out.
 const AXIS = 40; // the body's axis, as every notation draws it
 const ACROSS = 1.5; // how much distances across the body grow
 const X = 60; // the body's axis, stood up
@@ -14,7 +14,13 @@ const set = (e: Element, attrs: Record<string, number | string>) => { for (const
 
 export function vertical(lying: SVGSVGElement, label: string): SVGSVGElement {
   const svg = lying.cloneNode(true) as SVGSVGElement;
-  svg.querySelectorAll(".hand, .hand-name, .callout, .bell").forEach((e) => e.remove()); // (an upright bell too: turned, it would point sideways)
+  svg.querySelectorAll(".hand, .hand-name, .callout, .key-name").forEach((e) => e.remove());
+  svg.removeAttribute("style"); // (a size set for the full view: the compact one's own)
+  if (svg.classList.contains("tall")) { // (already standing: the saxophone's)
+    svg.setAttribute("class", "keys tall mini-keys");
+    svg.setAttribute("aria-label", label);
+    return svg;
+  }
   let top = Infinity, bottom = -Infinity, left = Infinity, right = -Infinity;
   const fit = (x1: number, y1: number, x2: number, y2: number) => { left = Math.min(left, x1); right = Math.max(right, x2); top = Math.min(top, y1); bottom = Math.max(bottom, y2); };
   for (const e of svg.querySelectorAll("*")) {
@@ -61,6 +67,6 @@ export function vertical(lying: SVGSVGElement, label: string): SVGSVGElement {
     }
   }
   const pad = 2;
-  set(svg, { viewBox: `${left - pad} ${top - pad} ${right - left + 2 * pad} ${bottom - top + 2 * pad}`, class: "keys mini-keys", "aria-label": label });
+  set(svg, { viewBox: `${left - pad} ${top - pad} ${right - left + 2 * pad} ${bottom - top + 2 * pad}`, class: `${svg.getAttribute("class")} mini-keys`, "aria-label": label });
   return svg;
 }

@@ -61,13 +61,13 @@ export const SAX_NOTATION: Notation<SaxFingering> = {
     return keys.length ? `Press: ${keys.join(", ")}` : "Nothing pressed";
   },
   blank: "--- | ---",
-  legendLabel: (options) => `The keys: the octave key${options.lowA ? " and low A key" : ""} under the left thumb; the palm keys E-flat, D and F and the front F key; left 1, the bis key, left 2 and 3; the left pinky's G-sharp, B, low C-sharp and B-flat; the side keys E, C and B-flat and the high F-sharp key; right 1, 2, the alternate F-sharp key, right 3; the right pinky's E-flat and low C`,
+  legendLabel: (options) => `The keys, from the neck down: the front F key, the octave key${options.lowA ? " and low A key" : ""} under the left thumb, the palm keys E-flat, D and F; left 1, the bis key, left 2 and 3; the left pinky's G-sharp, B, low C-sharp and B-flat; the high F-sharp key and the side keys E, C and B-flat; right 1, 2, the alternate F-sharp key, right 3; the right pinky's E-flat and low C`,
   legend: ({ name, options }) => [
-    `The ${name}'s keys laid out along it: the mouthpiece on the left, then the left hand's keys, then the right's, as they go down the instrument.`,
+    `The ${name} facing you, as the usual charts draw it: the neck at the top, the left hand's keys in a column, then the right's, each key in its shape and where it is.`,
     "<b>Filled is pressed, outlined is up.</b> The numbers are your fingers: 1 the index, 2 the middle, 3 the ring finger.",
-    "Above the body, the left palm's <b>E♭</b>, <b>D</b> and <b>F</b> keys and the front F key (<b>f</b>), by left 1; and the right hand's side keys <b>E</b>, <b>C</b> and <b>B♭</b>, with the high <b>F♯</b> key most saxophones have.",
-    `Below it, the left thumb's octave key (<b>oct</b>)${options.lowA ? " and the baritone's low <b>A</b> key" : ""}, the left pinky's <b>G♯</b>, <b>B</b>, <b>C♯</b> and <b>B♭</b>, and the right pinky's <b>E♭</b> and <b>C</b>.`,
-    "The small key between left 1 and 2 is the <b>bis</b> B♭ key; the dashed one between right 2 and 3, the alternate F♯ key. Dashed keys are the few that only some fingerings use.",
+    `At the top, the front F key, and beside left 1 the octave key, under the left thumb${options.lowA ? " (the baritone's low A key under it)" : ""}; up on the right, the left palm's <b>E♭</b>, <b>D</b> and <b>F</b> keys.`,
+    "On the right under left 3, the left pinky's table: <b>G♯</b>, <b>B</b>, <b>C♯</b> and <b>B♭</b>. On the left by the right hand, its side keys <b>E</b>, <b>C</b> and <b>B♭</b>, with the high <b>F♯</b> key most saxophones have; and under right 3, the right pinky's <b>E♭</b> and <b>C</b>.",
+    "The small key between left 1 and 2 is the <b>bis</b> B♭ key; the dashed one beside right 2 and 3, the alternate F♯ key. Dashed keys are the few that only some fingerings use.",
     "Under each diagram the same fingering in words. Every saxophone, soprano to baritone, is fingered alike.",
   ],
 };
