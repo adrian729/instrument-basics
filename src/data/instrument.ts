@@ -10,7 +10,7 @@ import { drawArt } from "../notations/art";
 
 export type InstrumentId =
   | "flute" | "piccolo"
-  | "bb-clarinet" | "a-clarinet" | "eb-clarinet" | "bass-clarinet"
+  | "bb-clarinet" | "a-clarinet" | "eb-clarinet" | "bass-clarinet" | "bb-clarinet-german" | "a-clarinet-german" | "eb-clarinet-german"
   | "soprano-sax" | "alto-sax" | "tenor-sax" | "baritone-sax"
   | "bb-trumpet" | "c-trumpet" | "piccolo-trumpet"
   | "cornet" | "flugelhorn" | "mellophone" | "tenor-horn" | "baritone-horn" | "euphonium";
@@ -37,6 +37,7 @@ type About = {
   group: GroupId;
   name: string; // as in a sentence: "the flute"
   kind: string; // its name in the picker, beside its group's others: "Flute", "Alto"
+  system?: string; // its key system, where its group has more than one (the clarinets' "Boehm" and "German"): a kind's in each
   title: string; // the picker's tooltip
   clef: Clef;
   transposition: Transposition;

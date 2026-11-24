@@ -10,6 +10,7 @@ import cornet from "./cornet";
 import euphonium from "./euphonium";
 import flugelhorn from "./flugelhorn";
 import flute from "./flute";
+import germanClarinet from "./german-clarinet";
 import mellophone from "./mellophone";
 import piccolo from "./piccolo";
 import piccoloTrumpet from "./piccolo-trumpet";
@@ -18,8 +19,6 @@ import tenorHorn from "./tenor-horn";
 import tenorSax from "./tenor-sax";
 import trumpet from "./trumpet";
 
-export type ArtId =
-  | "flute" | "piccolo" | "clarinet" | "bass-clarinet" | "soprano-sax" | "alto-sax" | "tenor-sax" | "baritone-sax"
-  | "trumpet" | "piccolo-trumpet" | "cornet" | "flugelhorn" | "mellophone" | "tenor-horn" | "baritone-horn" | "euphonium";
+export type ArtId = "alto-sax" | "baritone-horn" | "baritone-sax" | "bass-clarinet" | "clarinet" | "cornet" | "euphonium" | "flugelhorn" | "flute" | "german-clarinet" | "mellophone" | "piccolo" | "piccolo-trumpet" | "soprano-sax" | "tenor-horn" | "tenor-sax" | "trumpet";
 
-export const ART: Partial<Record<ArtId, Art>> = { "alto-sax": altoSax, "baritone-horn": baritoneHorn, "baritone-sax": baritoneSax, "bass-clarinet": bassClarinet, "clarinet": clarinet, "cornet": cornet, "euphonium": euphonium, "flugelhorn": flugelhorn, "flute": flute, "mellophone": mellophone, "piccolo": piccolo, "piccolo-trumpet": piccoloTrumpet, "soprano-sax": sopranoSax, "tenor-horn": tenorHorn, "tenor-sax": tenorSax, "trumpet": trumpet };
+export const ART: Record<ArtId, Art> = { "alto-sax": altoSax, "baritone-horn": baritoneHorn, "baritone-sax": baritoneSax, "bass-clarinet": bassClarinet, "clarinet": clarinet, "cornet": cornet, "euphonium": euphonium, "flugelhorn": flugelhorn, "flute": flute, "german-clarinet": germanClarinet, "mellophone": mellophone, "piccolo": piccolo, "piccolo-trumpet": piccoloTrumpet, "soprano-sax": sopranoSax, "tenor-horn": tenorHorn, "tenor-sax": tenorSax, "trumpet": trumpet };

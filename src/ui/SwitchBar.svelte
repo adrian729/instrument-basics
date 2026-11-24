@@ -1,7 +1,8 @@
 <!--
   The switches at the top of the page, in named groups: the instrument (its group, from a list in sections that can
-  grow long, then its kind among the group's, if there's more than one), how notes are named, the view (full, or
-  compact), and in full, what's shown of the alternatives.
+  grow long, then its kind among the group's, if there's more than one, and its key system, if the group has more
+  than one: the clarinets' Boehm and German), how notes are named, the view (full, or compact), and in full,
+  what's shown of the alternatives.
 -->
 <script lang="ts">
   import { GROUPS, SECTIONS, instrument, type GroupId } from "../data/instruments";
@@ -25,7 +26,11 @@
   const ordered = (key: keyof Choices, list: Choice[]) => (VALUES[key] as string[]).map((v) => list.find((c) => c.value === v)!);
 
   const shown = $derived(instrument(choices.instrument));
-  const kinds = $derived(GROUPS.find((g) => g.id === shown.group)!.instruments);
+  const all = $derived(GROUPS.find((g) => g.id === shown.group)!.instruments);
+  // Each kind once, in the system shown if it has it (the bass clarinet is Boehm's alone); each system the
+  // group has, its button the kind shown in it, if there is one.
+  const kinds = $derived([...new Set(all.map((i) => i.kind))].map((k) => all.find((i) => i.kind === k && i.system === shown.system) ?? all.find((i) => i.kind === k)!));
+  const systems = $derived([...new Set(all.flatMap((i) => (i.system ? [i.system] : [])))].map((name) => ({ name, to: all.find((i) => i.kind === shown.kind && i.system === name) })));
 </script>
 
 {#snippet group(name: string, key: keyof Choices, list: Choice[])}
@@ -58,6 +63,13 @@
         <div class="switch" role="group" aria-label="Kind">
           {#each kinds as i (i.id)}
             <button type="button" data-instrument={i.id} title={i.title} aria-label={spoken(i.kind)} aria-pressed={choices.instrument === i.id} onclick={() => choose("instrument", i.id)}>{i.kind}</button>
+          {/each}
+        </div>
+      {/if}
+      {#if systems.length > 1}
+        <div class="switch" role="group" aria-label="Key system">
+          {#each systems as s (s.name)}
+            <button type="button" data-system={s.name} title={s.to ? s.to.title : `No ${s.name}-system ${shown.name} here`} disabled={!s.to} aria-pressed={shown.system === s.name} onclick={() => s.to && choose("instrument", s.to.id)}>{s.name}</button>
           {/each}
         </div>
       {/if}

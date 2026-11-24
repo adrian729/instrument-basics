@@ -20,6 +20,7 @@ const first = (notes: typeof FLUTE, id: string) => notes.find((n) => n.id === id
 test.describe("the data", () => {
   const RANGES = [["flute", "B3", "F7"], ["piccolo", "D4", "D7"],
     ["eb-clarinet", "E3", "A6"], ["bb-clarinet", "E3", "C7"], ["a-clarinet", "E3", "C7"], ["bass-clarinet", "C3", "D#7"],
+    ["eb-clarinet-german", "E3", "A6"], ["bb-clarinet-german", "E3", "C7"], ["a-clarinet-german", "E3", "C7"],
     ["soprano-sax", "A#3", "F#6"], ["alto-sax", "A#3", "F#6"], ["tenor-sax", "A#3", "F#6"], ["baritone-sax", "A3", "F#6"],
     ["bb-trumpet", "F#3", "C6"], ["c-trumpet", "F#3", "C6"], ["piccolo-trumpet", "C#3", "G5"], ["cornet", "F#3", "C6"], ["flugelhorn", "F#3", "C6"],
     ["mellophone", "F#3", "C6"], ["tenor-horn", "F#3", "C6"], ["baritone-horn", "F#3", "C6"], ["euphonium", "C#3", "G6"]] as const;
@@ -671,9 +672,30 @@ test.describe("the page", () => {
     for (const g of GROUPS) {
       await groupSelect(page).selectOption(g.id);
       await expect(page.locator("html")).toHaveAttribute("data-instrument", defaultOf(g));
-      const pills = page.locator('#switches [data-group="instrument"] button');
-      if (g.instruments.length > 1) await expect(pills).toHaveText(g.instruments.map((i) => i.kind));
+      const pills = page.locator('#switches [data-group="instrument"] button[data-instrument]');
+      const kinds = [...new Set(g.instruments.map((i) => i.kind))]; // (each once: the clarinets' in two systems)
+      if (g.instruments.length > 1) await expect(pills).toHaveText(kinds);
       else await expect(pills).toHaveCount(0);
     }
+  });
+
+  test("the clarinets' key system: Boehm or German, the same kind in each, the bass clarinet Boehm's alone", async ({ page }) => {
+    await open(page, { "instrument-basics-instrument": "bb-clarinet" });
+    const system = (name: string) => page.locator(`#switches button[data-system="${name}"]`);
+    await expect(system("Boehm")).toHaveAttribute("aria-pressed", "true");
+    await system("German").click();
+    await expect(page.locator("html")).toHaveAttribute("data-instrument", "bb-clarinet-german");
+    await expect(page).toHaveURL(/instrument=bb-clarinet-german/);
+    await expect(page.locator("h1")).toContainText("German-system B♭ clarinet");
+    // Its own keys: the double F/C sliver, and the left pinky's levers; low E with both pinkies.
+    await expect(card(page, "E3").locator('svg.keys [data-key="left-e"].down')).toHaveCount(1);
+    await expect(card(page, "E3").locator('svg.keys [data-key="right-f"].down')).toHaveCount(1);
+    await expect(card(page, "F4").locator('[data-key="sliver-f"]')).not.toHaveCount(0);
+    // A kind keeps the system; the bass clarinet has none but Boehm.
+    await page.locator('#switches button[data-instrument="a-clarinet-german"]').click();
+    await expect(page.locator("html")).toHaveAttribute("data-instrument", "a-clarinet-german");
+    await page.locator('#switches button[data-instrument="bass-clarinet"]').click();
+    await expect(system("German")).toBeDisabled();
+    await expect(system("Boehm")).toHaveAttribute("aria-pressed", "true");
   });
 });

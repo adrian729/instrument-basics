@@ -61,6 +61,9 @@ test("look clarinets", async ({ page }) => {
   await page.goto("/?instrument=bass-clarinet");
   await settle(page);
   await expect(register(page, "altissimo")).toHaveScreenshot("bass-clarinet-altissimo.png", TALL);
+  await page.goto("/?instrument=bb-clarinet-german");
+  await settle(page);
+  await expect(register(page, "chalumeau")).toHaveScreenshot("german-clarinet-chalumeau.png", TALL);
 });
 
 test("look euphonium", async ({ page }) => {
@@ -72,7 +75,7 @@ test("look euphonium", async ({ page }) => {
 
 test("look drawings", async ({ page }) => {
   await open(page, { "instrument-basics-instrument": "cornet" });
-  for (const id of ["flute", "piccolo", "bb-clarinet", "bass-clarinet", "soprano-sax", "alto-sax", "tenor-sax", "baritone-sax",
+  for (const id of ["flute", "piccolo", "bb-clarinet", "bass-clarinet", "bb-clarinet-german", "soprano-sax", "alto-sax", "tenor-sax", "baritone-sax",
     "bb-trumpet", "piccolo-trumpet", "cornet", "flugelhorn", "mellophone", "tenor-horn", "baritone-horn", "euphonium"]) {
     await page.goto(`/?instrument=${id}`);
     await settle(page);
