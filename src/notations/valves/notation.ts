@@ -26,7 +26,7 @@ export const VALVES_NOTATION: Notation<ValveFingering> = {
   legendLabel: (options) => `The valves, from the mouthpiece out: 1, 2 and 3${(options.valves?.length ?? 3) > 3 ? (options.sideValve ? ", and the 4th on the side, for the left hand" : ", and the 4th set apart") : ""}`,
   legend: ({ name, options }) => [
     options.valvesOnly
-      ? `Above, the ${name} as it stands, seen from the front: the valves on top, 1 nearest the mouthpiece and you, so 3 2 1 from the left. Each note's diagram is its valves alone, 1 2 3 from the left${(options.valves?.length ?? 3) > 3 && options.sideValve ? ", the 4th lower and apart" : ""}.`
+      ? `Above, the ${name} as it stands, seen from the side (your left): the valves on top, 1 nearest the mouthpiece and you, so 3 2 1 from the left. Each note's diagram is its valves alone, 1 2 3 from the left${(options.valves?.length ?? 3) > 3 && options.sideValve ? ", the 4th lower and apart" : ""}.`
       : `Above, the ${name} from the side, its valves numbered, 1 nearest the mouthpiece. Each note's diagram draws it simplified, seen from above as you play it: the mouthpiece on the left, the valves, the bell on the right.`,
     "<b>Filled is pressed, outlined is up.</b> The right hand plays the valves: 1 the index, 2 the middle, 3 the ring finger.",
     ...((options.valves?.length ?? 3) > 3 ? [options.sideValve

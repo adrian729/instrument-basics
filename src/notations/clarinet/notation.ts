@@ -77,6 +77,6 @@ export const CLARINET_NOTATION: Notation<ClarinetFingering> = {
     "The little fingers' keys, each on its own hand's side: on the right under left 3, the left pinky's <b>C♯</b>, <b>F</b>, <b>E</b> and <b>F♯</b>; on the left at the bottom, the right pinky's <b>G♯</b>, <b>F♯</b>, <b>F</b> and <b>E</b>. E, F and F♯ are on both sides, so that the pinkies can take turns.",
     "On the left between the hands, the four side keys (<b>1</b> to <b>4</b>, 4 the lowest), pressed with the side of right 1. The small keys between 2 and 3 on each hand are the <b>sliver</b> keys: E♭ on the left hand, B on the right.",
     ...(options.bass ? ["The bass clarinet's lowest keys: <b>E♭</b> by the right pinky, and on a low C bass clarinet <b>D</b>, <b>C♯</b> and <b>C</b> under the right thumb, behind the instrument, drawn on the right by right 1 and 2 (where they are varies: some have low D by a pinky). A half-filled left 1 is a <b>half-hole</b>: the ring pressed, the hole left open, as its altissimo does."] : []),
-    `Under each diagram the same fingering in words. Every Boehm clarinet, E♭ to bass, is fingered alike.`,
+    `Under each diagram the same fingering in words. Every Boehm clarinet, E♭ to bass, is fingered alike up to clarion C; the bass clarinet's altissimo is its own.`,
   ],
 };

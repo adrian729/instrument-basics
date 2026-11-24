@@ -1,6 +1,7 @@
 // A diagram stood up, for the compact view: every notation draws its diagrams lying down, the mouthpiece on
-// the left and the body's axis at y = 40; here the same keys are laid out top to bottom, the mouthpiece at the
-// top, what was drawn above the body now on its left and what was below it on its right. The keys keep their
+// the left and the body's axis at y = 40; here the same diagram is turned a quarter clockwise (as a drawing's
+// upright layout is: ../notations/art.ts), the mouthpiece at the top, what was drawn above the body now on its
+// right and what was below it on its left. The keys keep their
 // shape and their labels, upright (only where they are changes), the body and any curve (a bell) are turned
 // with the rest, and across the body distances grow a little, so that two rows of keys stay apart. The hands'
 // brackets and their names are left out.
@@ -8,7 +9,7 @@ const AXIS = 40; // the body's axis, as every notation draws it
 const ACROSS = 1.5; // how much distances across the body grow
 const X = 60; // the body's axis, stood up
 
-const at = (x: number, y: number) => [X + (y - AXIS) * ACROSS, x] as const;
+const at = (x: number, y: number) => [X - (y - AXIS) * ACROSS, x] as const;
 const num = (e: Element, name: string) => Number(e.getAttribute(name) ?? 0);
 const set = (e: Element, attrs: Record<string, number | string>) => { for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, String(v)); };
 
@@ -36,7 +37,7 @@ export function vertical(lying: SVGSVGElement, label: string): SVGSVGElement {
     } else if (tag === "rect") {
       const x = num(e, "x"), y = num(e, "y"), w = num(e, "width"), h = num(e, "height");
       if (e.matches(".body, .mouth")) { // the body (the valves' tubing): turned, its corners too
-        const [x1, y1] = at(x, y), rx = num(e, "rx");
+        const [x1, y1] = at(x, y + h), rx = num(e, "rx"); // (its bottom edge, now its left)
         set(e, { x: x1, y: y1, width: h * ACROSS, height: w, rx: Math.min(rx * ACROSS, (h * ACROSS) / 2), ry: rx });
         fit(x1, y1, x1 + h * ACROSS, y1 + w);
       } else { // a key: where it was, upright
@@ -47,11 +48,8 @@ export function vertical(lying: SVGSVGElement, label: string): SVGSVGElement {
     } else if (tag === "text") {
       const [x, y] = at(num(e, "x"), num(e, "y"));
       set(e, { x, y });
-    } else if (tag === "path" && e.classList.contains("half-fill")) { // a half-holed key: the half that was below, now on the right
-      const c = e.parentElement!.querySelector("circle")!, cx = num(c, "cx"), cy = num(c, "cy"), r = num(c, "r");
-      set(e, { d: `M${cx} ${cy - r}A${r} ${r} 0 0 1 ${cx} ${cy + r}Z` });
     } else if (tag === "path") { // a curve (a bell, a mouthpiece): turned whole
-      set(e, { transform: `matrix(0 1 ${ACROSS} 0 ${X - AXIS * ACROSS} 0)` });
+      set(e, { transform: `matrix(0 1 ${-ACROSS} 0 ${X + AXIS * ACROSS} 0)` });
       const xs: number[] = [], ys: number[] = [];
       const d = e.getAttribute("d") ?? "";
       // (its extent, from its absolute points: the notations draw them with M, L, C, H, V and A)

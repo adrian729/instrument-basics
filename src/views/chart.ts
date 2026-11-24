@@ -62,6 +62,9 @@ export function makeChart(root: HTMLElement, legend: HTMLElement): Chart {
     document.querySelector("#intro-title")!.textContent = `Fingerings for the ${shown.name}`;
     html(".intro .facts", items(shown.facts));
     html(".legend-text ul", items(shown.legend));
+    // (the compact view's diagrams, said apart: the ones drawn lying turned to stand, the standing ones as they are)
+    const lying = !shown.registers[0].notes[0].fingerings[0].diagram().classList.contains("tall");
+    html(".legend-text .compact-note", `<b>Compact view:</b> each card its note and its standard fingering's diagram alone, without the words, the sounding note or the alternatives${lying ? ". The diagram stood up, turned a quarter clockwise: its left end at the top, what's drawn above the body on its right, below it on its left." : ", standing as described."}`);
     html("footer .tip", shown.tip);
     html("footer .sources", group(shown.group).sources);
     document.querySelector(".toc-links")!.replaceChildren(h("p", { className: "toc-title", ariaHidden: "true" }, "Contents"), h("a", { href: "#intro" }, "Overview"), ...shown.registers.map((r) => h("a", { href: `#${r.id}` }, r.nav)));

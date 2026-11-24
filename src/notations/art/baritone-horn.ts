@@ -8,7 +8,7 @@ const art: Art = {
   scale: 0.1918736,
   box: [-521.18,-31.27,1212.71,1886.66],
   marks: [{"key":"valve1","n":1,"at":[313,504.36],"to":[348.66,384.49]},{"key":"valve2","n":2,"at":[235,504.36],"to":[234,384.49]},{"key":"valve3","n":3,"at":[155,504.36],"to":[119.34,384.49]}],
-  notes: [{"at":[866,685.33],"text":["mouthpiece"]},{"at":[846.27,46.36],"text":["bell"],"anchor":"start"},{"at":[-62,1300],"text":["1st valve slide"],"anchor":"end","to":[33,1300]},{"at":[672,1000],"text":["3rd valve slide"],"anchor":"start","to":[381,1000]},{"at":[672,1420],"text":["main tuning slide"],"anchor":"start","to":[356,1420]}],
+  notes: [{"at":[866,685.33],"text":["mouthpiece"]},{"at":[846.27,46.36],"text":["bell"],"anchor":"start"},{"at":[-62,1300],"text":["3rd valve slide"],"anchor":"end","to":[33,1300]},{"at":[672,1000],"text":["1st valve slide"],"anchor":"start","to":[381,1000]},{"at":[672,1420],"text":["main tuning slide"],"anchor":"start","to":[356,1420]}],
   parts: [
     ["tube", "M420 740V1640", 40],
     ["tube", "M74 1600V830C74 770 100 745 150 745", 52],

@@ -8,7 +8,7 @@ const art: Art = {
   scale: 0.3508772,
   box: [-285,-17.1,671,1031.7],
   marks: [{"key":"valve1","n":1,"at":[180,321.45],"to":[202.7,255.9]},{"key":"valve2","n":2,"at":[140,321.45],"to":[140,255.9]},{"key":"valve3","n":3,"at":[100,321.45],"to":[77.3,255.9]}],
-  notes: [{"at":[450,461.35],"text":["mouthpiece"]},{"at":[491.1,33.45],"text":["bell"],"anchor":"start"},{"at":[-30,640],"text":["1st valve slide"],"anchor":"end","to":[62,640]},{"at":[368,625],"text":["3rd valve slide"],"anchor":"start","to":[257,625]},{"at":[368,760],"text":["main tuning slide"],"anchor":"start","to":[254,760]}],
+  notes: [{"at":[450,461.35],"text":["mouthpiece"]},{"at":[491.1,33.45],"text":["bell"],"anchor":"start"},{"at":[-30,640],"text":["3rd valve slide"],"anchor":"end","to":[62,640]},{"at":[368,600],"text":["1st valve slide"],"anchor":"start","to":[228,600]},{"at":[368,700],"text":["main tuning slide"],"anchor":"start","to":[212,669]}],
   parts: [
     ["tube", "M32 800V470C32 425 60 402 105 402H210", 34],
     ["shape", "M140 42C190 62 228 120 240 220C250 320 258 500 262 600L266 830 C262 880 230 912 170 918C110 920 70 900 55 860C50 840 49 820 49 800L15 800 C14 860 30 905 80 935C130 960 230 962 280 925C318 896 331 860 332 820L333 600 C334 450 340 300 352 220C365 130 410 70 474 42A167 17 0 0 0 140 42Z"],

@@ -8,7 +8,7 @@ const art: Art = {
   scale: 0.20923080000000002,
   box: [-477.94,-28.68,1246.76,1730.15],
   marks: [{"key":"valve1","n":1,"at":[368,451.66],"to":[400.15,341.74]},{"key":"valve2","n":2,"at":[295,451.66],"to":[295,341.74]},{"key":"valve3","n":3,"at":[222,451.66],"to":[189.85,341.74]},{"key":"valve4","n":4,"at":[26,868],"to":[6.88,791.53]}],
-  notes: [{"at":[912,692.57],"text":["mouthpiece"]},{"at":[933.68,55.66],"text":["bell"],"anchor":"start"},{"at":[-22.68,879.95],"text":["4th valve","left index"],"anchor":"end"},{"at":[-57,1150],"text":["1st valve slide"],"anchor":"end","to":[107,1150]},{"at":[710,960],"text":["3rd valve slide"],"anchor":"start","to":[452,960]},{"at":[710,1300],"text":["main tuning slide"],"anchor":"start","to":[422,1300]}],
+  notes: [{"at":[912,692.57],"text":["mouthpiece"]},{"at":[933.68,55.66],"text":["bell"],"anchor":"start"},{"at":[-22.68,879.95],"text":["4th valve","left index"],"anchor":"end"},{"at":[-57,1150],"text":["3rd valve slide"],"anchor":"end","to":[107,1150]},{"at":[710,960],"text":["1st valve slide"],"anchor":"start","to":[452,960]},{"at":[710,1300],"text":["main tuning slide"],"anchor":"start","to":[422,1300]}],
   parts: [
     ["shape", "M265 70C330 110 420 190 445 320C470 450 500 700 505 900L512 1250 C522 1340 505 1420 440 1455C380 1475 280 1475 220 1440C165 1405 145 1340 140 1255L52 1255 C52 1420 110 1540 230 1590C330 1620 470 1610 560 1550C625 1500 652 1420 652 1300 L660 900C668 600 690 380 740 240C780 150 840 100 905 80A322 38 0 0 0 265 70Z"],
     ["line", "M265 70A322 38 0 0 0 905 80"],

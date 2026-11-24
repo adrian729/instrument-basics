@@ -61,7 +61,7 @@ export const SAX_NOTATION: Notation<SaxFingering> = {
     return keys.length ? `Press: ${keys.join(", ")}` : "Nothing pressed";
   },
   blank: "--- | ---",
-  legendLabel: (options) => `The keys, from the neck down: the front F key, the octave key${options.lowA ? " and low A key" : ""} under the left thumb, the palm keys E-flat, D and F; left 1, the bis key, left 2 and 3; the left pinky's G-sharp, B, low C-sharp and B-flat; the high F-sharp key and the side keys E, C and B-flat; right 1, 2, the alternate F-sharp key, right 3; the right pinky's E-flat and low C`,
+  legendLabel: (options) => `The keys, from the neck down: the front F key, the octave key${options.lowA ? " and low A key" : ""} under the left thumb, the palm keys E-flat, D and F; left 1, the bis key, left 2 and 3; the left pinky's G-sharp, low C-sharp, B and B-flat; the side keys E, C and B-flat and the high F-sharp key under them; right 1, 2, the alternate F-sharp key, right 3; the right pinky's E-flat and low C`,
   legend: ({ name, options }) => [
     `Above, the ${name} as it is, facing you, every key named where it is. Each note's diagram draws the same keys as the usual charts do: in a column, the neck at the top, the left hand's keys and then the right's, each in its shape and where it is, without the body.`,
     "<b>Filled is pressed, outlined is up.</b> The numbers are your fingers: 1 the index, 2 the middle, 3 the ring finger.",

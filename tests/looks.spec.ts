@@ -74,6 +74,7 @@ test("look euphonium", async ({ page }) => {
 });
 
 test("look drawings", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1600 }); // (a clarinet's drawing is taller than the usual window: whole in it)
   await open(page, { "instrument-basics-instrument": "cornet" });
   for (const id of ["flute", "piccolo", "bb-clarinet", "bass-clarinet", "bb-clarinet-german", "soprano-sax", "alto-sax", "tenor-sax", "baritone-sax",
     "bb-trumpet", "piccolo-trumpet", "cornet", "flugelhorn", "mellophone", "tenor-horn", "baritone-horn", "euphonium"]) {

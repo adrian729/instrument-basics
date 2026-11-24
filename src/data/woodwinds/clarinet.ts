@@ -97,7 +97,7 @@ export const CLARINET: Register<ClarinetFingering>[] = [
       ["A6", ["T R -23 | --- F", "", SOPRANO], ["T R --- | s4 --- G#", "", BASS], ["T R -23 F | ---", LEFT, SOPRANO], ["R --- | 12- F#", "The thumb hole open: responds quickly, and in tune.", SOPRANO]],
       ["A#6", ["T R G# -23 C# | --- G#", "", TO_C7], ["T R G# --- | s4 --- G#", "", BASS], ["T R G# -23 C# | s3 s4 ---", "In tune, and responds easily.", TO_C7]],
       ["B6", ["T R G# 12- | 12-", "", TO_C7], ["T R 02- | 12-", "", BASS]],
-      ["C7", ["T R G# 1-- | 1-- F#", "", TO_C7], ["T R G# --- | s2 ---", "", BASS], ["T R A 1-- | --- G#", "Responds better than with right 1 down too.", TO_C7]],
+      ["C7", ["T R G# 1-- | 1-- F#", "", TO_C7], ["T R G# --- | s2 ---", "", BASS], ["T R A 1-- | --- G#", "Responds better than left 1 and right 1 with the G♯ key, without the A key.", TO_C7]],
       ["C#7", ["T R G# 1-- | s4 1--", "Sharp, but easy to lip down.", BASS]],
       ["D7", ["T R 023 | s1 ---", "", BASS]],
       ["D#7", ["R 023 C# | ---", "The thumb hole open.", BASS]],

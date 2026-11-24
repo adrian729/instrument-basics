@@ -11,7 +11,7 @@ import { OEHLER } from "./oehler";
 const WFG = "https://www.wfg.woodwind.org/clarinet/";
 const WRITTEN = "The chart names written notes, and each card says what you'll hear.";
 const TWELFTH = "<b>It overblows a twelfth.</b> The register key takes the chalumeau's fingerings up an octave and a fifth, not an octave as on the flute or saxophone: clarion B is low E's fingering, and so on.";
-const ALIKE = "<b>Fingered alike on every size</b>, E♭ to bass: the same written note takes the same keys.";
+const ALIKE = "<b>Fingered alike on every size</b>, E♭ to bass, up to clarion C: the same written note takes the same keys (the bass clarinet's altissimo is its own).";
 const TIP = "Most alternatives are for an easier passage: the pinkies' keys taking turns, the sliver and side keys in chromatic passages. Others are for tone and tuning, above all on the throat notes. Try them with a tuner, and keep what works on yours.";
 const about = (id: "eb-clarinet" | "bb-clarinet" | "a-clarinet" | "bass-clarinet", name: string, kind: string, key: string, steps: number, semitones: number) => ({
   id, group: "clarinets" as const, name, kind, system: "Boehm", title: `The ${name}, in ${key}, sounding ${intervalWords({ steps, semitones })}`, clef: "treble" as const,
@@ -49,7 +49,7 @@ export const CLARINETS: Group = {
       facts: [
         `<b>It sounds a major ninth lower</b> (an octave and a tone). The bass clarinet is in B♭, an octave below the B♭ clarinet, and read in treble clef, as most of its parts are. ${WRITTEN}`,
         "<b>Its lowest notes.</b> Every bass clarinet has a low E♭ key; a low C one adds D, C♯ and C, the chart's first three notes. On a low E♭ bass clarinet, start at E♭.",
-        "<b>Fingered like the B♭ clarinet</b> up to clarion C. From altissimo D up, left 1 is half-holed, its ring pressed and the hole left open, where the smaller clarinets lift it.",
+        "<b>Fingered like the B♭ clarinet</b> up to clarion C. From altissimo D up, left 1 is mostly half-holed, its ring pressed and the hole left open, where the smaller clarinets lift it.",
       ],
     }, CLARINET_NOTATION, CLARINET),
     define({

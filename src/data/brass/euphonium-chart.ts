@@ -12,6 +12,7 @@ export const EVERETT = "https://olemiss.edu/lowbrass/lowbrassmethods/charts/euph
 
 const LOW = "The 4th valve with others: on a compensating euphonium, in tune.";
 const FOURTH = "The 4th valve, in place of 1 and 3: better in tune.";
+const FOURTH2 = "The 4th valve with the 2nd, in place of 1, 2 and 3: better in tune.";
 const SHARP = "Without the 4th valve: sharp.";
 const THIRD = "The 3rd valve alone is as long as 1 and 2 together: a choice for tuning.";
 const OTHER = "The same note on another harmonic: for tuning, or an easier passage.";
@@ -26,7 +27,7 @@ export const EUPHONIUM_CHART: Register<ValveFingering>[] = [
       ["D#3", ["234", LOW]],
       ["E3", ["124", LOW]],
       ["F3", ["14", LOW]],
-      ["F#3", ["24", FOURTH], ["123", SHARP]],
+      ["F#3", ["24", FOURTH2], ["123", SHARP]],
       ["G3", ["4", FOURTH], ["13", SHARP]],
       ["G#3", "23"],
       ["A3", "12", ["3", THIRD]],
@@ -39,7 +40,7 @@ export const EUPHONIUM_CHART: Register<ValveFingering>[] = [
     id: "middle", name: "Middle register", nav: "Middle",
     about: "The staff: the 3rd and 4th harmonics, the 4th valve again for 1–3 and 1–2–3.",
     notes: rows(parseValves, [
-      ["C#4", ["24", FOURTH], ["123", SHARP]],
+      ["C#4", ["24", FOURTH2], ["123", SHARP]],
       ["D4", ["4", FOURTH], ["13", SHARP]],
       ["D#4", "23"],
       ["E4", "12", ["3", THIRD]],
