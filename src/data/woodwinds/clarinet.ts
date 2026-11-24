@@ -18,7 +18,7 @@ const SOPRANO: InstrumentId[] = ["eb-clarinet", "bb-clarinet", "a-clarinet"], BA
 const TO_C7: InstrumentId[] = ["bb-clarinet", "a-clarinet"]; // (the E♭ clarinet's range ends at A6)
 const RIGHT = "The right pinky's key instead: next to a note that takes the left pinky.";
 const LEFT = "The left pinky's key instead: next to a note that takes the right pinky.";
-const BOTH = (next: string) => `Both pinkies down, the right already on F: next to ${next}, the left pinky alone lifting.`;
+const BOTH = (next: string) => `Both pinkies down, the right already on F: next to ${next}, the left pinky alone lifting. Yamaha's chart gives this one first.`;
 
 export const CLARINET: Register<ClarinetFingering>[] = [
   {

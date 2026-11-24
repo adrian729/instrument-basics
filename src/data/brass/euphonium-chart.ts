@@ -56,7 +56,7 @@ export const EUPHONIUM_CHART: Register<ValveFingering>[] = [
   },
   {
     id: "high", name: "High register", nav: "High",
-    about: "Above the staff, to written G6 (sounding F5): the harmonics closer together, so that several notes share a fingering and many have two or more.",
+    about: "From the top of the staff up, to written G6 (sounding F5): the harmonics closer together, so that several notes share a fingering and many have two or more.",
     notes: rows(parseValves, [
       ["C#5", "12", ["24", OTHER], ["123", OTHER]],
       ["D5", "1", ["4", OTHER], ["13", OTHER]],
