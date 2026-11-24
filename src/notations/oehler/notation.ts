@@ -68,7 +68,7 @@ export const OEHLER_NOTATION: Notation<OehlerFingering> = {
     "<b>Filled is pressed, outlined is up.</b> The numbers are your fingers: 1 the index, 2 the middle, 3 the ring finger, each covering a hole (in a ring).",
     "At the top on the left, the left thumb's hole (<b>T</b>) and the register key (<b>reg</b>), which it presses too, for the notes from clarion B up: they're behind the instrument, under the thumb. Above left 1, the <b>A</b> key, and on the right the side <b>G♯</b> key, for the throat notes.",
     "The small keys between the fingers are the <b>sliver</b> keys: <b>F</b> between left 1 and 2 (the double F/C key), <b>E♭</b> between left 2 and 3, <b>B♭</b> between right 2 and 3.",
-    "The little fingers' keys are each on one side only: on the right under left 3, the left pinky's <b>C♯</b>, <b>F♯</b> and <b>E</b>; on the left at the bottom, the right pinky's <b>G♯</b> and <b>F</b>, the pinkies sliding between them on rollers. Under the left pinky's keys, its two small levers, dashed, give <b>B♭</b> and <b>G♯</b> to the left hand too.",
+    "The little fingers' keys are each on one side only: on the right under left 3, the left pinky's <b>C♯</b>, <b>E</b> and <b>F♯</b>; on the left at the bottom, the right pinky's <b>G♯</b> and <b>F</b>, the pinkies sliding between them on rollers. Under the left pinky's keys, its two small levers, dashed, give <b>B♭</b> and <b>G♯</b> to the left hand too.",
     "On the left between the hands, the four side keys (<b>1</b> to <b>4</b>, 4 the lowest), pressed with the side of right 1.",
     "Under each diagram the same fingering in words. Models differ in their extra keys: the double F/C key and the levers are not on every German clarinet.",
   ],

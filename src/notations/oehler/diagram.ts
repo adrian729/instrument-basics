@@ -3,8 +3,8 @@
 // it. The finger holes are circles with their numbers, the sliver keys small ones between them (F between left
 // 1 and 2, E♭ between left 2 and 3, B♭ between right 2 and 3), the other keys pills with their names, each on
 // the side it's on (as the photo the key's drawing is traced from has them): on the right (the player's left),
-// the side G♯ key and the left pinky's (C♯ the topmost, then F♯ and E further out, then its B♭ and G♯ levers,
-// dashed: only some models have them); on the left (the player's right), the four side keys, 1 the topmost, and
+// the side G♯ key and the left pinky's (C♯ the topmost, then E and F♯ further out, then its B♭ and G♯ levers,
+// dashed: only some models have them; as The Woodwind Fingering Guide's key pictures have them); on the left (the player's right), the four side keys, 1 the topmost, and
 // the right pinky's (G♯, F under it). The A key on the front, above left 1; the thumb's hole and register key,
 // behind, drawn on the left at the top. Filled is pressed.
 import type { OehlerFingering, OehlerKey } from "./notation";
@@ -50,8 +50,8 @@ export function oehlerDiagram(f: OehlerFingering, label: string, legend = false)
   small("sliver-e-flat", 110, on("Eb"));
   hole(LEFT[2], 3, f.left[2], "left");
   pill("left-c-sharp", NEAR.right, 134, 22, "C♯", on("lC#"));
-  pill("left-f-sharp", NEAR.right, 134 + ROW, 22, "F♯", on("lF#"));
-  pill("left-e", FAR.right, 134 + ROW, 22, "E", on("lE"));
+  pill("left-e", NEAR.right, 134 + ROW, 22, "E", on("lE"));
+  pill("left-f-sharp", FAR.right, 134 + ROW, 22, "F♯", on("lF#"));
   pill("lever-b-flat", NEAR.right, 134 + 2 * ROW, 22, "B♭", on("levBb"), true);
   pill("lever-g-sharp", FAR.right, 134 + 2 * ROW, 22, "G♯", on("levG#"), true);
   // The right hand: the side keys; the fingers and the B♭ sliver; the pinky's.
