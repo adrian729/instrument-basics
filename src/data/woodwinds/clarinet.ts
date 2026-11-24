@@ -7,8 +7,8 @@
 // cl_alt_1.html, cl_alt_4.html; basscl_alt_1.html, _2), its comments adapted: the basic chart's fingerings and
 // alternatives, the upper altissimo's first listed (and a few alternatives with what they're for),
 // a few of the alternate chart's (B's sliver, a rounder E, the throat notes' tone), and the bass clarinet's
-// own, its first listed (but low D's: the guide lists a pinky's key first, the right thumb's last; its
-// placement varies, and the thumb's is drawn here, with the low C♯ and C keys).
+// own, its first listed (low D's the left pinky's lever, as the guide and Yamaha's chart for the YCL-622 drawn
+// here have it; the right thumb's, the alternative).
 // (The notation: notations/clarinet.)
 import type { InstrumentId } from "../instrument";
 import { parseClarinet, type ClarinetFingering } from "../../notations/clarinet/notation";
@@ -27,7 +27,7 @@ export const CLARINET: Register<ClarinetFingering>[] = [
     notes: rows(parseClarinet, [
       ["C3", ["T 123 | lowC 123", "On a low C bass clarinet: the right thumb's low C key.", BASS]],
       ["C#3", ["T 123 | lowC# 123", "On a low C bass clarinet: the right thumb's low C♯ key.", BASS]],
-      ["D3", ["T 123 | lowD 123", "On a low C bass clarinet: the low D key, drawn here under the right thumb with the low C♯ and C keys (where it is varies: on some, it's a pinky's).", BASS]],
+      ["D3", ["T 123 D | 123", "On a low C bass clarinet: the left pinky's low D lever.", BASS], ["T 123 | lowD 123", "The right thumb's low D key instead, on models with one.", BASS]],
       ["D#3", ["T 123 | 123 lowEb", "The low E♭ key, by the right pinky: every bass clarinet has it.", BASS]],
       ["E3", "T 123 E | 123", ["T 123 | 123 E", RIGHT], ["T 123 E | 123 F", BOTH("F")]],
       ["F3", "T 123 | 123 F", ["T 123 F | 123", LEFT]],

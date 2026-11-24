@@ -70,6 +70,9 @@ body > header nav { display: flex; flex-wrap: wrap; align-items: center; gap: 0.
 /* (on a phone, only the instrument's row: the others below it, side by side) */
 @media screen and (max-width: 600px) { .switch-row { padding-right: 0; } .switch-group[data-group="instrument"] { flex-basis: 100%; padding-right: 7.5rem; } }
 @media (max-width: 600px) { .toc { right: 1rem; } }
+/* (on a narrow phone, a size switch on its own row, under the select and the button, free to use the room
+   kept clear of it: the saxophones' four sizes need it) */
+@media screen and (max-width: 400px) { .picker:has(.switch)::after { content: ""; flex-basis: 100%; order: 1; } .picker .switch { order: 2; margin-right: -7.5rem; } }
 @media (min-width: 90rem) {
   .toc { top: calc(var(--header-height, 3.5rem) + 3.5rem); right: auto; left: calc(50% + 37.5rem); align-items: stretch; }
   .toc-toggle { display: none; }

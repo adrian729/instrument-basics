@@ -3,7 +3,7 @@
 // are circles with their numbers (the sliver keys small ones between 2 and 3), the other keys pills with their
 // names, each on the side of the instrument it's on: on the right (the player's left), the side G♯ key and the
 // left pinky's (C♯ the topmost, F beside it, further out, then E and F♯ under them: the photo's and The
-// Woodwind Fingering Guide's); on the left (the player's right), the four side keys, 1 the topmost, between left
+// Woodwind Fingering Guide's; the bass clarinet's low D lever under F♯); on the left (the player's right), the four side keys, 1 the topmost, between left
 // 3 and right 1, and the right pinky's (G♯ and F♯ further out, then F and E under them; the bass clarinet's low
 // E♭ under E). The A key on the front, above left 1; the thumb's hole and register key, behind, drawn on the
 // left at the top as the charts draw them, and the bass clarinet's right thumb keys (low D, C♯ and C), behind
@@ -66,6 +66,7 @@ export function clarinetDiagram(f: ClarinetFingering, label: string, bass: boole
   pill("right-e", FAR.left, 274 + ROW, 22, "E", on("rE"));
   if (bass) {
     pill("low-e-flat", FAR.left, 274 + 2 * ROW, 22, "E♭", on("lowEb"));
+    pill("left-low-d", FAR.right, 134 + 2 * ROW, 18, "D", on("lD"));
     pill("low-d", NEAR.right, 186, 18, "D", on("lowD"));
     pill("low-c-sharp", NEAR.right, 186 + ROW, 22, "C♯", on("lowC#"));
     pill("low-c", NEAR.right, 186 + 2 * ROW, 18, "C", on("lowC"));

@@ -77,7 +77,8 @@ function render(a: Art, l: Labels, turned: boolean, label: string, layout: strin
     const [x, y] = [n.at[0] * s, n.at[1] * s];
     if (n.to) { // (from the words' edge nearest what they name: above or below them, or beside)
       const [tx, ty] = place(n.to, inset), half = (n.text.length * 11) / 2 + 2;
-      const [sx, sy] = Math.abs(ty - y) > half ? [x, ty < y ? y - half : y + half] : [n.anchor === "start" ? x - 3 : n.anchor === "end" ? x + 3 : x, y];
+      const wide = Math.max(...n.text.map((t) => t.length)) * 2.7 + 3; // (half the words' width: DM Mono's 0.6em at 9px)
+      const [sx, sy] = Math.abs(ty - y) > half ? [x, ty < y ? y - half : y + half] : [n.anchor === "start" ? x - 3 : n.anchor === "end" ? x + 3 : tx > x ? x + wide : x - wide, y];
       el("path", { d: `M${sx} ${sy}L${tx} ${ty}`, class: "leader" }, svg);
       el("circle", { cx: tx, cy: ty, r: 1.3, class: "pin" }, svg);
     }

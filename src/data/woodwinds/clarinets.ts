@@ -49,7 +49,7 @@ export const CLARINETS: Group = {
       facts: [
         `<b>It sounds a major ninth lower</b> (an octave and a tone). The bass clarinet is in B♭, an octave below the B♭ clarinet, and read in treble clef, as most of its parts are. ${WRITTEN}`,
         "<b>Its lowest notes.</b> Every bass clarinet has a low E♭ key; a low C one adds D, C♯ and C, the chart's first three notes. On a low E♭ bass clarinet, start at E♭.",
-        "<b>Fingered like the B♭ clarinet</b> up to clarion C. From altissimo D up, left 1 is mostly half-holed, its ring pressed and the hole left open, where the smaller clarinets lift it.",
+        "<b>Fingered like the B♭ clarinet</b> up to clarion C. From altissimo D up, left 1 is mostly half-holed, its key pressed and the small hole in its plate left open, where the smaller clarinets lift it.",
       ],
     }, CLARINET_NOTATION, CLARINET),
     define({

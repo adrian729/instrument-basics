@@ -16,7 +16,7 @@ export const EUPHONIUM: Group = {
       options: { valves: [2, 1, 3, 5], openHorn: "C3", valvesOnly: true, sideValve: true, drawing: "euphonium" },
       facts: [
         NINTH("euphonium"),
-        "<b>The 4th valve</b> lowers a fourth: in place of 1–3 and 1–2–3, better in tune, and with the others down to written C♯3. On a compensating euphonium (the better ones have it) the lowest notes are in tune too.",
+        "<b>The 4th valve</b> lowers a fourth: in place of 1–3 and 1–2–3, better in tune, and with the others down to written C♯3. On a compensating euphonium (many top models; not every one with its 4th valve on the side) the lowest notes are in tune too.",
         "<b>Not compensating?</b> Then the notes under written F♯3 are sharp: play each with the fingering the chart gives a semitone lower (written F3 with 1–2–4, or 1–4), and low C♯3 only as a weak false tone, with 1–2–3–4.",
       ],
       tip: TIP,

@@ -23,15 +23,15 @@ export const VALVES_NOTATION: Notation<ValveFingering> = {
   words: (f) => [["Valves", pressed(f).join(" ") || "none (open)"]],
   label: (f) => (pressed(f).length ? `Press: ${pressed(f).map((v) => `valve ${v}`).join(", ")}` : "No valves pressed (open)"),
   blank: "0",
-  legendLabel: (options) => `The valves, from the mouthpiece out: 1, 2 and 3${(options.valves?.length ?? 3) > 3 ? (options.sideValve ? ", and the 4th on the side, for the left hand" : ", and the 4th set apart") : ""}`,
+  legendLabel: (options) => `The valves, from the mouthpiece out: 1, 2 and 3${(options.valves?.length ?? 3) > 3 ? (options.sideValve ? ", and the 4th on the side, for the left hand" : ", and the 4th after them, in the same row") : ""}`,
   legend: ({ name, options }) => [
     options.valvesOnly
       ? `Above, the ${name} as it stands, seen from the side (your left): the valves on top, 1 nearest the mouthpiece and you, so 3 2 1 from the left. Each note's diagram is its valves alone, 1 2 3 from the left${(options.valves?.length ?? 3) > 3 && options.sideValve ? ", the 4th lower and apart" : ""}.`
       : `Above, the ${name} from the side, its valves numbered, 1 nearest the mouthpiece. Each note's diagram draws it simplified, seen from above as you play it: the mouthpiece on the left, the valves, the bell on the right.`,
     "<b>Filled is pressed, outlined is up.</b> The right hand plays the valves: 1 the index, 2 the middle, 3 the ring finger.",
     ...((options.valves?.length ?? 3) > 3 ? [options.sideValve
-      ? `The <b>4th valve</b>, on the side, lowers a fourth, like 1 and 3 together but better in tune. The left index finger presses it. It's there on a compensating ${name}, this chart's; one with all four valves in a row on top (a student's, mostly) isn't compensating, and its 4th is the right pinky's.`
-      : "The <b>4th valve</b>, set apart, lowers a fourth, like 1 and 3 together but better in tune. It's pressed by the right pinky or the left hand, depending on the instrument."] : []),
+      ? `The <b>4th valve</b>, on the side, lowers a fourth, like 1 and 3 together but better in tune. The left index finger presses it (the right pinky, on a model with all four valves on top). This chart's lowest notes are a compensating ${name}'s fingerings; many aren't compensating, the one drawn above among them: then see <b>Not compensating?</b>.`
+      : "The <b>4th valve</b>, after the 3rd (drawn apart on the cards), lowers a fourth, like 1 and 3 together but better in tune. It's pressed by the right pinky or the left hand, depending on the instrument."] : []),
     "<b>One fingering, several notes.</b> Each plays a series of notes, its harmonics, and your lips choose which: the staff tells you which note you're on.",
     "Under each diagram the same fingering in words.",
   ],

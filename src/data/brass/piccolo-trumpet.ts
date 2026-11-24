@@ -16,7 +16,7 @@ const OWN = rows(parseValves, [
   ["D3", ["134", SHARP]],
   ["D#3", ["234", SHARP]],
   ["E3", ["124", SHARP]],
-  ["F3", ["14", FOURTH]],
+  ["F3", ["14", `${FOURTH} ${SHARP}`]],
   ["F#3", ["24", FOURTH], ["123", OLD]],
   ["G3", ["4", FOURTH], ["13", OLD]],
   ["C#4", ["24", FOURTH], ["123", OLD]],
