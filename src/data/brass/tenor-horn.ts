@@ -11,7 +11,7 @@ export const TENOR_HORN: Group = {
   sources: `The fingerings and alternatives are from <a href="${YAMAHA}">Yamaha's trumpet fingering chart</a>, as the tenor horn is fingered like the trumpet; that, and its range, from Wikipedia's ${WIKIPEDIA("Tenor_horn")} and ${WIKIPEDIA("Mellophone")}.${DRAWN("YAH-203 alto horn", "Yamaha Alto horn YAH-203.tif")}`,
   instruments: [
     define({
-      id: "tenor-horn", group: "tenor-horn", name: "tenor horn", kind: "Tenor horn", title: "The E♭ tenor horn (the alto horn, in the US), sounding a major sixth lower", clef: "treble", transposition: { steps: -5, semitones: -9 }, options: { ...THREE, drawing: "tenor-horn" },
+      id: "tenor-horn", group: "tenor-horn", name: "tenor horn", kind: "Tenor horn", title: "The E♭ tenor horn (the alto horn, in the US), sounding a major sixth lower", clef: "treble", transposition: { steps: -5, semitones: -9 }, options: { ...THREE, valvesOnly: true, drawing: "tenor-horn" },
       facts: [
         "<b>It sounds a major sixth lower.</b> The tenor horn (the alto horn, in the US) is in E♭: a written C sounds the E♭ below. The chart names written notes, and each card says what you'll hear.",
         `${ALIKE("")} It's held upright, its bell up, and plays the inner parts of a brass band.`,

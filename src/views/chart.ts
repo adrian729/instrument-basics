@@ -65,8 +65,8 @@ export function makeChart(root: HTMLElement, legend: HTMLElement): Chart {
     html("footer .tip", shown.tip);
     html("footer .sources", group(shown.group).sources);
     document.querySelector(".toc-links")!.replaceChildren(h("p", { className: "toc-title", ariaHidden: "true" }, "Contents"), h("a", { href: "#intro" }, "Overview"), ...shown.registers.map((r) => h("a", { href: `#${r.id}` }, r.nav)));
-    legend.querySelector(".legend-keys")?.remove();
-    legend.prepend(shown.legendDiagram());
+    legend.querySelector(".legend-figure")?.remove();
+    legend.prepend(h("div", { className: "legend-figure" }, shown.legendDiagram()));
     root.replaceChildren(...shown.registers.map((r) => {
       const fit = stepsFor(r.notes.map((n) => n.pitch));
       return h("section", { className: "register", id: r.id },

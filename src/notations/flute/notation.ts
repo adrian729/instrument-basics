@@ -75,9 +75,9 @@ export const FLUTE_NOTATION: Notation<FluteFingering> = {
   legendLabel: (options) => "The keys: the thumb's B-flat lever and B key; left 1, 2 and 3; the G-sharp key; right 1, 2 and 3, the side B-flat lever by right 1 and the D and D-sharp trill keys between them; the E-flat key"
     + (options.foot ? "; the foot joint's low C-sharp, C and B keys and the gizmo" : ""),
   legend: ({ name, options }) => [
-    `The ${name} seen from above as you play it: the embouchure hole (where you blow) on the left, the left hand nearer it, the right hand further out.`,
+    `Above, the ${name} as it is, every key named where it is: the embouchure hole (where you blow) in its head joint, the left hand's keys nearer it, the right's further out. Each note's diagram has the same keys simplified, in a row, seen from above as you play it, the embouchure hole on the left.`,
     "<b>Filled is pressed, outlined is up.</b> The numbers are your fingers: 1 the index, 2 the middle, 3 the ring finger.",
-    `Above the body, the left pinky's <b>G♯</b>. Below it, the keys on your side of the instrument: the thumb's two (use <b>B</b>; a few fingerings ask for the <b>B♭</b> lever), the right hand's side lever and trill keys, and the right pinky's <b>E♭</b>${options.foot ? " with the foot joint's rollers for low <b>C♯</b> and <b>C</b>" : ""}.`,
+    `In the diagrams, above the body, the left pinky's <b>G♯</b>; below it, the keys on your side of the instrument: the thumb's two (use <b>B</b>; a few fingerings ask for the <b>B♭</b> lever), the right hand's side lever and trill keys, and the right pinky's <b>E♭</b>${options.foot ? " with the foot joint's rollers for low <b>C♯</b> and <b>C</b>" : ""}.`,
     ...(options.foot ? ["The foot joint's <b>B</b> key and <b>giz</b>mo are a B foot's: on a C foot, use the fingerings without them."] : []),
     "The dashed <b>D</b> and <b>D♯</b> are the trill keys' touches, between your right-hand fingers, pressed with whichever finger is free. The <b>side</b> B♭ lever, by right 1, is pressed with the side of that finger. Only a few notes use these.",
     `Under each diagram the same fingering in words. Open-hole and closed-hole ${name}s are fingered alike.`,

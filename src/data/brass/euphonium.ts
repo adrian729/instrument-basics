@@ -13,7 +13,7 @@ export const EUPHONIUM: Group = {
   instruments: [
     define({
       id: "euphonium", group: "euphonium", name: "euphonium", kind: "Euphonium", title: "The euphonium, four valves, in B♭ treble clef, sounding a major ninth lower", clef: "treble", transposition: { steps: -8, semitones: -14 },
-      options: { valves: [2, 1, 3, 5], openHorn: "C3", drawing: "euphonium", sideValve: true },
+      options: { valves: [2, 1, 3, 5], openHorn: "C3", valvesOnly: true, sideValve: true, drawing: "euphonium" },
       facts: [
         NINTH("euphonium"),
         "<b>The 4th valve</b> lowers a fourth: in place of 1–3 and 1–2–3, better in tune, and with the others down to written C♯3. On a compensating euphonium (the better ones have it) the lowest notes are in tune too.",

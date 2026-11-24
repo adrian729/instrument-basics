@@ -12,7 +12,7 @@ export const BARITONE_HORN: Group = {
   sources: `The fingerings and alternatives are from <a href="${YAMAHA}">Yamaha's trumpet fingering chart</a>, as the baritone horn is fingered like the trumpet; that, and its range, from Wikipedia's ${WIKIPEDIA("Baritone_horn")}.${DRAWN("YBH-301 baritone horn", "Yamaha Baritone horn YBH-301.tif")}`,
   instruments: [
     define({
-      id: "baritone-horn", group: "baritone-horn", name: "baritone horn", kind: "Baritone", title: "The baritone horn, three valves, in B♭ treble clef, sounding a major ninth lower", clef: "treble", transposition: { steps: -8, semitones: -14 }, options: { ...THREE, drawing: "baritone-horn" },
+      id: "baritone-horn", group: "baritone-horn", name: "baritone horn", kind: "Baritone", title: "The baritone horn, three valves, in B♭ treble clef, sounding a major ninth lower", clef: "treble", transposition: { steps: -8, semitones: -14 }, options: { ...THREE, valvesOnly: true, drawing: "baritone-horn" },
       facts: [
         NINTH("baritone horn"),
         `${ALIKE(", an octave and a tone lower")} Narrower than the euphonium, with a brighter sound.`,

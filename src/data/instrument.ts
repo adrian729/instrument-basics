@@ -5,6 +5,8 @@
 // lists them all.
 import type { Notation } from "../notations/types";
 import type { Fingered, Register } from "./types";
+import { ART, type ArtId } from "../notations/art/index";
+import { drawArt } from "../notations/art";
 
 export type InstrumentId =
   | "flute" | "piccolo"
@@ -18,10 +20,11 @@ export type Section = "Woodwinds" | "Brass";
 export type Clef = "treble"; // (only the treble clef is drawn yet)
 // What the diagrams depend on: a flute's foot joint; a bass clarinet's lowest keys; a baritone saxophone's low
 // A key; a valved instrument's valves, as the semitones each lowers (the trumpet's [2, 1, 3]), the open horn's
-// lowest harmonic, written (the trumpet's C3), and its drawing, if it has one (notations/valves/drawings.ts):
-// then each note's diagram is its valves alone, and the key the instrument drawn.
-export type Drawn = "cornet" | "flugelhorn" | "mellophone" | "tenor-horn" | "baritone-horn" | "euphonium";
-export type Options = { foot?: boolean; bass?: boolean; lowA?: boolean; valves?: number[]; openHorn?: string; drawing?: Drawn; sideValve?: boolean }; // (sideValve: the 4th on the side, the left hand's, as a compensating euphonium has it)
+// lowest harmonic, written (the trumpet's C3), the bell its cards draw (the trumpet's, or the cornet's...), or
+// its valves alone (an upright one's: valvesOnly), and a side 4th valve, the left hand's (as a compensating
+// euphonium has it). And its drawing, for the key above the chart (notations/art/).
+export type Bell = "trumpet" | "cornet" | "flugelhorn" | "mellophone";
+export type Options = { foot?: boolean; bass?: boolean; lowA?: boolean; valves?: number[]; openHorn?: string; bell?: Bell; valvesOnly?: boolean; sideValve?: boolean; drawing?: ArtId };
 // How it sounds against what's written: up (or down, negative) so many letters and semitones (the B♭ trumpet
 // −1 and −2: a written C sounds B♭).
 export type Transposition = { steps: number; semitones: number };
@@ -41,7 +44,7 @@ type About = {
   facts: string[]; // what to know first, the intro's list (HTML)
   tip: string; // the footer's advice on the alternatives
 };
-export type Instrument = About & { registers: Register<Shown>[]; legend: string[]; legendDiagram(): SVGSVGElement };
+export type Instrument = About & { registers: Register<Shown>[]; legend: string[]; legendDiagram(): SVGSVGElement | HTMLElement };
 // sources: the footer's credits for the group's data (HTML). Its default is its first instrument, unless
 // another is named (the saxophones are listed by size, the alto the usual first).
 export type Group = { id: GroupId; name: string; section: Section; sources: string; instruments: Instrument[]; default?: InstrumentId };
@@ -66,7 +69,10 @@ export function define<F extends Fingered>(about: About, notation: Notation<F>, 
       }))
       .filter((r) => r.notes.length),
     legend: notation.legend(about),
-    legendDiagram: () => notation.diagram(notation.parse(notation.blank), about.options, notation.legendLabel(about.options), true),
+    legendDiagram: () => {
+      const art = about.options.drawing && ART[about.options.drawing], label = notation.legendLabel(about.options);
+      return art ? drawArt(art, label) : notation.diagram(notation.parse(notation.blank), about.options, label, true);
+    },
   };
 }
 

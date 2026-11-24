@@ -12,9 +12,9 @@
 }
 /* The dark theme, on screen (printed, the light): the system's, unless light is chosen, or chosen (the header's switch). */
 @media screen and (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) { color-scheme: dark; --bg: #181817; --fg: #e8e8e3; --muted: #9a9a93; --line: #34342f; --body: #2a2a27; --card: #1f1f1d; }
+  :root:not([data-theme="light"]) { color-scheme: dark; --bg: #181817; --fg: #e8e8e3; --muted: #9a9a93; --line: #34342f; --body: #2a2a27; --card: #1f1f1d; --hole: #45453f; }
 }
-@media screen { :root[data-theme="dark"] { color-scheme: dark; --bg: #181817; --fg: #e8e8e3; --muted: #9a9a93; --line: #34342f; --body: #2a2a27; --card: #1f1f1d; } }
+@media screen { :root[data-theme="dark"] { color-scheme: dark; --bg: #181817; --fg: #e8e8e3; --muted: #9a9a93; --line: #34342f; --body: #2a2a27; --card: #1f1f1d; --hole: #45453f; } }
 /* DM Mono (SIL Open Font License, fonts/OFL.txt), from github.com/google/fonts/tree/main/ofl/dmmono, as
    WOFF2; the fallback shows until it's in (swap). It has no bold: Medium (500) is the heaviest weight. */
 @font-face { font-family: "DM Mono"; src: url("/fonts/DMMono-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
@@ -201,8 +201,16 @@ h2 { font-size: 1.15rem; line-height: 1.3; text-wrap: balance; }
 .keys .art .sheet { fill: var(--bg); stroke: var(--fg); stroke-linejoin: round; }
 .keys .art .sheet.bare { stroke: none; }
 .keys .leader { stroke: var(--muted); stroke-width: 0.8; }
-.legend-keys.drawing.upright { width: auto; height: 24rem; max-width: 100%; margin-inline: auto; }
-.legend-keys.drawing.lying { max-width: 26rem; }
+.keys .art .solid { fill: var(--hole, var(--fg)); } /* (a hole, dark in either theme) */
+.keys .pin { fill: var(--muted); }
+.keys .lens { fill: none; stroke: var(--muted); stroke-width: 0.8; stroke-dasharray: 2 2; }
+.keys .inset-ground { fill: var(--bg); }
+.keys .inset-edge { fill: none; stroke: var(--muted); stroke-width: 1; }
+.legend-keys.drawing { max-width: 100%; height: auto; margin-inline: auto; } /* (its width, its natural size, set on it) */
+.legend:has(.legend-keys.wide) { grid-template-columns: minmax(0, 1fr); }
+.legend-figure { min-width: 0; overflow-x: auto; }
+.art-layouts > .portrait { display: none; }
+@media (max-width: 800px) { .art-layouts > .landscape { display: none; } .art-layouts > .portrait { display: block; } }
 .legend-keys.tall { max-width: 20rem; margin-inline: auto; }
 
 /* The alternatives: folded under the standard one, opened one note at a time (or all: the switch). */

@@ -10,5 +10,4 @@ export const ALIKE = (others: string) => `<b>Fingered like the trumpet</b>${othe
 export const NINTH = (name: string) => `<b>It sounds a major ninth lower</b> (an octave and a tone). Read in treble clef, as in brass bands, the ${name} is in B♭: a written C sounds the B♭ an octave and a tone below. In bass clef it's read at concert pitch: this chart is the treble clef's.`;
 export const TIP = "Most alternatives are for tuning, or for a passage where another valve combination is easier. Try them with a tuner, and keep what works on yours.";
 
-// The credit for an instrument's drawing (notations/valves/drawings.ts): traced from a photo of Yamaha's.
-export const DRAWN = (model: string, file: string) => ` The drawing is traced from Yamaha Corporation's photo of the ${model} (<a href="https://commons.wikimedia.org/wiki/File:${encodeURIComponent(file.replaceAll(" ", "_"))}">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>), and shared under the same licence.`;
+export { DRAWN } from "../drawn";

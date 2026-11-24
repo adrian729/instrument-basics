@@ -36,7 +36,7 @@ export const standard = (page: Page, note: string) => card(page, note).locator("
 export const alternatives = (page: Page, note: string) => card(page, note).locator("details.alternatives");
 export const switchButton = (page: Page, key: string, value: string) => page.locator(`#switches [data-${key}="${value}"]`);
 export const themeSwitch = (page: Page) => page.locator(".theme-switch");
-export const legendKeys = (page: Page) => page.locator("#legend svg.keys");
+export const legendKeys = (page: Page) => page.locator("#legend svg.keys:not(.portrait)"); // (a wide drawing's phone layout aside)
 export const facts = (page: Page) => page.locator(".intro .facts");
 export const legendText = (page: Page) => page.locator(".legend-text ul");
 

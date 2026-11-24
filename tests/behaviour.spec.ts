@@ -233,11 +233,11 @@ test.describe("first visit", () => {
     await expect(alternatives(page, "C7").locator('[data-key="gizmo"].down')).toHaveCount(1);
   });
 
-  test("the keys on the player's side drawn below the body, the G♯ key above it", async ({ page }) => {
+  test("a card's keys on the player's side drawn below the body, the G♯ key above it", async ({ page }) => {
     await open(page);
-    const box = async (sel: string) => (await legendKeys(page).locator(sel).first().boundingBox())!;
+    const box = async (sel: string) => (await card(page, "C4").locator("svg.keys").first().locator(sel).first().boundingBox())!;
     const body = await box(".body");
-    for (const key of ["thumb-b", "thumb-bb", "side", "tr-d", "tr-d-sharp", "e-flat", "low-c-sharp", "low-c", "low-b", "gizmo"])
+    for (const key of ["thumb-b", "thumb-bb", "tr-d", "tr-d-sharp", "e-flat", "low-c-sharp", "low-c", "low-b"]) // (the side lever and gizmo only where used)
       expect((await box(`[data-key="${key}"]`)).y, key).toBeGreaterThan(body.y + body.height);
     const g = await box('[data-key="g-sharp"]');
     expect(g.y + g.height).toBeLessThan(body.y);

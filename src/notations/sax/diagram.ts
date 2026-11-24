@@ -1,7 +1,7 @@
 // A saxophone fingering's diagram, as the usual charts draw it (Conn-Selmer's basic chart, for one): the keys
 // in a column down the instrument, the neck at the top, the saxophone facing you, each key drawn in its shape
 // and where it is, with no body and no names, as a player knows them by where they are. Down the column, the
-// left hand's 1, the bis key, 2 and 3, then the right hand's 1, 2, the alternate F♯ key and 3, the numbers
+// left hand's 1, the bis key, 2 and 3, then the right hand's 1, 2, the alternate F♯ key (beside them, toward the side keys) and 3, the numbers
 // the fingers. Around it: at the top, the front F key above left 1, the octave key (the baritone's low A key
 // under it) beside it, under the left thumb; the palm keys up on the right (E♭ the topmost, D the outermost,
 // F the lower: The Woodwind Fingering Guide's sax_fing page); the left pinky's table on the right, under left
@@ -50,7 +50,7 @@ export function saxDiagram(f: SaxFingering, label: string, lowA: boolean, legend
   bar("side-b-flat", X - 34, 190, 8, 19, on("sBb"));
   finger(RIGHT[0], 1, f.right[0], "right");
   finger(RIGHT[1], 2, f.right[1], "right");
-  dot("alt-f-sharp", X + 20, 213, 4.5, on("altF#"), true);
+  dot("alt-f-sharp", X - 20, 215, 4.5, on("altF#"), true); // (on the side keys' side: The Woodwind Fingering Guide's photo)
   finger(RIGHT[2], 3, f.right[2], "right");
   bar("e-flat", X - 36, 238, 22, 8, on("Eb"));
   bar("low-c", X - 36, 249, 22, 8, on("lowC"));
@@ -67,8 +67,8 @@ export function saxDiagram(f: SaxFingering, label: string, lowA: boolean, legend
     name(X + 41, 118, "G♯"); name(X + 42, 135, "C♯"); name(X + 41, 147, "B♭"); name(X + 13, 133, "B", "end");
     call(X + 50, 165, "left pinky", "start");
     name(X - 38, 136, "F♯", "end"); name(X - 38, 156, "E", "end"); name(X - 38, 178, "C", "end"); name(X - 38, 200, "B♭", "end");
-    call(X - 50, 220, "side keys", "end");
-    name(X + 26, 213, "alt F♯");
+    call(X - 50, 231, "side keys", "end");
+    name(X - 27, 219, "alt F♯", "end");
     name(X - 40, 248, "E♭ C", "end"); call(X - 40, 259, "right pinky");
     call(X + 22, 92, "LEFT HAND", "start"); call(X + 22, 198, "RIGHT HAND", "start");
   }

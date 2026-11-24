@@ -70,9 +70,10 @@ test("look euphonium", async ({ page }) => {
   await expect(register(page, "low")).toHaveScreenshot("euphonium-low.png", TALL);
 });
 
-test("look brass drawings", async ({ page }) => {
+test("look drawings", async ({ page }) => {
   await open(page, { "instrument-basics-instrument": "cornet" });
-  for (const id of ["cornet", "flugelhorn", "mellophone", "tenor-horn", "baritone-horn", "euphonium"]) {
+  for (const id of ["flute", "piccolo", "bb-clarinet", "bass-clarinet", "soprano-sax", "alto-sax", "tenor-sax", "baritone-sax",
+    "bb-trumpet", "piccolo-trumpet", "cornet", "flugelhorn", "mellophone", "tenor-horn", "baritone-horn", "euphonium"]) {
     await page.goto(`/?instrument=${id}`);
     await settle(page);
     await expect(page.locator("#legend")).toHaveScreenshot(`key-${id}.png`);
@@ -80,6 +81,19 @@ test("look brass drawings", async ({ page }) => {
   await page.emulateMedia({ colorScheme: "dark" });
   await settle(page);
   await expect(page.locator("#legend")).toHaveScreenshot("key-euphonium-dark.png");
+  await page.goto("/?instrument=bb-clarinet");
+  await settle(page);
+  await expect(page.locator("#legend")).toHaveScreenshot("key-bb-clarinet-dark.png");
+});
+
+test("look phone drawings @phone", async ({ page }) => { // a long instrument stood up, its own layout
+  await open(page, { "instrument-basics-instrument": "flute" });
+  for (const id of ["flute", "bass-clarinet"]) {
+    await page.goto(`/?instrument=${id}`);
+    await settle(page);
+    await page.addStyleTag({ content: "body > header, .switches, .toc { visibility: hidden; }" }); // (the sticky bars, off it)
+    await expect(page.locator("#legend .legend-figure")).toHaveScreenshot(`key-${id}.png`);
+  }
 });
 
 test("look compact", async ({ page }) => {

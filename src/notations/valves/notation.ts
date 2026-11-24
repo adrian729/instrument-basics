@@ -6,7 +6,6 @@
 import type { Fingered } from "../../data/types";
 import type { Notation } from "../types";
 import { valvesDiagram } from "./diagram";
-import { DRAWINGS } from "./drawings";
 
 export type ValveFingering = Fingered & { valves: [boolean, boolean, boolean, boolean] };
 
@@ -20,17 +19,15 @@ const pressed = (f: ValveFingering) => f.valves.flatMap((d, i) => (d ? [i + 1] :
 
 export const VALVES_NOTATION: Notation<ValveFingering> = {
   parse: parseValves,
-  diagram: (f, options, label, legend) => valvesDiagram(f, label, options.valves?.length ?? 3, options.drawing, options.sideValve ?? false, legend),
+  diagram: (f, options, label, legend) => valvesDiagram(f, label, options.valves?.length ?? 3, options.bell ?? "trumpet", options.valvesOnly ?? false, options.sideValve ?? false, legend),
   words: (f) => [["Valves", pressed(f).join(" ") || "none (open)"]],
   label: (f) => (pressed(f).length ? `Press: ${pressed(f).map((v) => `valve ${v}`).join(", ")}` : "No valves pressed (open)"),
   blank: "0",
   legendLabel: (options) => `The valves, from the mouthpiece out: 1, 2 and 3${(options.valves?.length ?? 3) > 3 ? (options.sideValve ? ", and the 4th on the side, for the left hand" : ", and the 4th set apart") : ""}`,
   legend: ({ name, options }) => [
-    !options.drawing
-      ? `The ${name} seen from above as you play it: the mouthpiece on the left, the bell on the right, and the valves between, 1 nearest you.`
-      : DRAWINGS[options.drawing].upright
-        ? `The ${name} as it stands, seen from the front: the valves on top, 1 nearest the mouthpiece and you, so 3 2 1 from the left. Each note's diagram is its valves alone, 1 2 3 from the left${(options.valves?.length ?? 3) > 3 && options.sideValve ? ", the 4th lower and apart" : ""}.`
-        : `The ${name} from the side: the mouthpiece on the left, the bell on the right, the valves on top, 1 nearest the mouthpiece. Each note's diagram is its valves alone, 1 2 3 from the left.`,
+    options.valvesOnly
+      ? `Above, the ${name} as it stands, seen from the front: the valves on top, 1 nearest the mouthpiece and you, so 3 2 1 from the left. Each note's diagram is its valves alone, 1 2 3 from the left${(options.valves?.length ?? 3) > 3 && options.sideValve ? ", the 4th lower and apart" : ""}.`
+      : `Above, the ${name} from the side, its valves numbered, 1 nearest the mouthpiece. Each note's diagram draws it simplified, seen from above as you play it: the mouthpiece on the left, the valves, the bell on the right.`,
     "<b>Filled is pressed, outlined is up.</b> The right hand plays the valves: 1 the index, 2 the middle, 3 the ring finger.",
     ...((options.valves?.length ?? 3) > 3 ? [options.sideValve
       ? `The <b>4th valve</b>, on the side, lowers a fourth, like 1 and 3 together but better in tune. The left index finger presses it. It's there on a compensating ${name}, this chart's; one with all four valves in a row on top (a student's, mostly) isn't compensating, and its 4th is the right pinky's.`
