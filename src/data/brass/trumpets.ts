@@ -26,7 +26,7 @@ export const TRUMPETS: Group = {
       tip: TIP,
     }, VALVES_NOTATION, TRUMPET),
     define({
-      id: "c-trumpet", group: "trumpets", name: "C trumpet", kind: "C", title: "The C trumpet, sounding as written", clef: "treble", transposition: { steps: 0, semitones: 0 }, options: { ...THREE, drawing: "trumpet" },
+      id: "c-trumpet", group: "trumpets", name: "C trumpet", kind: "C", title: "The C trumpet, sounding as written", clef: "treble", transposition: { steps: 0, semitones: 0 }, options: { ...THREE, drawing: "trumpet", drawnAs: "a B♭ trumpet (the C trumpet's valves and slides are in the same places, its tubing a little shorter)" },
       facts: [
         "<b>It sounds as written.</b> The C trumpet, common in orchestras (American ones especially) alongside the B♭, reads concert pitch: the note on the page is the note you hear.",
         "<b>Fingered like the B♭ trumpet.</b> The same written note takes the same valves; it just sounds a tone higher.",

@@ -3,8 +3,9 @@
 // note's first fingering is the standard one; the rest are alternatives. From the guide's Oehler/Albert pages
 // (wfg.woodwind.org/clarinet/ocl_bas_1.html, _2, _3: the basic chart's fingerings and alternatives, its comments
 // adapted; ocl_alt_4.html: the upper altissimo's first listed), every standard one checked against Yamaha's
-// German-system owner's manual and A-Klarinette's chart, which agree with it to F6. At G6 those two give
-// left 1 with the right hand down, the guide's second, so it's first here and the guide's first follows.
+// German-system owner's manual and A-Klarinette's chart, which agree with it to F6 (Yamaha's F6 is the guide's
+// alternative). At F♯6 and G6 those two give left 1 with the right hand down (Yamaha's first, A-Klarinette's for
+// a held note; the guide's later ones), so it's first here and the guide's first follows.
 // (The notation: notations/oehler.)
 import type { InstrumentId } from "../instrument";
 import { parseOehler, type OehlerFingering } from "../../notations/oehler/notation";
@@ -69,15 +70,15 @@ export const OEHLER: Register<OehlerFingering>[] = [
   },
   {
     id: "altissimo", name: "Altissimo", nav: "Altissimo",
-    about: "Above clarion C: left 1 lifted, and most with the right pinky's G♯ key, as a vent.",
+    about: "Above clarion C: most with the right pinky's G♯ key, as a vent, and left 1 lifted to F; at F♯ and G, left 1 and the right hand down.",
     notes: rows(parseOehler, [
       ["C#6", "T R -23 | 123 G#", ["T R --- | ---", "Open, the register key and thumb alone: on a model with the twelfth link (the Duodezimverbindung), as the YCL-457II-22 has."]],
       ["D6", "T R -23 | 1-3 G#"],
       ["D#6", "T R -23 | 1-- G#"],
       ["E6", "T R -23 | --- G#", ["R 123 | --- G#", "Left 1 down, the thumb hole open."], ["T R 123 | --- G#", "Left 1 down too."]],
       ["F6", "T R -23 C# | --- G#", ["T R 123 C# | 123", "Every finger down, the left pinky's C♯ too."]],
-      ["F#6", "T R -2- | --- G#", ["T R 12- | 123 G#", "Left 1 and the right hand down."]],
-      ["G6", ["T R 1-- | 123 G#", "Yamaha's and A-Klarinette's first."], ["T R -2- | s4 --- G#", "The guide's first: left 2 and the lowest side key."], ["T R -2- Eb | --- G#", "The E♭ sliver key instead of the side key."]],
+      ["F#6", ["T R 12- | 123 G#", "Yamaha's first, and A-Klarinette's for a held note."], ["T R -2- | --- G#", "The guide's first: left 2 alone."]],
+      ["G6", ["T R 1-- | 123 G#", "Yamaha's first, and A-Klarinette's for a held note."], ["T R -2- | s4 --- G#", "The guide's first: left 2 and the lowest side key."], ["T R -2- Eb | --- G#", "The E♭ sliver key instead of the side key."]],
     ]),
   },
   {

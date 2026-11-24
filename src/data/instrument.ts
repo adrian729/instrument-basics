@@ -22,9 +22,10 @@ export type Clef = "treble"; // (only the treble clef is drawn yet)
 // A key; a valved instrument's valves, as the semitones each lowers (the trumpet's [2, 1, 3]), the open horn's
 // lowest harmonic, written (the trumpet's C3), the bell its cards draw (the trumpet's, or the cornet's...), or
 // its valves alone (an upright one's: valvesOnly), and a side 4th valve, the left hand's (as a compensating
-// euphonium has it). And its drawing, for the key above the chart (notations/art/).
+// euphonium has it). And its drawing, for the key above the chart (notations/art/), and what it shows when
+// that is another instrument (drawnAs: the C trumpet's is a B♭ trumpet's).
 export type Bell = "trumpet" | "cornet" | "flugelhorn" | "mellophone";
-export type Options = { foot?: boolean; bass?: boolean; lowA?: boolean; valves?: number[]; openHorn?: string; bell?: Bell; valvesOnly?: boolean; sideValve?: boolean; drawing?: ArtId };
+export type Options = { foot?: boolean; bass?: boolean; lowA?: boolean; valves?: number[]; openHorn?: string; bell?: Bell; valvesOnly?: boolean; sideValve?: boolean; drawing?: ArtId; drawnAs?: string };
 // How it sounds against what's written: up (or down, negative) so many letters and semitones (the B♭ trumpet
 // −1 and −2: a written C sounds B♭).
 export type Transposition = { steps: number; semitones: number };

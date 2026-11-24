@@ -12,7 +12,7 @@ export const SAX: Register<SaxFingering>[] = [
     id: "low", name: "Low register", nav: "Low",
     about: "No octave key: relaxed air and a loose embouchure. The pinkies' keys give the lowest notes, which are the hardest to play softly.",
     notes: rows(parseSax, [
-      ["A3", ["lowA 123 | 123 lowC", "The lowest note, on the baritone only: its low A key, with the left thumb.", ["baritone-sax"]]],
+      ["A3", ["lowA 123 lowBb | 123 lowC", "The lowest note, on the baritone only: low B♭'s fingering and the low A key, with the left thumb (Yamaha's chart; on some, the low A key closes B♭ itself).", ["baritone-sax"]]],
       ["A#3", "123 lowBb | 123 lowC"],
       ["B3", "123 lowB | 123 lowC"],
       ["C4", "123 | 123 lowC"],

@@ -38,7 +38,7 @@ export const threeValves = (SHARP: string): Register<ValveFingering>[] => [
   },
   {
     id: "middle", name: "Middle register", nav: "Middle",
-    about: "The staff's middle: from open G (the 3rd harmonic) up through the 4th, 5th and 6th, closer together, so that several notes share a fingering and a few have two.",
+    about: "The staff's middle: from open G (the 3rd harmonic) up through the 4th, 5th and 6th, closer together, so that several notes share a fingering and some have two or more.",
     notes: rows(parseValves, [
       ["G4", "0", ["13", OTHER]],
       ["G#4", "23"],

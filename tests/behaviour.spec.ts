@@ -117,7 +117,7 @@ test.describe("the data", () => {
       expect(keys(id, "G4")).toBe("123 | ---");
       expect(keys(id, "C#5")).toBe("--- | ---");
       expect(keys(id, "D5")).toBe("T 123 | 123");
-      expect(keys(id, "A3")).toBe(id === "baritone-sax" ? "lowA 123 | 123 lowC" : undefined);
+      expect(keys(id, "A3")).toBe(id === "baritone-sax" ? "lowA 123 lowBb | 123 lowC" : undefined);
     }
   });
 
