@@ -64,12 +64,12 @@ export const OEHLER_NOTATION: Notation<OehlerFingering> = {
   blank: "--- | ---",
   legendLabel: () => "The keys: the thumb hole and register key under the left thumb; the A and side G-sharp keys by left 1; left 1, the F sliver key, left 2, the E-flat sliver key and left 3; the left pinky's C-sharp, E and F-sharp keys and its G-sharp and B-flat levers; the side keys 1 to 4 by right 1; right 1, 2, the B-flat sliver key and right 3; the right pinky's G-sharp and F keys",
   legend: ({ name }) => [
-    `Above, the ${name} as it is, every key named where it is. Each note's diagram lays the same keys out along it, simplified: the mouthpiece on the left, then the left hand's keys, then the right's, as they go down the instrument.`,
+    `Above, the ${name} as it is, every key named where it is. Each note's diagram draws the same keys the same way up, simplified, as the usual charts do: the clarinet standing, facing you, the mouthpiece at the top, the left hand's keys and then the right's, each key on its side of the instrument.`,
     "<b>Filled is pressed, outlined is up.</b> The numbers are your fingers: 1 the index, 2 the middle, 3 the ring finger, each covering a hole (in a ring).",
-    "In the diagrams, below the body, the left thumb's hole (<b>T</b>) and the register key (<b>reg</b>), which it presses too, for the notes from clarion B up. Above it, by left 1, the <b>A</b> key and the side <b>G♯</b> key, for the throat notes.",
+    "At the top on the left, the left thumb's hole (<b>T</b>) and the register key (<b>reg</b>), which it presses too, for the notes from clarion B up: they're behind the instrument, under the thumb. Above left 1, the <b>A</b> key, and on the right the side <b>G♯</b> key, for the throat notes.",
     "The small keys between the fingers are the <b>sliver</b> keys: <b>F</b> between left 1 and 2 (the double F/C key), <b>E♭</b> between left 2 and 3, <b>B♭</b> between right 2 and 3.",
-    "The little fingers' keys, below the body, are each on one side only: the left pinky's <b>C♯</b>, <b>E</b> and <b>F♯</b>, the right pinky's <b>G♯</b> and <b>F</b>, the pinkies sliding between them on rollers. The left pinky's two small levers, dashed, give G♯ and B♭ to the left hand too.",
-    "Above the body, by right 1, the four side keys (<b>1</b> to <b>4</b>, 4 the lowest), pressed with the side of that finger.",
+    "The little fingers' keys are each on one side only: on the right under left 3, the left pinky's <b>C♯</b>, <b>F♯</b> and <b>E</b>; on the left at the bottom, the right pinky's <b>G♯</b> and <b>F</b>, the pinkies sliding between them on rollers. Under the left pinky's keys, its two small levers, dashed, give <b>B♭</b> and <b>G♯</b> to the left hand too.",
+    "On the left between the hands, the four side keys (<b>1</b> to <b>4</b>, 4 the lowest), pressed with the side of right 1.",
     "Under each diagram the same fingering in words. Models differ in their extra keys: the double F/C key and the levers are not on every German clarinet.",
   ],
 };

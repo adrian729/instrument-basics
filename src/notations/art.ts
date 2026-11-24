@@ -20,30 +20,32 @@ export type Inset = { from: Point; r: number; at: Point; zoom: number; marks?: M
 type Labels = { box: [number, number, number, number]; marks: Mark[]; notes: Note[]; insets?: Inset[] };
 export type Art = Labels & {
   width: number; height: number; scale: number; wide?: boolean; parts: Part[];
+  turned?: boolean; // (stood up on every screen: a clarinet, as it's played and charted)
   portrait?: Labels; // (a wide one's, for a narrow screen: see drawArt)
 };
 
 const LINE = 1.4; // the outline, at the page's size
 const R = 8.5; // a finger's or valve's circle
 
-// The drawing, labelled. A wide one (a flute, a clarinet) may have a second layout for a narrow screen, the
-// instrument stood up, turned a quarter clockwise (its left end at the top): its parts and its marks' and insets'
-// points are the same, turned; its labels', its insets' places and its box are its own, in the turned drawing's
-// pixels (x across from the left, y down from the top). The page shows one or the other (styles.css).
+// The drawing, labelled. A photo taken lying down can be drawn stood up, turned a quarter clockwise (its left
+// end at the top): its parts and its marks' and insets' points are the photo's, turned; its labels', its insets'
+// places and its box are in the turned drawing's pixels (x across from the left, y down from the top). A
+// clarinet is always drawn so (turned); a wide one (a flute) may have it as a second layout, for a narrow
+// screen (portrait), the page showing one or the other (styles.css).
 export function drawArt(a: Art, label: string): SVGSVGElement | HTMLElement {
-  const main = render(a, a, false, label);
+  const main = render(a, a, a.turned ?? false, label, a.portrait ? "landscape" : "");
   if (!a.portrait) return main;
   const both = document.createElement("div");
   both.className = "art-layouts";
-  both.append(main, render(a, a.portrait, true, label));
+  both.append(main, render(a, a.portrait, true, label, "portrait"));
   return both;
 }
 
-function render(a: Art, l: Labels, turned: boolean, label: string): SVGSVGElement {
+function render(a: Art, l: Labels, turned: boolean, label: string, layout: string): SVGSVGElement {
   const s = a.scale;
   const [x0, y0, x1, y1] = l.box;
   const svg = el("svg", {
-    viewBox: `${x0 * s} ${y0 * s} ${(x1 - x0) * s} ${(y1 - y0) * s}`, class: `keys legend-keys drawing${a.wide ? " wide" : ""}${turned ? " portrait" : a.portrait ? " landscape" : ""}`, role: "img", "aria-label": label,
+    viewBox: `${x0 * s} ${y0 * s} ${(x1 - x0) * s} ${(y1 - y0) * s}`, class: `keys legend-keys drawing${a.wide && !a.turned ? " wide" : ""}${layout ? ` ${layout}` : ""}`, role: "img", "aria-label": label,
     style: `width: ${((x1 - x0) * s) / 16}rem`,
   });
   // A point of the drawing's in the layout: turned, a quarter clockwise, (x, y) is (height − y, x).

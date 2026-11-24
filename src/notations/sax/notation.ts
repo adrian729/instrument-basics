@@ -66,7 +66,7 @@ export const SAX_NOTATION: Notation<SaxFingering> = {
     `Above, the ${name} as it is, facing you, every key named where it is. Each note's diagram draws the same keys as the usual charts do: in a column, the neck at the top, the left hand's keys and then the right's, each in its shape and where it is, without the body.`,
     "<b>Filled is pressed, outlined is up.</b> The numbers are your fingers: 1 the index, 2 the middle, 3 the ring finger.",
     `In the diagrams, at the top, the front F key, and beside left 1 the octave key, under the left thumb${options.lowA ? " (the baritone's low A key under it)" : ""}; up on the right, the left palm's <b>E♭</b>, <b>D</b> and <b>F</b> keys.`,
-    "On the right under left 3, the left pinky's table: <b>G♯</b>, <b>B</b>, <b>C♯</b> and <b>B♭</b>. On the left by the right hand, its side keys <b>E</b>, <b>C</b> and <b>B♭</b>, with the high <b>F♯</b> key most saxophones have; and under right 3, the right pinky's <b>E♭</b> and <b>C</b>.",
+    "On the right under left 3, the left pinky's table: <b>G♯</b>, <b>B</b>, <b>C♯</b> and <b>B♭</b>. On the left by the right hand, its side keys <b>E</b>, <b>C</b> and <b>B♭</b>, and under them the high <b>F♯</b> key most saxophones have; and under right 3, the right pinky's <b>E♭</b> and <b>C</b>.",
     "The small key between left 1 and 2 is the <b>bis</b> B♭ key; the dashed one beside right 2 and 3, the alternate F♯ key. Dashed keys are the few that only some fingerings use.",
     "Under each diagram the same fingering in words. Every saxophone, soprano to baritone, is fingered alike.",
   ],

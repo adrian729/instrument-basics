@@ -16,7 +16,7 @@ export function vertical(lying: SVGSVGElement, label: string): SVGSVGElement {
   const svg = lying.cloneNode(true) as SVGSVGElement;
   svg.querySelectorAll(".hand, .hand-name, .callout, .key-name").forEach((e) => e.remove());
   svg.removeAttribute("style"); // (a size set for the full view: the compact one's own)
-  if (svg.classList.contains("tall")) { // (already standing: the saxophone's)
+  if (svg.classList.contains("tall")) { // (already standing: the saxophone's, the clarinets')
     svg.setAttribute("class", "keys tall mini-keys");
     svg.setAttribute("aria-label", label);
     return svg;

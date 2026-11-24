@@ -6,7 +6,7 @@
 // under it) beside it, under the left thumb; the palm keys up on the right (E♭ the topmost, D the outermost,
 // F the lower: The Woodwind Fingering Guide's sax_fing page); the left pinky's table on the right, under left
 // 3 (G♯ the topmost, B the inner, C♯ the outer, B♭ the bottommost); the side keys on the left, by the right
-// hand (E, C and B♭ down, the high F♯ key above them); the right pinky's E♭ and C under right 3. Filled is
+// hand (E, C and B♭ down, the high F♯ key under them: the guide's photo); the right pinky's E♭ and C under right 3. Filled is
 // pressed; keys few fingerings use dashed while up. The key's diagram names them.
 import type { SaxFingering, SaxKey } from "./notation";
 import { el, text } from "../../views/svg";
@@ -44,10 +44,10 @@ export function saxDiagram(f: SaxFingering, label: string, lowA: boolean, legend
   bar("low-c-sharp", X + 29, 125, 10, 15, on("lowC#"));
   bar("low-b-flat", X + 16, 143, 22, 8, on("lowBb"));
   // The right hand: the side keys (and the high F♯ key), the fingers and the alternate F♯ key, the pinky's.
-  bar("high-f-sharp", X - 34, 128, 8, 14, on("hiF#"), true);
-  bar("side-e", X - 34, 146, 8, 19, on("sE"));
-  bar("side-c", X - 34, 168, 8, 19, on("sC"));
-  bar("side-b-flat", X - 34, 190, 8, 19, on("sBb"));
+  bar("side-e", X - 34, 128, 8, 19, on("sE"));
+  bar("side-c", X - 34, 150, 8, 19, on("sC"));
+  bar("side-b-flat", X - 34, 172, 8, 19, on("sBb"));
+  bar("high-f-sharp", X - 34, 194, 8, 14, on("hiF#"), true);
   finger(RIGHT[0], 1, f.right[0], "right");
   finger(RIGHT[1], 2, f.right[1], "right");
   dot("alt-f-sharp", X - 20, 215, 4.5, on("altF#"), true); // (on the side keys' side: The Woodwind Fingering Guide's photo)
@@ -66,7 +66,7 @@ export function saxDiagram(f: SaxFingering, label: string, lowA: boolean, legend
     name(X + 8, 59, "bis", "start");
     name(X + 41, 118, "G♯"); name(X + 42, 135, "C♯"); name(X + 41, 147, "B♭"); name(X + 13, 133, "B", "end");
     call(X + 50, 165, "left pinky", "start");
-    name(X - 38, 136, "F♯", "end"); name(X - 38, 156, "E", "end"); name(X - 38, 178, "C", "end"); name(X - 38, 200, "B♭", "end");
+    name(X - 38, 137.5, "E", "end"); name(X - 38, 159.5, "C", "end"); name(X - 38, 181.5, "B♭", "end"); name(X - 38, 201, "F♯", "end");
     call(X - 50, 231, "side keys", "end");
     name(X - 27, 219, "alt F♯", "end");
     name(X - 40, 248, "E♭ C", "end"); call(X - 40, 259, "right pinky");
